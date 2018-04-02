@@ -7,6 +7,6 @@ import { RoomComponent } from './room-basic-info/room.component';
     CommonModule
   ],
   declarations: [RoomComponent],
-  exports: [HostRegisterModule]
+  exports: [RoomComponent]
 })
 export class HostRegisterModule { }
