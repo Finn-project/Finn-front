@@ -1,0 +1,31 @@
+<article class="content-left">
+  <div class="title">
+    <h2 class="room">
+      누구님 안녕하세요!
+      회원님의 숙소 등록을
+      도와드리겠습니다.
+    </h2>
+  </div>
+  <hr>
+  <div class="stage1">
+    <span>1단계</span>
+  </div>
+  <div class="stage1-description">
+    <span>회원님의 숙소 유형은 무엇인가요?</span>
+  </div>
+  <select name="room-type">
+    <option *ngFor="let room of rooms">{{room}}</option>
+  </select>
+  <select name="room-capacity">
+    <option *ngFor="let capacity of capacities">{{capacity}}</option>
+  </select>
+
+  <input type="text" class="list-space-location-input pull-left"
+   placeholder="예) 강남구" name="full_address" value="대한민국 서울특별시"
+  autocomplete="off">
+  <a class="button" href="#">계속</a>
+</article>
+
+<aside class="content-right">
+
+</aside>

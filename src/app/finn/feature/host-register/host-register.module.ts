@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RoomComponent } from './room-basic-info/room.component';
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: []
+  declarations: [RoomComponent],
+  exports: [HostRegisterModule]
 })
 export class HostRegisterModule { }
