@@ -6,9 +6,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 // import { RoomComponent } from './finn/feature/host-register/room-basic-info/room.component';
-import { HostRegisterModule } from './finn/feature/host-register/host-register.module';
+import { HostRegisterModule } from './feature/host-register/host-register.module';
 
-import { CoreModule } from './finn/core/core.module';
+import { CoreModule } from './core/core.module';
 
 
 @NgModule({
