@@ -11,6 +11,7 @@ export class CoreComponent implements OnInit {
 
   ngOnInit() {
   }
+  
   loginModal() {
     this.modal = !this.modal;
   }
