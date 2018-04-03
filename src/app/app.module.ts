@@ -9,12 +9,13 @@ import { AppComponent } from './app.component';
 import { HostRegisterModule } from './feature/host-register/host-register.module';
 
 import { CoreModule } from './core/core.module';
+import { HomeComponent } from './feature/home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    // RoomComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +23,6 @@ import { CoreModule } from './core/core.module';
     FormsModule,
     HostRegisterModule,
     CoreModule
-    // RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
