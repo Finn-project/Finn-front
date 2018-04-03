@@ -1,0 +1,29 @@
+<div class="main" *ngIf="modal">
+  <div class="content">
+    <button class = "modal-off"(click)="loginModal.emit(modal)">
+      <svg viewBox="0 0 24 24" role="img" aria-label="닫기" focusable="false" style="height: 16px; width: 16px; display: block; fill: rgb(118, 118, 118);">
+        <path d="m23.25 24c-.19 0-.38-.07-.53-.22l-10.72-10.72-10.72 10.72c-.29.29-.77.29-1.06 0s-.29-.77 0-1.06l10.72-10.72-10.72-10.72c-.29-.29-.29-.77 0-1.06s.77-.29 1.06 0l10.72 10.72 10.72-10.72c.29-.29.77-.29 1.06 0s .29.77 0 1.06l-10.72 10.72 10.72 10.72c.29.29.29.77 0 1.06-.15.15-.34.22-.53.22"
+          fill-rule="evenodd"></path>
+      </svg>
+    </button>
+
+    <div class = "btn-wrapper">
+    <button class="facebook-btn">
+      <div>
+          <span class= "login-text">페이스북 계정의 로그인</span>
+      </div>
+    </button>
+    </div>
+    <form action="">
+      <input type="text" class="form-control" placeholder="이메일 주소">
+      <input type="text" class="form-control" placeholder="비밀번호">
+      <button class="facebook-btn login">
+        <div>
+          <span class="login-text">로그인</span>
+        </div>
+      </button>
+    </form>
+    <hr>
+    <span class="signUp-text">에어비앤비 계정이 없으세요? <a class= "signUp">회원 가입</a></span>
+  </div>
+</div>
