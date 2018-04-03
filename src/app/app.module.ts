@@ -8,17 +8,7 @@ import { AppComponent } from './app.component';
 // import { RoomComponent } from './finn/feature/host-register/room-basic-info/room.component';
 import { HostRegisterModule } from './finn/feature/host-register/host-register.module';
 
-
-//hi
-
-
-
-
-
-
-
-
-
+import { CoreModule } from './finn/core/core.module';
 
 
 @NgModule({
@@ -30,7 +20,8 @@ import { HostRegisterModule } from './finn/feature/host-register/host-register.m
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    HostRegisterModule
+    HostRegisterModule,
+    CoreModule
     // RouterModule.forRoot(routes)
   ],
   providers: [],

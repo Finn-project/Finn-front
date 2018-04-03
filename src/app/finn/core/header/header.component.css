@@ -1,0 +1,60 @@
+li {
+      list-style : none;
+    }
+a  {
+    text-decoration : none;
+    color : black;
+}
+
+.login-btn{
+  color : red;
+}
+.header {
+    width : 100%;
+    height: 50px;
+    padding : 5px 5px 5px 15px;
+  }
+  .header-wrapper {
+    padding : 10px;
+    width : 100%;
+    display : flex;
+  }
+.logo {
+    color : #FF5A5F;
+    font-size : 34px;
+  }
+  .input-text {
+    width : 100%;
+    margin-top : 3px;
+    border : 0;
+    outline: none;
+    box-shadow:none !important;
+  }
+  .input-main {
+    width : 100%;
+  }
+  .input-wrapper {
+    display : flex;
+     width : 350px;
+     margin-left : 10px;
+     box-shadow: 2px 2px #eee;
+  }
+  .input-wrapper svg {
+    margin-top : 5px;
+  }
+  .nav-bar {
+    width : 600px;
+  }
+
+  .nav-bar ul{
+    display : flex;
+  }
+  .nav-bar ul div {
+    padding : 15px;
+  }
+  .nav-bar ul div:hover {
+    border-bottom : 2px solid #767676;
+  }
+  .login-btn{
+    cursor: pointer;
+  }
