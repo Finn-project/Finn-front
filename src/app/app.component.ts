@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  modal = true;
+
+  loginModal() {
+    this.modal = !this.modal;
+  }
 }
