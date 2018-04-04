@@ -1,31 +1,169 @@
 <article class="content-left">
-  <div class="title">
-    <h2 class="room">
-      누구님 안녕하세요!
-      회원님의 숙소 등록을
-      도와드리겠습니다.
-    </h2>
-  </div>
-  <hr>
-  <div class="stage1">
-    <span>1단계</span>
-  </div>
-  <div class="stage1-description">
-    <span>회원님의 숙소 유형은 무엇인가요?</span>
-  </div>
-  <select name="room-type">
-    <option *ngFor="let room of rooms">{{room}}</option>
-  </select>
-  <select name="room-capacity">
-    <option *ngFor="let capacity of capacities">{{capacity}}</option>
-  </select>
 
-  <input type="text" class="list-space-location-input pull-left"
-   placeholder="예) 강남구" name="full_address" value="대한민국 서울특별시"
-  autocomplete="off">
-  <a class="button" href="#">계속</a>
+  <!--숙소정보 container-->
+  <div *ngIf="currentState === 'room'" class="room-container">
+    <div class="greeting">
+      <h1 class="greeting-title">
+        회원님 안녕하세요!
+        회원님의 숙소 등록을
+        도와드리겠습니다.
+      </h1>
+    </div>
+    <hr>
+    <div class="current-stage">
+      <span>1단계</span>
+    </div>
+    <div class="room-title">
+      <h3>회원님의 숙소 유형은 무엇인가요?</h3>
+    </div>
+    <!--Room관련 selectBox들 설정-->
+    <div class="room-selectbox">
+      <!--개인실 or 다인실 설정-->
+      <select name="room-type">
+        <option *ngFor="let roomType of roomTypes">
+          {{roomType}}
+        </option>
+      </select>
+      <!--최대수용인원 설정-->
+      <select name="room-capacity">
+        <option *ngFor="let roomCapacity of roomCapacities">
+          {{roomCapacity}}
+        </option>
+      </select>
+      <!--숙소유형 설정(아파트,주택 등등)-->
+      <h3 class="room-type-title">숙소 유형을 선택해주세요!</h3>
+      <select name="room-type-category">
+        <option *ngFor="let roomCategory of roomCategories">
+          {{roomCategory}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!--침대정보 container-->
+  <div *ngIf="currentState === 'bedroom'" class="bedroom-container">
+    <!--침대(갯수 선택)-->
+    <div class="bedroom">
+      <h3 class="bedroom-title">
+        게스트가 사용할 수 있는 침대는 몇 개인가요?
+      </h3>
+      <!--Bedroom관련 selectBox들 설정-->
+      <div class="bedroom-selectbox">
+        <!--침대 유형 설정-->
+        <div class="bedroom-type">
+          <select name="bedroom-type">
+            <option *ngFor="let bedroomType of bedroomTypes">
+              {{bedroomType}}
+            </option>
+          </select>
+        </div>
+        <!--침대 갯수 설정-->
+        <div class="bedroom-count">
+          <button (click)="decreaseBedroomCount()" class="count-button btn btn-success">-</button>
+            <span>{{bedroomCount}}</span>
+          <button (click)="increaseBedroomCount()" class="count-button btn btn-success">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--욕실정보 container-->
+  <div *ngIf="currentState === 'bathroom'" class="bathroom-container">
+    <h3 class="bathroom-title">
+      숙소의 욕실은 총 몇개 인가요?
+    </h3>
+
+    <!--욕실(갯수 선택)-->
+    <div class="bedroom-count">
+      <button (click)="decreaseBathroomCount()" class="count-button btn btn-success">-</button>
+        <span>{{bathroomCount}}</span>
+      <button (click)="increaseBathroomCount()" class="count-button btn btn-success">+</button>
+    </div>
+
+  </div>
+
+  <div *ngIf="currentState === 'location'" class="location-container">
+    <!--위치(설정)-->
+    <h3>숙소의 위치를 설정해주세요!</h3>
+    <input type="text" placeholder="Enter Location!"
+    (keyup.enter)="findLocation($event.target.value)">
+    <p>현재위치: {{formattedLocation}}</p>
+    <p>우편번호: {{zipcode}}</p>
+    <div class="location-field">
+
+      <div *ngFor="let field of locationFields"></div>
+
+      <div class="location-field-nation">
+        <label for="nation">
+          <span class="location-description">국가</span>
+        </label>
+        <input class="block-box" type="text" name="nation" readonly>
+      </div>
+
+      <div class="location-field-state">
+        <label for="state">
+          <span class="location-description">시/도</span>
+        </label>
+        <input class="block-box" type="text" name="state" readonly>
+      </div>
+
+      <div class="location-field-city">
+        <label for="city">
+          <span class="location-description">시/군</span>
+        </label>
+        <input class="block-box" type="text" name="city" readonly>
+      </div>
+
+      <div class="location-field-street">
+        <label for="street">
+          <span class="location-description">도로명/건물번호/건물이름</span>
+        </label>
+        <input class="block-box" type="text" name="street" readonly>
+      </div>
+
+      <div class="location-field-zipcode">
+        <label for="zipcode">
+          <span class="location-description">우편번호</span>
+        </label>
+        <input class="block-box"  type="text" name="zipcode" readonly>
+      </div>
+    </div>
+    <hr>
+    <div class="map-screen">
+      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+        <agm-marker [latitude]="latitude" [longitude]="longitude">
+          <agm-info-window>{{formattedLocation}}</agm-info-window>
+        </agm-marker>
+      </agm-map>
+    </div>
+  </div>
+
+  <div *ngIf="currentState === 'amentities'" class="amentities-container">
+    <!--편의물품(종류 선택)-->
+    <h3>숙소에 어떤 편의물품을 제공하시나요?</h3>
+    <p>편의물품</p>
+  </div>
+
+  <div *ngIf="currentState === 'spaces'" class="spaces-container">
+    <!--편의시설(종류 선택)-->
+    <h3>어떤 편의시설을 제공하시나요?</h3>
+  </div>
+
+
 </article>
+<hr>
 
+<div class="hosting-button-panel">
+  <a class="register-button btn btn-primary"
+  (click)="backState()">
+    뒤로
+  </a>
+
+  <a class="register-button btn btn-primary"
+  (click)="nextState()">
+    다음
+  </a>
+</div>
 <aside class="content-right">
 
 </aside>

@@ -1,3 +1,27 @@
 .room {
-  width: 350px;
+  width: 390px;
+}
+
+.register-button {
+  margin-left: 20px;
+}
+
+.content-left {
+  margin: 20px;
+}
+
+.count-button {
+  margin: 20px;
+}
+
+.block-box {
+  display: block;
+}
+.location-description {
+  color: green;
+}
+
+agm-map {
+  width: 50%;
+  height: 300px;
 }
