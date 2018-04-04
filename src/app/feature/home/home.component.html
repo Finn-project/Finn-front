@@ -1,3 +1,22 @@
-<p>
-  home works!
-</p>
+<div class="container-fluid main-room-list-container">
+  <div class="row room-list">
+      <div *ngFor="let item of data" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
+        <!-- <img src="{{item.image}}" class="room-list-image" alt="room image"> -->
+        <!-- <div class="room-list-image-container">
+            <img src="{{item.image}}" class="img-fluid room-list-image" alt="room image">
+        </div> -->
+        <div class="embed-responsive embed-responsive-3by2">
+            <img src="{{item.image}}" class="embed-responsive-item" alt="room image">
+        </div>
+        <div class="room-list-item-type">
+            {{item.roomType}}
+          </div>
+        <div class="room-list-item-title">
+            {{item.title}}
+        </div>
+        <div class="room-list-item-price">
+          ₩{{item.price}}
+        </div>
+      </div>
+  </div>
+</div>
