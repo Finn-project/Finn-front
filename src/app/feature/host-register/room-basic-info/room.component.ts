@@ -40,7 +40,7 @@ export class RoomComponent implements OnInit {
 
   findLocation(location: string) {
     this.location = location;
-    this.http.get('https://maps.googleapis.com/maps/api/geocode/json', {
+    this.http.get<any>('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
         address: location,
         key: 'AIzaSyCxXp7uUGDn2FCzjDg5j5Z-AQlCxcTLOdM'
