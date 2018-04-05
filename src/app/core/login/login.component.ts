@@ -16,21 +16,21 @@ export class LoginComponent implements OnInit {
   userForm: FormGroup;
 
   signForm: FormGroup;
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, private router: Router) { }
 
   ngOnInit() {
 
     this.userForm = new FormGroup({
-      email: new FormControl('', [
+      email_test: new FormControl('', [
         Validators.required,
         Validators.pattern(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/)
       ]),
-      password: new FormControl('', [
+      password_test: new FormControl('', [
         Validators.required,
         Validators.pattern(/[a-zA-Z0-9]/),
         Validators.minLength(4),
         Validators.maxLength(10)
-      ]),
+      ])
     });
 
     this.signForm = new FormGroup({
@@ -38,13 +38,13 @@ export class LoginComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/)
       ]),
-      frist_name: new FormControl('',[
+      first_name: new FormControl('', [
         Validators.required
       ]),
       last_name: new FormControl('', [
         Validators.required
       ]),
-      password: new FormControl('',[
+      password: new FormControl('', [
         Validators.required
       ]),
       confirm_password: new FormControl('', [
@@ -67,17 +67,17 @@ export class LoginComponent implements OnInit {
 
   // 회원가입 form
 
-  get email_f() {
+  get email() {
     return this.signForm.get('email');
   }
-  get frist_name() {
-    return this.signForm.get('frist_name');
+  get first_name() {
+    return this.signForm.get('first_name');
   }
   get last_name() {
     return this.signForm.get('last_name');
 
   }
-  get password_f() {
+  get password() {
     return this.signForm.get('password');
 
   }
@@ -90,22 +90,29 @@ export class LoginComponent implements OnInit {
 
   }
   // login form
-  get email() {
-    return this.userForm.get('email');
+  get email_test() {
+    return this.userForm.get('email_test');
   }
-  get password() {
-    return this.userForm.get('password');
+  get password_test() {
+    return this.userForm.get('password_test');
   }
+// 회원가입 done
   sign() {
-
-    console.log(this.signForm);
+    console.log(this.signForm.value);
+    this.http.post(`${this.url}user/`, this.signForm.value)
+      .subscribe(() => {
+        this.modal = false;
+        this.signForm.reset();
+        this.sigin = false;
+      });
   }
-
+  // login ing~~
   login() {
     console.log(this.userForm);
   }
+
   match () {
-    if (this.signForm.value.password !== this.signForm.value.confirm_password){
+    if (this.signForm.value.password !== this.signForm.value.confirm_password) {
       return true;
     }
   }
