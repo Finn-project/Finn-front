@@ -9,7 +9,7 @@
 
     </button>
     <div class = "re">
-      <div class="social-login">
+      <div class="social-login" (click)= "socialSignin('facebook')">
         <form>
           <button class="facebook-btn">페이스북 계정으로 로그인</button>
         </form>
@@ -47,7 +47,7 @@
               password를 입력하세요</p>
           </div>
           <div>
-            <button class="facebook-btn login" type="submit" [disabled]="userForm.valid">로그인</button>
+            <button class="facebook-btn login" type="submit" [disabled]="userForm.invalid">로그인</button>
           </div>
         </form>
         <hr>
@@ -58,6 +58,7 @@
       </div>
     </div>
   </div>
+  <pre>{{userForm.value | json}}</pre>
   <!--회원가입 view -->
   <div class="siginUpcontent" *ngIf="sigin">
     <button class="modal-off" (click)="toggleLoginModal.emit(modal)">

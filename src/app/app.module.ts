@@ -10,6 +10,7 @@ import { HostRegisterModule } from './feature/host-register/host-register.module
 
 import { CoreModule } from './core/core.module';
 import { HomeComponent } from './feature/home/home.component';
+import { AuthService, AuthModule } from './core/login/anth';
 
 
 @NgModule({
@@ -23,9 +24,10 @@ import { HomeComponent } from './feature/home/home.component';
     FormsModule,
     HostRegisterModule,
     CoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

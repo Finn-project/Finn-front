@@ -2,6 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+
+import { environment } from '../../../environments/environment';
+
+import { AuthService } from './anth/services/auth.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,12 +16,17 @@ export class LoginComponent implements OnInit {
   @Input() modal;
   @Output() toggleLoginModal = new EventEmitter();
   sigin: boolean;
-  url = 'https://himanmen.com/';
+  url = `${environment.apiUrl}`;
 
   userForm: FormGroup;
+  message: string;
 
   signForm: FormGroup;
-  constructor(public http: HttpClient, private router: Router) { }
+  constructor(
+    public http: HttpClient,
+    public router: Router,
+    public auth: AuthService
+  ) { }
 
   ngOnInit() {
 
@@ -108,7 +118,27 @@ export class LoginComponent implements OnInit {
   }
   // login ing~~
   login() {
-    console.log(this.userForm);
+    console.log(this.email_test.value);
+    this.auth.login(this.email_test.value, this.password_test.value)
+      .subscribe(
+      () => {
+        console.log(this.userForm.value), this.modal = false;
+        this.signForm.reset(); },
+      () => this.router.navigate(['host']),
+
+      );
+  }
+// 소셜 로그인
+  socialSignin(facebook) {
+    this.auth.socialSignin(facebook)
+      .subscribe(
+      () => {
+        console.log(facebook),
+        this.modal = false;
+        this.signForm.reset();
+      },
+      () => this.router.navigate(['host']),
+      );
   }
 
   match () {
