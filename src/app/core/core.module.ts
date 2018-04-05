@@ -8,10 +8,11 @@ import { CoreRoutingModule } from './core-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './login/sign-up/sign-up.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
-    CommonModule, CoreRoutingModule
+    CommonModule, CoreRoutingModule, ReactiveFormsModule, FormsModule,
   ],
   declarations: [HeaderComponent, LoginComponent, SignUpComponent],
   exports: [HeaderComponent, LoginComponent, SignUpComponent, RouterModule]
