@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   @Input() modal;
-  @Output() loginModal = new EventEmitter();
+  @Output() toggleLoginModal = new EventEmitter();
   sigin: boolean;
   url = 'https://himanmen.com/';
 
