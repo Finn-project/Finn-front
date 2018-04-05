@@ -54,7 +54,8 @@ export class HomeComponent implements OnInit {
     price: '65000',
     image: 'https://picsum.photos/1200/984',
     location: '서울'
-  }]
+  }];
+  
   constructor() { }
 
   ngOnInit() {
