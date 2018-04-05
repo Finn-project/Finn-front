@@ -10,6 +10,26 @@ export type PageState = 'room' | 'bedroom' | 'bathroom' | 'location' | 'amentiti
 })
 export class RoomComponent implements OnInit {
 
+  amentities = [
+    { name: 'essentials', content: '필수품목' },
+    { name: 'wifi', content: '무선인터넷' },
+    { name: 'shampoo', content: '샴푸' },
+    { name: 'tv', content: 'TV' },
+    { name: 'heater', content: '난방' },
+    { name: 'ac', content: '에어컨' },
+    { name: 'breakfast', content: '조식' },
+    { name: 'iron', content: '다리미' },
+    { name: 'hair-dryer', content: '헤어드라이어' },
+  ];
+
+  spaces = [
+    { name: 'pool', content: '수영장' },
+    { name: 'kitchen', content: '주방' },
+    { name: 'washer', content: '세탁기' },
+    { name: 'parking-lot', content: '주차장' },
+    { name: 'elevator', content: '엘리베이터' },
+  ];
+
   locationFields = [
     { name: '국가', type: 'nation', content: '' },
     { name: '시/도', type: 'state', content: '' },
@@ -18,10 +38,11 @@ export class RoomComponent implements OnInit {
     { name: '우편번호', type: 'zipcode', content: '' }
   ];
 
-  states: PageState[] = ['room', 'bedroom', 'bathroom', 'location', 'amentities', 'spaces'];
+  // 현재 페이지의 상태
+  pageStates: PageState[] = ['room', 'bedroom', 'bathroom', 'location', 'amentities', 'spaces'];
 
   stateCount = 0;
-  currentState: PageState = this.states[this.stateCount];
+  currentState: PageState = this.pageStates[this.stateCount];
 
   roomTypes = ['개인실', '다인실'];
 
@@ -43,16 +64,6 @@ export class RoomComponent implements OnInit {
   zipcode = '';
   zipcodeLength = 0;
   location: string;
-
-  autocomplete;
-
-  ngOninit () {
-
-    // AIzaSyDOyI9-PcSk-p_c3PoApgLnFiRPnHH53b8
-    // this.autocomplete = new google.maps.places.Autocomplete(
-    //         /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-    //   { types: ['geocode'] });
-  }
 
   constructor(public http: HttpClient) { }
 
@@ -88,29 +99,29 @@ export class RoomComponent implements OnInit {
   }
 
 
-  changeState () {
+  changePageState () {
     switch (this.currentState) {
-      case 'room': this.currentState = this.states[this.stateCount]; break;
-      case 'bedroom': this.currentState = this.states[this.stateCount]; break;
-      case 'bathroom': this.currentState = this.states[this.stateCount]; break;
-      case 'location': this.currentState = this.states[this.stateCount]; break;
-      case 'amentities': this.currentState = this.states[this.stateCount]; break;
-      case 'spaces': this.currentState = this.states[this.stateCount]; break;
-      default: this.currentState = this.states[this.stateCount]; break;
+      case 'room': this.currentState = this.pageStates[this.stateCount]; break;
+      case 'bedroom': this.currentState = this.pageStates[this.stateCount]; break;
+      case 'bathroom': this.currentState = this.pageStates[this.stateCount]; break;
+      case 'location': this.currentState = this.pageStates[this.stateCount]; break;
+      case 'amentities': this.currentState = this.pageStates[this.stateCount]; break;
+      case 'spaces': this.currentState = this.pageStates[this.stateCount]; break;
+      default: this.currentState = this.pageStates[this.stateCount]; break;
     }
   }
 
-  backState () {
+  backPageState () {
     if (this.stateCount > 0) {
       this.stateCount--;
-      this.changeState();
+      this.changePageState();
     }
   }
 
-  nextState () {
+  nextPageState () {
     if (this.stateCount < 5) {
       this.stateCount++;
-      this.changeState();
+      this.changePageState();
     }
   }
 

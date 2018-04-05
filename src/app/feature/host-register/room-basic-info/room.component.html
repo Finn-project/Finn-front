@@ -1,139 +1,156 @@
-<article class="content-left">
+<div class="content-container">
+  <article class="content-left">
 
-  <!--숙소정보 container-->
-  <div *ngIf="currentState === 'room'" class="room-container">
-    <div class="greeting">
-      <h1 class="greeting-title">
-        회원님 안녕하세요!
-        회원님의 숙소 등록을
-        도와드리겠습니다.
-      </h1>
+    <!--숙소정보 container-->
+    <div *ngIf="currentState === 'room'" class="room-container">
+      <div class="greeting">
+        <h1 class="greeting-title">
+          회원님 안녕하세요! 회원님의 숙소 등록을 도와드리겠습니다.
+        </h1>
+      </div>
+      <hr>
+      <div class="current-stage">
+        <span>1단계</span>
+      </div>
+      <div class="room-title">
+        <h3>회원님의 숙소 유형은 무엇인가요?</h3>
+      </div>
+      <!--Room관련 selectBox들 설정-->
+      <div class="room-selectbox">
+        <!--개인실 or 다인실 설정-->
+        <select name="room-type">
+          <option *ngFor="let roomType of roomTypes">
+            {{roomType}}
+          </option>
+        </select>
+        <!--최대수용인원 설정-->
+        <select name="room-capacity">
+          <option *ngFor="let roomCapacity of roomCapacities">
+            {{roomCapacity}}
+          </option>
+        </select>
+        <!--숙소유형 설정(아파트,주택 등등)-->
+        <h3 class="room-type-title">숙소 유형을 선택해주세요!</h3>
+        <select name="room-type-category">
+          <option *ngFor="let roomCategory of roomCategories">
+            {{roomCategory}}
+          </option>
+        </select>
+      </div>
     </div>
-    <hr>
-    <div class="current-stage">
-      <span>1단계</span>
-    </div>
-    <div class="room-title">
-      <h3>회원님의 숙소 유형은 무엇인가요?</h3>
-    </div>
-    <!--Room관련 selectBox들 설정-->
-    <div class="room-selectbox">
-      <!--개인실 or 다인실 설정-->
-      <select name="room-type">
-        <option *ngFor="let roomType of roomTypes">
-          {{roomType}}
-        </option>
-      </select>
-      <!--최대수용인원 설정-->
-      <select name="room-capacity">
-        <option *ngFor="let roomCapacity of roomCapacities">
-          {{roomCapacity}}
-        </option>
-      </select>
-      <!--숙소유형 설정(아파트,주택 등등)-->
-      <h3 class="room-type-title">숙소 유형을 선택해주세요!</h3>
-      <select name="room-type-category">
-        <option *ngFor="let roomCategory of roomCategories">
-          {{roomCategory}}
-        </option>
-      </select>
-    </div>
-  </div>
 
-  <!--침대정보 container-->
-  <div *ngIf="currentState === 'bedroom'" class="bedroom-container">
-    <!--침대(갯수 선택)-->
-    <div class="bedroom">
-      <h3 class="bedroom-title">
-        게스트가 사용할 수 있는 침대는 몇 개인가요?
-      </h3>
-      <!--Bedroom관련 selectBox들 설정-->
-      <div class="bedroom-selectbox">
-        <!--침대 유형 설정-->
-        <div class="bedroom-type">
-          <select name="bedroom-type">
-            <option *ngFor="let bedroomType of bedroomTypes">
-              {{bedroomType}}
-            </option>
-          </select>
-        </div>
-        <!--침대 갯수 설정-->
-        <div class="bedroom-count">
-          <button (click)="decreaseBedroomCount()" class="count-button btn btn-success">-</button>
+    <!--침대정보 container-->
+    <div *ngIf="currentState === 'bedroom'" class="bedroom-container">
+      <!--침대(갯수 선택)-->
+      <div class="bedroom">
+        <h3 class="bedroom-title">
+          게스트가 사용할 수 있는 침대는 몇 개인가요?
+        </h3>
+        <!--Bedroom관련 selectBox들 설정-->
+        <div class="bedroom-selectbox">
+          <!--침대 유형 설정-->
+          <div class="bedroom-type">
+            <select name="bedroom-type">
+              <option *ngFor="let bedroomType of bedroomTypes">
+                {{bedroomType}}
+              </option>
+            </select>
+          </div>
+          <!--침대 갯수 설정-->
+          <div class="bedroom-count">
+            <button (click)="decreaseBedroomCount()" class="count-button btn btn-success">-</button>
             <span>{{bedroomCount}}</span>
-          <button (click)="increaseBedroomCount()" class="count-button btn btn-success">+</button>
+            <button (click)="increaseBedroomCount()" class="count-button btn btn-success">+</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!--욕실정보 container-->
-  <div *ngIf="currentState === 'bathroom'" class="bathroom-container">
-    <h3 class="bathroom-title">
-      숙소의 욕실은 총 몇개 인가요?
-    </h3>
+    <!--욕실정보 container-->
+    <div *ngIf="currentState === 'bathroom'" class="bathroom-container">
+      <h3 class="bathroom-title">
+        숙소의 욕실은 총 몇개 인가요?
+      </h3>
 
-    <!--욕실(갯수 선택)-->
-    <div class="bedroom-count">
-      <button (click)="decreaseBathroomCount()" class="count-button btn btn-success">-</button>
+      <!--욕실(갯수 선택)-->
+      <div class="bedroom-count">
+        <button (click)="decreaseBathroomCount()" class="count-button btn btn-success">-</button>
         <span>{{bathroomCount}}</span>
-      <button (click)="increaseBathroomCount()" class="count-button btn btn-success">+</button>
-    </div>
-
-  </div>
-
-  <div *ngIf="currentState === 'location'" class="location-container">
-    <!--위치(설정)-->
-    <h3>숙소의 위치를 설정해주세요!</h3>
-    <input type="text" placeholder="Enter Location!"
-    (keyup.enter)="findLocation($event.target.value)">
-    <div class="location-field">
-
-      <div *ngFor="let field of locationFields">
-        <label for="{{field.type}}">
-          <span class="location-description">{{field.name}}</span>
-        </label>
-        <input class="block-box" value="{{field.content}}"
-        type="text" name="{{field.type}}" readonly>
+        <button (click)="increaseBathroomCount()" class="count-button btn btn-success">+</button>
       </div>
 
     </div>
 
-    <div class="map-screen">
-      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-        <agm-marker [latitude]="latitude" [longitude]="longitude">
-          <agm-info-window>{{formattedLocation}}</agm-info-window>
-        </agm-marker>
-      </agm-map>
+    <div *ngIf="currentState === 'location'" class="location-container">
+      <!--위치(설정)-->
+      <h3>숙소의 위치를 설정해주세요!</h3>
+      <input type="text" placeholder="Enter Location!" (keyup.enter)="findLocation($event.target.value)">
+      <div class="location-field">
+
+        <div *ngFor="let field of locationFields">
+          <label for="{{field.type}}">
+            <span class="location-description">{{field.name}}</span>
+          </label>
+          <input class="block-box" value="{{field.content}}" type="text" name="{{field.type}}" readonly>
+        </div>
+
+      </div>
+
+      <div class="map-screen">
+        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+          <agm-marker [latitude]="latitude" [longitude]="longitude">
+            <agm-info-window>{{formattedLocation}}</agm-info-window>
+          </agm-marker>
+        </agm-map>
+      </div>
     </div>
-  </div>
 
-  <div *ngIf="currentState === 'amentities'" class="amentities-container">
-    <!--편의물품(종류 선택)-->
-    <h3>숙소에 어떤 편의물품을 제공하시나요?</h3>
-    <p>편의물품</p>
-  </div>
+    <div *ngIf="currentState === 'amentities'" class="amentities-container">
+      <!--편의물품(종류 선택)-->
+      <h3>숙소에 어떤 편의물품을 제공하시나요?</h3>
+      <div class="amentities-info">
+        <ul class="amentities-list">
+          <label class="amentities-label" for="{{amentity.name}}" *ngFor="let amentity of amentities">
+            <li class="amentities-content">
+              <input class="form-check-input" type="checkbox" value="{{amentity.content}}" id="{{amentity.name}}"> {{amentity.content}}
+            </li>
+          </label>
+        </ul>
+      </div>
+    </div>
 
-  <div *ngIf="currentState === 'spaces'" class="spaces-container">
-    <!--편의시설(종류 선택)-->
-    <h3>어떤 편의시설을 제공하시나요?</h3>
-  </div>
+    <div *ngIf="currentState === 'spaces'" class="spaces-container">
+      <!--편의시설(종류 선택)-->
+      <h3>어떤 편의시설을 제공하시나요?</h3>
+      <div class="space-info">
+        <ul class="space-list">
+          <label class="space-label" for="{{space.name}}" *ngFor="let space of spaces">
+            <li class="space-content">
+              <input class="form-check-input" type="checkbox" value="{{space.content}}" id="{{space.name}}"> {{space.content}}
+            </li>
+          </label>
+        </ul>
+      </div>
+    </div>
 
 
-</article>
-<hr>
+    <div class="hosting-button-panel d-flex justify-content-around">
+      <a class="register-button btn btn-primary" (click)="backPageState()">
+        뒤로
+      </a>
 
-<div class="hosting-button-panel">
-  <a class="register-button btn btn-primary"
-  (click)="backState()">
-    뒤로
-  </a>
+      <a class="register-button btn btn-primary" (click)="nextPageState()">
+        다음
+      </a>
+    </div>
+  </article>
+  <hr>
 
-  <a class="register-button btn btn-primary"
-  (click)="nextState()">
-    다음
-  </a>
+  <aside class="content-right">
+    <div class="help-panel">
+      <div class="aside-panel-body d-flex justify-content-center">
+        <p>이곳에 도움말을 적어주세요!</p>
+      </div>
+    </div>
+  </aside>
 </div>
-<aside class="content-right">
-
-</aside>

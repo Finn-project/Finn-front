@@ -1,13 +1,46 @@
-.content-left {
-  width: 500px;
+.content-container {
+  display: flex;
+}
+
+.content-right {
+  flex: 1000px;
+  background-color: #fafafa;
 }
 
 .room {
   width: 390px;
 }
 
+/* 편의물품 */
+.amentities-label {
+  display: block;
+}
+
+label.amentities-label {
+  width: 150px;
+  cursor: pointer;
+}
+
+/* 편의시설 */
+.space-label {
+  display: block;
+}
+
+/* hosting 버튼 패널 */
+.hosting-button-panel {
+  position:fixed;
+  left: 0px;
+  bottom: 100px;
+  height: 30px;
+  width: 50%;
+}
+
+
+/* 뒤로, 다음 버튼 */
 .register-button {
-  margin-left: 20px;
+  font-size: 1.5em;
+  width: 100px;
+  height: 50px;
 }
 
 .content-left {
@@ -25,10 +58,17 @@
 .location-description {
   color: green;
 }
-/* .agm-map-container-inner {
-  border-top: 2px solid gray;
-  padding-top: 5px;
-} */
+
+/* aside 도움말 */
+.aside-panel-body {
+  width: 300px;
+  height: 300px;
+  margin-left: 30px;
+  border: solid 1px #dce0e0;
+  border-radius: 10;
+}
+
+/* 맵 */
 .map-screen {
   margin-top: 10px;
 }
