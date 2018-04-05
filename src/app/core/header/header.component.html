@@ -35,10 +35,11 @@
         </div>
         <div>
           <li>
-            <a class="login-btn" (click) ="loginModal.emit()">로그인</a>
+            <a class="login-btn" (click) ="toggleLoginModal()">로그인</a>
           </li>
         </div>
       </ul>
     </div>
   </div>
 </div>
+<app-login [modal]="modal" (toggleLoginModal)="toggleLoginModal()"></app-login>
