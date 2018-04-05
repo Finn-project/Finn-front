@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+export type PageState = 'room' | 'bedroom' | 'bathroom' | 'location' | 'amentities' | 'spaces';
+
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
@@ -8,13 +10,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RoomComponent implements OnInit {
 
+  locationFields = [
+    { name: '국가', type: 'nation', content: '' },
+    { name: '시/도', type: 'state', content: '' },
+    { name: '시/군', type: 'city', content: '' },
+    { name: '도로명/건물번호/건물이름', type: 'street', content: '' },
+    { name: '우편번호', type: 'zipcode', content: '' }
+  ];
 
-  states = ['room', 'bedroom', 'bathroom',
-            'location', 'amentities', 'spaces'];
-
-  currentState = 'room';
+  states: PageState[] = ['room', 'bedroom', 'bathroom', 'location', 'amentities', 'spaces'];
 
   stateCount = 0;
+  currentState: PageState = this.states[this.stateCount];
+
   roomTypes = ['개인실', '다인실'];
 
   roomCapacities = ['최대 1명 숙박 가능', '최대 2명 숙박 가능',
@@ -36,6 +44,16 @@ export class RoomComponent implements OnInit {
   zipcodeLength = 0;
   location: string;
 
+  autocomplete;
+
+  ngOninit () {
+
+    // AIzaSyDOyI9-PcSk-p_c3PoApgLnFiRPnHH53b8
+    // this.autocomplete = new google.maps.places.Autocomplete(
+    //         /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+    //   { types: ['geocode'] });
+  }
+
   constructor(public http: HttpClient) { }
 
   findLocation(location: string) {
@@ -47,7 +65,20 @@ export class RoomComponent implements OnInit {
       }
     })
       .subscribe(response => {
+
         console.dir(response);
+        console.dir(response.results);
+
+        response.results[0].address_components.map(el => {
+          return console.dir(el.types);
+        });
+        const resLength = response.results[0].address_components.length;
+        for (let i = 0; i < 5; i++) {
+          this.locationFields[i].content = '';
+        }
+        for (let j = 0; j < resLength; j++ ) {
+          this.locationFields[j].content = response.results[0].address_components[j].long_name;
+        }
         this.zipcodeLength = response.results[0].address_components.length;
         this.formattedLocation = response.results[0].formatted_address;
         this.zipcode = response.results[0].address_components[this.zipcodeLength - 1].long_name;

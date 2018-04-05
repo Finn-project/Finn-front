@@ -87,48 +87,18 @@
     <h3>숙소의 위치를 설정해주세요!</h3>
     <input type="text" placeholder="Enter Location!"
     (keyup.enter)="findLocation($event.target.value)">
-    <p>현재위치: {{formattedLocation}}</p>
-    <p>우편번호: {{zipcode}}</p>
     <div class="location-field">
 
-      <div *ngFor="let field of locationFields"></div>
-
-      <div class="location-field-nation">
-        <label for="nation">
-          <span class="location-description">국가</span>
+      <div *ngFor="let field of locationFields">
+        <label for="{{field.type}}">
+          <span class="location-description">{{field.name}}</span>
         </label>
-        <input class="block-box" type="text" name="nation" readonly>
+        <input class="block-box" value="{{field.content}}"
+        type="text" name="{{field.type}}" readonly>
       </div>
 
-      <div class="location-field-state">
-        <label for="state">
-          <span class="location-description">시/도</span>
-        </label>
-        <input class="block-box" type="text" name="state" readonly>
-      </div>
-
-      <div class="location-field-city">
-        <label for="city">
-          <span class="location-description">시/군</span>
-        </label>
-        <input class="block-box" type="text" name="city" readonly>
-      </div>
-
-      <div class="location-field-street">
-        <label for="street">
-          <span class="location-description">도로명/건물번호/건물이름</span>
-        </label>
-        <input class="block-box" type="text" name="street" readonly>
-      </div>
-
-      <div class="location-field-zipcode">
-        <label for="zipcode">
-          <span class="location-description">우편번호</span>
-        </label>
-        <input class="block-box"  type="text" name="zipcode" readonly>
-      </div>
     </div>
-    <hr>
+
     <div class="map-screen">
       <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
         <agm-marker [latitude]="latitude" [longitude]="longitude">
