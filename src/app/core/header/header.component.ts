@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,23 +8,37 @@ import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/
 })
 export class HeaderComponent implements OnInit {
   modal: boolean = false;
-  showDropdown = true;
+  
+  navToDropdown: boolean = window.innerWidth < 1228 ? true : false;
+  showDropdown: boolean = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     if (event.target.innerWidth < 1128) {
-      this.showDropdown = true;
+      this.navToDropdown = true;
     } else {
-      this.showDropdown = false;
+      this.navToDropdown = false;
     }
-    console.log(this.showDropdown);
+    console.log(this.navToDropdown);
   }
   
-  constructor() { }
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
+  onLogoClick() {
+    if (this.navToDropdown) {
+      this.toggleDropdown();
+    } else {
+      this.router.navigate(['']);
+    }
+  }
+
   toggleLoginModal() {
     this.modal = !this.modal;
+  }
+
+  toggleDropdown () {
+    this.showDropdown = !this.showDropdown
   }
 }
