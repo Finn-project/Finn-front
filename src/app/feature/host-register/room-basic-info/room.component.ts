@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-export type PageState = 'room' | 'bedroom' | 'bathroom' | 'location' | 'amentities' | 'spaces';
+export type PageState = 'room' | 'bedroom'
+| 'bathroom' | 'location' | 'amentities' | 'spaces'
+| 'picture' | 'description' | 'accommodationName';
 
 @Component({
   selector: 'app-room',
@@ -39,23 +41,26 @@ export class RoomComponent implements OnInit {
   ];
 
   // 현재 페이지의 상태
-  pageStates: PageState[] = ['room', 'bedroom', 'bathroom', 'location', 'amentities', 'spaces'];
+  pageStates: PageState[] = ['room', 'bedroom', 'bathroom',
+    'location', 'amentities', 'spaces', 'picture', 'description', 'accommodationName'];
 
   stateCount = 0;
   currentState: PageState = this.pageStates[this.stateCount];
 
-  roomTypes = ['개인실', '다인실'];
+  roomCounts = ['방 1개', '방 2개', '방 3개', '방 4개'];
 
   roomCapacities = ['최대 1명 숙박 가능', '최대 2명 숙박 가능',
                     '최대 3명 숙박 가능', '최대 4명 숙박 가능'];
 
   roomCategories = ['주택', '아파트', '별채', '호텔'];
 
-  bedroomTypes = ['싱글', '더블', '킹', '퀸', '아기침대' ];
+  bedroomTypes = ['싱글사이즈', '더블사이즈', '킹사이즈', '퀸사이즈', '아기침대' ];
 
   bedroomCount = 0;
 
   bathroomCount = 0;
+
+  progressbarPercentage = 0;
 
   latitude = 37.49794199999999;
   longitude = 127.027621;
@@ -64,6 +69,8 @@ export class RoomComponent implements OnInit {
   zipcode = '';
   zipcodeLength = 0;
   location: string;
+
+
 
   constructor(public http: HttpClient) { }
 
@@ -78,11 +85,9 @@ export class RoomComponent implements OnInit {
       .subscribe(response => {
 
         console.dir(response);
-        console.dir(response.results);
-
-        response.results[0].address_components.map(el => {
-          return console.dir(el.types);
-        });
+        // response.results[0].address_components.map(el => {
+        //   return console.dir(el.types);
+        // });
         const resLength = response.results[0].address_components.length;
         for (let i = 0; i < 5; i++) {
           this.locationFields[i].content = '';
@@ -114,13 +119,23 @@ export class RoomComponent implements OnInit {
   backPageState () {
     if (this.stateCount > 0) {
       this.stateCount--;
+      const progressBar = document.getElementById('progressbar');
+      if (this.progressbarPercentage > 0) {
+        this.progressbarPercentage -= 20;
+        progressBar.style.width = this.progressbarPercentage + '%';
+      }
       this.changePageState();
     }
   }
 
   nextPageState () {
-    if (this.stateCount < 5) {
+    if (this.stateCount < 8) {
       this.stateCount++;
+      const progressBar = document.getElementById('progressbar');
+      if (this.progressbarPercentage < 100) {
+        this.progressbarPercentage += 20;
+        progressBar.style.width = this.progressbarPercentage + '%';
+      }
       this.changePageState();
     }
   }
