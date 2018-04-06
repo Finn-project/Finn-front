@@ -52,6 +52,7 @@ export class SocialAuthService {
   private initProviderConfig(...configs: SocialAuthConfig[]) {
     configs.forEach(this.loadScript);
   }
+
   private loadScript(config: SocialAuthConfig) {
     if (document.getElementById(config.provider)) { return; }
 

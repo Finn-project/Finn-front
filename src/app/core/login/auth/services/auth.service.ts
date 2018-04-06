@@ -35,6 +35,7 @@ export class AuthService {
     return this.socialAuth.getSocialCredential(provider)
       .switchMap(credential => this.http.post<Token>(`${this.url}facebook-login/`, credential))
       .do(res => this.setToken(res.token))
+      .do(res => console.log(res.token))
       .do(res => this.setUser(res.user))
       .shareReplay();
   }
@@ -46,13 +47,12 @@ export class AuthService {
   getToken(): string {
     return localStorage.getItem(this.TOKEN_NAME);
   }
-  getUser(): string {
-    return localStorage.getItem(this.user);
-  }
-
   setToken(token: string): void {
       localStorage.setItem(this.TOKEN_NAME, token);
     }
+  getUser(): string {
+    return localStorage.getItem(this.user);
+  }
   setUser(user) {
     localStorage.setItem(this.user, user);
   }

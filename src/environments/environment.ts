@@ -8,5 +8,6 @@ export const environment = {
   apiUrl: 'https://himanmen.com/',
   tokenName: 'access_token',
   user: 'user',
-  facebookAppId: '185549915559739'
+  facebookAppId: '556722268030664',
+  // facebookAppId: '185549915559739'
 };

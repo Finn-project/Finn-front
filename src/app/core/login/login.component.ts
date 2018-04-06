@@ -133,7 +133,6 @@ export class LoginComponent implements OnInit {
     this.auth.socialSignin(facebook)
       .subscribe(
       () => {
-        console.log(facebook),
         this.modal = false;
         this.signForm.reset();
       },
