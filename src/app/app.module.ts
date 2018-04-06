@@ -9,6 +9,7 @@ import { HostRegisterModule } from './feature/host-register/host-register.module
 
 import { CoreModule } from './core/core.module';
 import { HomeComponent } from './feature/home/home.component';
+import { AuthService, AuthModule } from './core/login/auth';
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -25,9 +26,11 @@ import { AgmCoreModule } from '@agm/core';
     CoreModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCxXp7uUGDn2FCzjDg5j5Z-AQlCxcTLOdM'
-    })
+    }),
+    ReactiveFormsModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
