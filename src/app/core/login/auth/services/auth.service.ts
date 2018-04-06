@@ -22,10 +22,8 @@ export class AuthService {
     private jwtHelper: JwtHelper,
     private socialAuth: SocialAuthService
   ) {}
-
   login(username , password): Observable<Token> {
     return this.http.post<Token>(`${this.url}user/login/`, { username: username, password: password} )
-    .do(res => console.log(res.token, res.user.id))
     .do(res => this.setToken(res.token))
     .do(res => this.setUser(res.user))
 
@@ -35,7 +33,7 @@ export class AuthService {
     return this.socialAuth.getSocialCredential(facebook)
       .switchMap(credential => {
         console.log('credential', credential);
-        return this.http.post<Token>(`${this.url}facebook-login/`, credential);
+        return this.http.post<Token>(`${this.url}user/facebook-login/`, credential);
       })
       .do(res => console.log(123213))
       .do(res => this.setToken(res.token))
@@ -46,7 +44,7 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    return token ? !this.isTokenExpired(token) : false;
+    return token ? true : false;
   }
   getToken(): string {
     return localStorage.getItem(this.TOKEN_NAME);
@@ -67,6 +65,8 @@ export class AuthService {
   }
   removeToken(): void {
     localStorage.removeItem(this.TOKEN_NAME);
+    localStorage.removeItem(this.user);
+
   }
 // jwt 사용 해서 확인하는곧
   isTokenExpired(token: string) {
