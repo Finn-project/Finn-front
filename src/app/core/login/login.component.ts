@@ -106,18 +106,17 @@ export class LoginComponent implements OnInit {
   get password_test() {
     return this.userForm.get('password_test');
   }
-// 회원가입 done
-
+// 회원가입
   sign() {
-    console.log(this.signForm.value);
-    this.http.post(`${this.url}user/`, this.signForm.value)
-      .subscribe(() => {
+    this.auth.sign(this.signForm.value)
+      .subscribe( () => {
         this.modal = false;
         this.signForm.reset();
         this.sigin = false;
-      }, res => this.status = res.status);
+        this.router.navigate(['']);
+      }, res => this.status = res.status );
   }
-  // login ing~~
+// login
   login() {
     console.log(this.email_test.value);
     this.auth.login(this.email_test.value, this.password_test.value)

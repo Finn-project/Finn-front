@@ -22,6 +22,14 @@ export class AuthService {
     private jwtHelper: JwtHelper,
     private socialAuth: SocialAuthService
   ) {}
+// 회원가입 후 자동 로그인 되게 함
+  sign(signForm): Observable<Token> {
+    return this.http.post<Token>(`${this.url}user/`, signForm )
+      .do(res => this.setToken(res.token))
+      .do(res => this.setUser(res.user))
+      .shareReplay();
+  }
+// 로그인 기능
   login(username , password): Observable<Token> {
     return this.http.post<Token>(`${this.url}user/login/`, { username: username, password: password} )
     .do(res => this.setToken(res.token))
@@ -29,6 +37,7 @@ export class AuthService {
 
     .shareReplay();
   }
+// 쇼셜 로그인
   socialSignin(facebook: string): Observable<Token> {
     return this.socialAuth.getSocialCredential(facebook)
       .switchMap(credential => {
@@ -41,7 +50,7 @@ export class AuthService {
       .do(res => this.setUser(res.user))
       .shareReplay();
   }
-
+// 인증 관련 함수들
   isAuthenticated(): boolean {
     const token = this.getToken();
     return token ? true : false;
