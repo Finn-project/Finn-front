@@ -32,16 +32,18 @@ export class SocialAuthService {
               observer.next(this.fetchFacebookCredential(response.authResponse.accessToken));
               // console.log(response.authResponse.accessToken);
               // return response.authResponse.accessToken;
+              observer.complete();
             } else {
               FB.login(response => {
                 if (response.status === 'connected') {
                   console.log(response.authResponse.accessToken);
                   observer.next(this.fetchFacebookCredential(response.authResponse.accessToken));
                   // return response.authResponse.accessToken;
+                  observer.complete();
                 }
               });
             }
-            observer.complete();
+            console.log(observer);
           });
           break;
       }});
