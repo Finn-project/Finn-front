@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,11 +6,22 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  modal: boolean;
+  modal: boolean = false;
+  showDropdown = true;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (event.target.innerWidth < 1128) {
+      this.showDropdown = true;
+    } else {
+      this.showDropdown = false;
+    }
+    console.log(this.showDropdown);
+  }
+  
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   toggleLoginModal() {
     this.modal = !this.modal;
