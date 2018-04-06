@@ -24,16 +24,20 @@ export class AuthService {
   ) {}
 
   login(username , password): Observable<Token> {
-    return this.http.post<any>(`${this.url}user/login/`, { username: username, password: password} )
+    return this.http.post<Token>(`${this.url}user/login/`, { username: username, password: password} )
     .do(res => console.log(res.token, res.user.id))
     .do(res => this.setToken(res.token))
     .do(res => this.setUser(res.user))
 
     .shareReplay();
   }
-  socialSignin(provider: string): Observable<Token> {
-    return this.socialAuth.getSocialCredential(provider)
-      .switchMap(credential => this.http.post<Token>(`${this.url}facebook-login/`, credential))
+  socialSignin(facebook: string): Observable<Token> {
+    return this.socialAuth.getSocialCredential(facebook)
+      .switchMap(credential => {
+        console.log('credential', credential);
+        return this.http.post<Token>(`${this.url}facebook-login/`, credential);
+      })
+      .do(res => console.log(123213))
       .do(res => this.setToken(res.token))
       .do(res => console.log(res.token))
       .do(res => this.setUser(res.user))

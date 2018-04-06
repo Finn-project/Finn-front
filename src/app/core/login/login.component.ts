@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.email_test.value, this.password_test.value)
       .subscribe(
       () => {
-        console.log(this.userForm.value), this.modal = false;
+        this.modal = false;
         this.signForm.reset(); },
       () => this.router.navigate(['host']),
 
@@ -135,8 +135,9 @@ export class LoginComponent implements OnInit {
       () => {
         this.modal = false;
         this.signForm.reset();
+        console.log(123124);
+        this.router.navigate(['host']);
       },
-      () => this.router.navigate(['host']),
       );
   }
 
