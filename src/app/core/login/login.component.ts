@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 
-import { AuthService } from './anth/services/auth.service';
+import { AuthService } from './auth/services/auth.service';
 
 @Component({
   selector: 'app-login',

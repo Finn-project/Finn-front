@@ -10,7 +10,7 @@ import { HostRegisterModule } from './feature/host-register/host-register.module
 
 import { CoreModule } from './core/core.module';
 import { HomeComponent } from './feature/home/home.component';
-import { AuthService, AuthModule } from './core/login/anth';
+import { AuthService, AuthModule } from './core/login/auth';
 
 
 @NgModule({
