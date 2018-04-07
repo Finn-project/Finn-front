@@ -1,6 +1,3 @@
-.main-room-list-container {
-    z-index: 1;
-}
 .main-room-list-item {
     display: flex;
     flex-direction: column;
