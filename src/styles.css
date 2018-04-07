@@ -2,3 +2,7 @@
 .pointer {
     cursor: pointer;
 }
+.on-dropdown-show {
+    height: 100%;
+    overflow: hidden;
+}
