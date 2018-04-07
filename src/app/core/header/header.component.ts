@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   modal: boolean = false;
-  
+  searchInput: string = '';
   navToDropdown: boolean = window.innerWidth < 1228 ? true : false;
   showDropdown: boolean = false;
 
@@ -19,10 +19,9 @@ export class HeaderComponent implements OnInit {
     } else {
       this.navToDropdown = false;
     }
-    console.log(this.navToDropdown);
   }
   
-  constructor(private router: Router) {}
+  constructor(private router: Router, private renderer: Renderer2) {}
 
   ngOnInit() {}
 
@@ -39,6 +38,22 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleDropdown () {
-    this.showDropdown = !this.showDropdown
+    if (this.showDropdown) {
+      document.getElementById("myNav").style.height = "0%";
+      document.body.className = document.body.className.replace(/on-dropdown-show/i, '')
+    } else {
+      document.getElementById("myNav").style.height = "100%";
+      document.body.className += 'on-dropdown-show';
+    }
+    this.showDropdown = !this.showDropdown;
+  }
+
+  clearSearchInput() {
+    console.log('clearsearch')
+    this.searchInput = '';
+  }
+
+  clickSearchInput() {
+    console.log('clickSearchIn[put');
   }
 }

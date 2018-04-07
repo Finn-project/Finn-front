@@ -5,37 +5,60 @@ a {
   text-decoration : none;
   color : black;
 }
-.login-btn{
-  color : red;
-}
 .header {
   width : 100%;
-  background-color: red;
   display: flex;
   align-items: center;
   height: 81px;
+  position: relative;
+  border-bottom: 1px solid #e4e4e4;
 }
 .logo {
   color : #FF5A5F;
   font-size : 34px;
   display: flex;
-  background-color: purple;
+  padding-left: 24px;
+  padding-right: 24px;
+  cursor: pointer;
+  height: 80px;
+  align-items: center;
 }
-.input-text {
-  width : 100%;
-  margin-top : 3px;
-  border : 0;
+.header-search-input {
+  flex-grow: 1;
+  background-color: peru;
+  margin-top: 3px;
+  border: 0;
   outline: none;
-  box-shadow:none !important;
+  box-shadow:none;
+  padding-left: 11px;
+  font-size: 19px;
 }
-.input-main {
-  width : 100%;
+.heaeder-search {
+  width: 458px;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 4px !important;
+  border: 1px solid #DBDBDB !important;
 }
-.input-wrapper {
-  display : flex;
-  width : 350px;
-  margin-left : 10px;
-  box-shadow: 2px 2px #eee;
+.icon-magnifying-glass {
+  width: 24px;
+  height: 24px;
+  margin-left: 12px;
+}
+.icon-clear-input {
+  height: 36px;
+  width: 36px;
+  padding: 12px;
+  cursor: pointer;
+}
+.search-input-dropdown {
+  position: relative;
+  display: flex;
+  width: 100%;
+  background-color: red;
 }
 .input-wrapper svg {
   margin-top : 5px;
@@ -53,16 +76,80 @@ a {
 .nav-bar ul div:hover {
   border-bottom : 2px solid #767676;
 }
-.login-btn{
-  cursor: pointer;
-}
 .hide {
   display: none;
 }
 .dropdown-container {
-  position: fixed;
-  top: 0;
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  width: 100vw;
+  height: 100%;
+}
+/* overlay */
+.overlay {
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+  height: 0;
+  width: 100%;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
   left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0px;
+  background-color: transparent; /* Black fallback color */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+  background-color: #fff;
+  position: relative;
+  height: 100%;
+  top: 81px; /* 25% from the top */
+  width: 100%; /* 100% width */
+  text-align: center; /* Centered text/links */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block; /* Display block instead of inline */
+  transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+      font-size: 40px;
+      top: 15px;
+      right: 35px;
+  }
+}
+.on-dropdown-show {
+  z-index: 30;
 }
