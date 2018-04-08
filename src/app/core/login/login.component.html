@@ -88,6 +88,8 @@
             email이 필요합니다</p>
           <p *ngIf="email.errors?.pattern && email.touched" class="text-danger">
             email를 이메일 형식에 맞게 입력하세요</p>
+            <p *ngIf=" status == 409" class="text-danger">
+              email이 중복됩니다.</p>
         </div>
 
         <!--이름 성 입력-->
@@ -152,7 +154,7 @@
         </div>
 
         <div class="email-wrapper tel">
-          <input type="tel" class="form-control email first" placeholder="전화번호" formControlName="phone_num">
+          <input type="tel" class="form-control email first" placeholder="전화번호(ex: 010-1234-4567 )" formControlName="phone_num">
           <div class="svg-login">
             <svg width="1.3em" height="1.1em" viewBox="0 0 44 65" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
               xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
@@ -166,6 +168,8 @@
         </div>
         <div class="alert-box">
             <p *ngIf="phone_num.errors?.pattern" class="text-danger">전화번호 형식에 맞지 않습니다.</p>
+            <p *ngIf="signForm.invalid" class="text-danger">입력 형식에 맞지 않는 것이 있습니다.</p>
+
         </div>
 
 
@@ -183,4 +187,3 @@
     </div>
   </div>
 </div>
-<pre>{{signForm.value | json}}</pre>

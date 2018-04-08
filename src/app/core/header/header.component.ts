@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, HostListener, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../login/auth';
+import { Token } from '@angular/compiler';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +14,8 @@ export class HeaderComponent implements OnInit {
   navToDropdown: boolean = window.innerWidth < 1228 ? true : false;
   showDropdown: boolean = false;
   isInputFocused: boolean = false;
+  
+  constructor(private router: Router, private renderer: Renderer2, public auth: AuthService) {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -21,9 +25,6 @@ export class HeaderComponent implements OnInit {
       this.navToDropdown = false;
     }
   }
-  
-  constructor(private router: Router, private renderer: Renderer2) {}
-
   ngOnInit() {}
 
   onLogoClick() {
