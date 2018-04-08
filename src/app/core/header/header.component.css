@@ -1,60 +1,221 @@
 li {
-      list-style : none;
-    }
-a  {
-    text-decoration : none;
-    color : black;
+  list-style : none;
 }
-
-.login-btn{
-  color : red;
+a {
+  text-decoration : none;
+  color : black;
 }
 .header {
-    width : 100%;
-    height: 50px;
-    padding : 5px 5px 5px 15px;
-  }
-  .header-wrapper {
-    padding : 10px;
-    width : 100%;
-    display : flex;
-  }
+  width : 100%;
+  display: flex;
+  align-items: center;
+  height: 81px;
+  position: fixed;
+  top: 0;
+  z-index: 5;
+  border-bottom: 1px solid #e4e4e4;
+  background-color: #fff;
+}
 .logo {
-    color : #FF5A5F;
-    font-size : 34px;
-  }
-  .input-text {
-    width : 100%;
-    margin-top : 3px;
-    border : 0;
-    outline: none;
-    box-shadow:none !important;
-  }
-  .input-main {
-    width : 100%;
-  }
-  .input-wrapper {
-    display : flex;
-     width : 350px;
-     margin-left : 10px;
-     box-shadow: 2px 2px #eee;
-  }
-  .input-wrapper svg {
-    margin-top : 5px;
-  }
-  .nav-bar {
-    width : 600px;
-  }
+  color : #FF5A5F;
+  font-size : 34px;
+  display: flex;
+  padding-left: 24px;
+  padding-right: 24px;
+  cursor: pointer;
+  height: 80px;
+  align-items: center;
+}
+.header-search-input {
+  flex-grow: 1;
+  margin-top: 3px;
+  border: 0;
+  outline: none;
+  box-shadow:none;
+  padding-left: 11px;
+  font-size: 19px;
+}
+.header-search {
+  width: 458px;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  border: 1px solid #DBDBDB;
+  position: relative;
+}
+.icon-magnifying-glass {
+  width: 24px;
+  height: 24px;
+  margin-left: 12px;
+}
+.icon-clear-input {
+  height: 36px;
+  width: 36px;
+  padding: 12px;
+  cursor: pointer;
+}
+.search-input-dropdown {
+  position: relative;
+  display: flex;
+  width: 100%;
+  background-color: red;
+}
+.input-wrapper svg {
+  margin-top : 5px;
+}
+.hide {
+  display: none;
+}
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  top: 47px;
+  width: 100%;
+  padding: 32px;
+}
+.recent-search-title {
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+  color: #484848;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.icon-clock {
+  width: 14px;
+  height: 14px;
+}
+.icon-clock-container {
+  padding-top: 4px;
+  padding-right: 12px;
+}
+.recent-search-list {
+  list-style: none;
+  padding: 0;
+}
+.recent-search-list-item {
+  display: flex;
+  list-style: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.recent-search-list-item:hover {
+  background-color: #CCEEEB;
+}
+.recent-search-place {
+  font-weight: normal;
+  margin: 0px;
+  word-wrap: break-word;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+  color: #484848;
+}
+.recent-search-condition {
+  margin: 0px;
+  word-wrap: break-word;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  font-weight: 300;
+  color: #767676;
+}
+.header-nav {
+  margin-left: auto;
+  margin-right: 8px;
+}
+.header-nav-list {
+  list-style-type: none;
+}
+.header-nav-list-item {
+  float: left;
+}
+.header-nav-list-item > a {
+  height: 80px;
+  display: block;
+  line-height: 80px;
+  padding: 0 8px;
+  cursor: pointer;
+  color:#484848;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "나눔 고딕","Nanum Gothic","맑은 고딕","Malgun Gothic","Apple Gothic","돋움",Dotum,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.header-nav-list-item > a:hover {
+  border-bottom: 2px solid #767676;
+}
+.search-modal-btn {
+  width: 458px;
+  background-color: ivory;
+}
+/* overlay */
+.overlay {
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+  height: 0;
+  width: 100%;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0px;
+  background-color: transparent; /* Black fallback color */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
 
-  .nav-bar ul{
-    display : flex;
+/* Position the content inside the overlay */
+.overlay-content {
+  background-color: #fff;
+  position: relative;
+  height: 100%;
+  top: 81px; /* 25% from the top */
+  width: 100%; /* 100% width */
+  text-align: center; /* Centered text/links */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block; /* Display block instead of inline */
+  transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+      font-size: 40px;
+      top: 15px;
+      right: 35px;
   }
-  .nav-bar ul div {
-    padding : 15px;
-  }
-  .nav-bar ul div:hover {
-    border-bottom : 2px solid #767676;
-  }
-  .login-btn{
-    cursor: pointer;
-  }
+}
+.on-dropdown-show {
+  z-index: 30;
+}

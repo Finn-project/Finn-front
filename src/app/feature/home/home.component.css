@@ -1,5 +1,5 @@
 .main-room-list-container {
-    z-index: 1;
+    padding-top: 80px;
 }
 .main-room-list-item {
     display: flex;

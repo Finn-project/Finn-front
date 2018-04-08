@@ -22,27 +22,38 @@ export class AuthService {
     private jwtHelper: JwtHelper,
     private socialAuth: SocialAuthService
   ) {}
-
+// 회원가입 후 자동 로그인 되게 함
+  sign(signForm): Observable<Token> {
+    return this.http.post<Token>(`${this.url}user/`, signForm )
+      .do(res => this.setToken(res.token))
+      .do(res => this.setUser(res.user))
+      .shareReplay();
+  }
+// 로그인 기능
   login(username , password): Observable<Token> {
-    return this.http.post<any>(`${this.url}user/login/`, { username: username, password: password} )
-    .do(res => console.log(res.token, res.user.id))
+    return this.http.post<Token>(`${this.url}user/login/`, { username: username, password: password} )
     .do(res => this.setToken(res.token))
     .do(res => this.setUser(res.user))
 
     .shareReplay();
   }
-  socialSignin(provider: string): Observable<Token> {
-    return this.socialAuth.getSocialCredential(provider)
-      .switchMap(credential => this.http.post<Token>(`${this.url}facebook-login/`, credential))
+// 쇼셜 로그인
+  socialSignin(facebook: string): Observable<Token> {
+    return this.socialAuth.getSocialCredential(facebook)
+      .switchMap(credential => {
+        console.log('credential', credential);
+        return this.http.post<Token>(`${this.url}user/facebook-login/`, credential);
+      })
+      .do(res => console.log(123213))
       .do(res => this.setToken(res.token))
       .do(res => console.log(res.token))
       .do(res => this.setUser(res.user))
       .shareReplay();
   }
-
+// 인증 관련 함수들
   isAuthenticated(): boolean {
     const token = this.getToken();
-    return token ? !this.isTokenExpired(token) : false;
+    return token ? true : false;
   }
   getToken(): string {
     return localStorage.getItem(this.TOKEN_NAME);
@@ -63,6 +74,8 @@ export class AuthService {
   }
   removeToken(): void {
     localStorage.removeItem(this.TOKEN_NAME);
+    localStorage.removeItem(this.user);
+
   }
 // jwt 사용 해서 확인하는곧
   isTokenExpired(token: string) {

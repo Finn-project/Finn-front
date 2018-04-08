@@ -11,8 +11,7 @@ import {
 declare const FB: any;
 
 interface Credential {
-  uid: number;
-  accessToken: string;
+  access_token: string;
 }
 
 @Injectable()
@@ -29,24 +28,31 @@ export class SocialAuthService {
         case 'facebook':
           FB.getLoginStatus(response => {
             if (response.status === 'connected') {
-              observer.next(this.fetchFacebookCredential(response.authResponse));
+              console.log(response.authResponse.accessToken);
+              observer.next(this.fetchFacebookCredential(response.authResponse.accessToken));
+              // console.log(response.authResponse.accessToken);
+              // return response.authResponse.accessToken;
+              observer.complete();
             } else {
               FB.login(response => {
                 if (response.status === 'connected') {
-                  observer.next(this.fetchFacebookCredential(response.authResponse));
+                  console.log(response.authResponse.accessToken);
+                  observer.next(this.fetchFacebookCredential(response.authResponse.accessToken));
+                  // return response.authResponse.accessToken;
+                  observer.complete();
                 }
               });
             }
-            observer.complete();
+            console.log(observer);
           });
           break;
       }});
   }
 
  private fetchFacebookCredential(authResponse): Credential {
+   console.log('fetchFacebookCredential', authResponse);
   return {
-        uid: authResponse.userID,
-         accessToken: authResponse.accessToken
+    access_token: authResponse
     };
   }
   private initProviderConfig(...configs: SocialAuthConfig[]) {
