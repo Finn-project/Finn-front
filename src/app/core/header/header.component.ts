@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit {
   searchInput: string = '';
   navToDropdown: boolean = window.innerWidth < 1228 ? true : false;
   showDropdown: boolean = false;
+  isInputFocused: boolean = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -49,11 +50,14 @@ export class HeaderComponent implements OnInit {
   }
 
   clearSearchInput() {
-    console.log('clearsearch')
     this.searchInput = '';
   }
 
-  clickSearchInput() {
-    console.log('clickSearchIn[put');
+  onFocusSearchInput() {    
+    this.isInputFocused = true;
+  }
+
+  onBlurSearchInput() {
+    this.isInputFocused = false;
   }
 }
