@@ -1,3 +1,6 @@
+.main-room-list-container {
+    padding-top: 80px;
+}
 .main-room-list-item {
     display: flex;
     flex-direction: column;
