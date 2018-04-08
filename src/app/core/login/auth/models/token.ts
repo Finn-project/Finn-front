@@ -2,8 +2,8 @@ export interface Token {
   token: string;
   user: {
     id: number,
-    username: string,
-    email: string,
+    username: any,
+    email: any,
     first_name: string,
     last_name: string,
     phone_num: number,

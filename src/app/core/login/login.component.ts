@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   userForm: FormGroup;
   message: string;
-
+  status: number;
   signForm: FormGroup;
   constructor(
     public http: HttpClient,
@@ -106,26 +106,25 @@ export class LoginComponent implements OnInit {
   get password_test() {
     return this.userForm.get('password_test');
   }
-// 회원가입 done
+// 회원가입
   sign() {
-    console.log(this.signForm.value);
-    this.http.post(`${this.url}user/`, this.signForm.value)
-      .subscribe(() => {
+    this.auth.sign(this.signForm.value)
+      .subscribe( () => {
         this.modal = false;
         this.signForm.reset();
         this.sigin = false;
-      });
+        this.router.navigate(['']);
+      }, res => this.status = res.status );
   }
-  // login ing~~
+// login
   login() {
     console.log(this.email_test.value);
     this.auth.login(this.email_test.value, this.password_test.value)
       .subscribe(
       () => {
-        console.log(this.userForm.value), this.modal = false;
+        this.modal = false;
         this.signForm.reset(); },
-      () => this.router.navigate(['host']),
-
+      () => this.router.navigate(['']),
       );
   }
 // 소셜 로그인
@@ -135,8 +134,9 @@ export class LoginComponent implements OnInit {
       () => {
         this.modal = false;
         this.signForm.reset();
+        console.log(123124);
+        this.router.navigate(['']);
       },
-      () => this.router.navigate(['host']),
       );
   }
 

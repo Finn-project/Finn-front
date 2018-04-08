@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AuthService } from '../login/auth';
+import { Token } from '@angular/compiler';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +9,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   modal: boolean;
-  constructor() { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {
   }
@@ -15,4 +17,5 @@ export class HeaderComponent implements OnInit {
   toggleLoginModal() {
     this.modal = !this.modal;
   }
+
 }

@@ -16,7 +16,7 @@
         <input type="text" class="form-control input-text" placeholder="숙소를 입력하세요">
       </div>
     </div>
-    <div class="nav-bar">
+    <div class="nav-bar" *ngIf= "!this.auth.isAuthenticated()">
       <ul>
         <div>
           <li>
@@ -40,6 +40,7 @@
         </div>
       </ul>
     </div>
+    <div *ngIf= "this.auth.isAuthenticated()" (click) ="this.auth.removeToken()"> 로그인후 nav</div>
   </div>
 </div>
 <app-login [modal]="modal" (toggleLoginModal)="toggleLoginModal()"></app-login>
