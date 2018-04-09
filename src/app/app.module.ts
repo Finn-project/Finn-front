@@ -11,7 +11,6 @@ import { HostRegisterModule } from './feature/host-register/host-register.module
 import { CoreModule } from './core/core.module';
 import { HomeComponent } from './feature/home/home.component';
 import { AuthService, AuthModule } from './core/login/auth';
-import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -26,11 +25,7 @@ import { AgmCoreModule } from '@agm/core';
     HostRegisterModule,
     CoreModule,
     ReactiveFormsModule,
-    AuthModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCxXp7uUGDn2FCzjDg5j5Z-AQlCxcTLOdM',
-      libraries: ["places"]
-    })
+    AuthModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
