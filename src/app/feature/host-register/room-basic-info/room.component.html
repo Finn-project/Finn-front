@@ -1,31 +1,211 @@
-<article class="content-left">
-  <div class="title">
-    <h2 class="room">
-      누구님 안녕하세요!
-      회원님의 숙소 등록을
-      도와드리겠습니다.
-    </h2>
-  </div>
-  <hr>
-  <div class="stage1">
-    <span>1단계</span>
-  </div>
-  <div class="stage1-description">
-    <span>회원님의 숙소 유형은 무엇인가요?</span>
-  </div>
-  <select name="room-type">
-    <option *ngFor="let room of rooms">{{room}}</option>
-  </select>
-  <select name="room-capacity">
-    <option *ngFor="let capacity of capacities">{{capacity}}</option>
-  </select>
 
-  <input type="text" class="list-space-location-input pull-left"
-   placeholder="예) 강남구" name="full_address" value="대한민국 서울특별시"
-  autocomplete="off">
-  <a class="button" href="#">계속</a>
-</article>
+<!--progressbar container-->
+<div class="progress">
+  <div class="progress-bar progress-bar-striped progress-bar-animated"
+  role="progressbar" aria-valuenow="progressbarPercentage" aria-valuemin="0"
+  aria-valuemax="100" style="width: 0%" id="progressbar">{{progressbarPercentage}}%</div>
+</div>
 
-<aside class="content-right">
+<!--content container-->
+<div class="content-container container">
+  <div class="row">
+      <!--article container-->
+    <article class="content-left col-md-6">
 
-</aside>
+      <!--숙소정보 container-->
+      <div *ngIf="currentState === 'room'" class="room-container">
+        <div class="greeting">
+          <h1 class="greeting-title">
+            회원님 안녕하세요! 회원님의 숙소 등록을 도와드리겠습니다.
+          </h1>
+        </div>
+        <div class="room-title">
+          <h3>회원님의 숙소 정보를 입력해주세요!</h3>
+        </div>
+        <!--Room관련 selectBox들 설정-->
+
+        <div class="room-selectbox">
+
+          <!--방 개수 설정-->
+          <div class="room-count-selectbox">
+            <select class="select-box" name="room-count">
+              <option *ngFor="let roomCount of roomCounts">
+                {{roomCount}}
+              </option>
+            </select>
+          </div>
+
+          <!--최대수용인원 설정-->
+          <div class="room-capacity-selectbox">
+            <select class="select-box" name="room-capacity">
+              <option *ngFor="let roomCapacity of roomCapacities">
+                {{roomCapacity}}
+              </option>
+            </select>
+          </div>
+
+          <!--숙소유형 설정(아파트,주택 등등)-->
+          <div class="room-type-selectbox">
+            <select class="select-box" name="room-type-category">
+              <option *ngFor="let roomCategory of roomCategories">
+                {{roomCategory}}
+              </option>
+            </select>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!--침대정보 container-->
+      <div *ngIf="currentState === 'bedroom'" class="bedroom-container">
+        <!--침대(갯수 선택)-->
+        <div class="bedroom">
+          <h3 class="bedroom-title">
+            게스트가 사용할 수 있는 침대는 몇 개인가요?
+          </h3>
+          <!--Bedroom관련 selectBox들 설정-->
+          <div class="bedroom-selectbox">
+            <!--침대 유형 설정-->
+            <div class="bedroom-type">
+              <select name="bedroom-type">
+                <option *ngFor="let bedroomType of bedroomTypes">
+                  {{bedroomType}}
+                </option>
+              </select>
+            </div>
+            <!--침대 갯수 설정-->
+            <div class="bedroom-count-container">
+              <button (click)="decreaseBedroomCount()" class="count-button btn btn-outline-success">-</button>
+              <span class="bedroom-count">{{bedroomCount}}</span>
+              <button (click)="increaseBedroomCount()" class="count-button btn btn-outline-success">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--욕실정보 container-->
+      <div *ngIf="currentState === 'bathroom'" class="bathroom-container">
+        <h3 class="bathroom-title">
+          숙소의 욕실은 총 몇개 인가요?
+        </h3>
+
+        <!--욕실(갯수 선택)-->
+        <div class="bathoom-count-container">
+          <button (click)="decreaseBathroomCount()" class="count-button btn btn-outline-success">-</button>
+          <span class="bathoom-count">{{bathroomCount}}</span>
+          <button (click)="increaseBathroomCount()" class="count-button btn btn-outline-success">+</button>
+        </div>
+
+      </div>
+
+      <!--위치정보 container-->
+      <div *ngIf="currentState === 'location'" class="location-container">
+        <!--위치(설정)-->
+        <h3>숙소의 위치를 설정해주세요!</h3>
+        <div class="location-searchbar">
+          <span>주소입력 </span>
+          <input type="text" placeholder="Enter Location!" (keyup.enter)="findLocation($event.target.value)">
+        </div>
+        <div class="location-field">
+          <span>숙소의 위치가</span>
+            <div>
+              <em class="user-location">{{formattedLocation}}</em>
+            </div>
+          <span>가 맞나요?</span>
+        </div>
+
+        <div class="map-screen">
+          <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+            <agm-marker [latitude]="latitude" [longitude]="longitude">
+              <agm-info-window>{{formattedLocation}}</agm-info-window>
+            </agm-marker>
+          </agm-map>
+        </div>
+      </div>
+
+      <!--편의물품 container-->
+      <div *ngIf="currentState === 'amentities'" class="amentities-container">
+        <!--편의물품(종류 선택)-->
+        <h3>숙소에 어떤 편의물품을 제공하시나요?</h3>
+        <div class="amentities-info">
+          <ul class="amentities-list">
+            <label class="amentities-label" for="{{amentity.name}}"
+            *ngFor="let amentity of amentities">
+              <span class="glyphicon glyphicon-ok"></span>
+              <li class="amentities-content">
+                <input class="form-check-input" type="checkbox"
+                value="{{amentity.content}}" id="{{amentity.name}}">
+                {{amentity.content}}
+              </li>
+            </label>
+          </ul>
+        </div>
+      </div>
+
+      <!--편의시설 container-->
+      <div *ngIf="currentState === 'spaces'" class="spaces-container">
+        <!--편의시설(종류 선택)-->
+        <h3>어떤 편의시설을 제공하시나요?</h3>
+        <div class="space-info">
+          <ul class="space-list">
+            <label class="space-label" for="{{space.name}}" *ngFor="let space of spaces">
+              <li class="space-content">
+                <input class="form-check-input" type="checkbox" value="{{space.content}}" id="{{space.name}}"> {{space.content}}
+              </li>
+            </label>
+          </ul>
+        </div>
+      </div>
+
+      <!--사진정보 container-->
+      <div *ngIf="currentState === 'picture'" class="picture-container">
+        <!--편의시설(종류 선택)-->
+        <h3>나만의 숙소 사진을 등록해주세요!</h3>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="inputGroupFile01">
+          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        </div>
+        <img src="https://www.bensound.com/bensound-img/betterdays.jpg" alt="sample Image">
+      </div>
+
+      <!--숙소설명 container-->
+      <div *ngIf="currentState === 'description'" class="description-container">
+        <!--편의시설(종류 선택)-->
+        <h3>숙소에 대해서 설명해주세요!</h3>
+        <input class="description-textbox" type="text" placeholder="역에서 5분거리입니다">
+      </div>
+
+      <!--숙소이름 container-->
+      <div *ngIf="currentState === 'accommodationName'" class="accommodationName-container">
+        <!--편의시설(종류 선택)-->
+        <h3>나만의 멋진 숙소이름을 만들어주세요!</h3>
+        <input class="accomodation-name" maxlength="10" type="text" placeholder="10글자 이내로 작성해주세요">
+      </div>
+
+      <!--버튼 panel-->
+      <div class="row justify-content-between hosting-button-panel">
+        <div class="hosting-button-back">
+          <a class="register-button btn btn-primary" (click)="backPageState()">
+            뒤로
+          </a>
+        </div>
+        <div class="hosting-button-next">
+          <a class="register-button btn btn-primary" (click)="nextPageState()">
+            다음
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!--aside container-->
+    <aside class="content-right col-md-6">
+      <div class="help-panel">
+        <div class="aside-panel-body d-flex justify-content-center">
+          <p>이곳에 도움말을 적어주세요!</p>
+        </div>
+      </div>
+    </aside>
+
+  </div> <!--row container-->
+</div> <!--content container-->
