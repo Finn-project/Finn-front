@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   navToDropdown: boolean = window.innerWidth < 1228 ? true : false;
   showDropdown: boolean = false;
   isInputFocused: boolean = false;
-  
+
   constructor(private router: Router, private renderer: Renderer2, public auth: AuthService) {}
 
   @HostListener('window:resize', ['$event'])
@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit {
     this.searchInput = '';
   }
 
-  onFocusSearchInput() {    
+  onFocusSearchInput() {
     this.isInputFocused = true;
   }
 

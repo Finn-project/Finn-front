@@ -75,13 +75,11 @@ export class AuthService {
   removeToken(): void {
     localStorage.removeItem(this.TOKEN_NAME);
     localStorage.removeItem(this.user);
-
   }
 // jwt 사용 해서 확인하는곧
   isTokenExpired(token: string) {
     return this.jwtHelper.isTokenExpired(token);
   }
-
   getDecodeToken() {
     return this.jwtHelper.decodeToken(this.getToken());
   }

@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.signForm = new FormGroup({
-      email: new FormControl('', [
+      username: new FormControl('', [
         Validators.required,
         Validators.pattern(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/)
       ]),
@@ -77,8 +77,8 @@ export class LoginComponent implements OnInit {
 
   // 회원가입 form
 
-  get email() {
-    return this.signForm.get('email');
+  get username() {
+    return this.signForm.get('username');
   }
   get first_name() {
     return this.signForm.get('first_name');
