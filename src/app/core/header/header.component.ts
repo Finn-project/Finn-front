@@ -9,7 +9,9 @@ import { Token } from '@angular/compiler';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  modal: boolean = false;
+  modal: boolean;
+  login_sign: boolean;
+  login_signUp: boolean;
   searchInput: string = '';
   navToDropdown: boolean = window.innerWidth < 1228 ? true : false;
   showDropdown: boolean = false;
@@ -34,10 +36,46 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['']);
     }
   }
-
+/* toggle modal  */
   toggleLoginModal() {
-    this.modal = !this.modal;
+   this.modal = !this.modal;
+    if (this.login_signUp = false) {
+      this.login_sign = false;
+    }else {
+      this.login_sign = true;
+    }
   }
+  toggleSinnUpModal() {
+    this.modal = !this.modal;
+    if (this.login_sign = false) {
+      this.login_signUp = false;
+    } else {
+      this.login_signUp = true;
+    }
+  }
+  moveSignUp() {
+    this.login_signUp = false;
+    this.login_sign = true;
+    console.log('moveSignUp');
+  }
+  moveSignIn() {
+    this.login_sign = false;
+    this.login_signUp = true;
+    console.log('moveSignIn');
+  }
+
+  move() {
+    if (this.login_signUp = false){
+      this.login_sign = true;
+    }
+    else{
+      this.login_signUp = true;
+    }
+  }
+  offButton() {
+    this.modal = false;
+  }
+
 
   toggleDropdown () {
     if (this.showDropdown) {
