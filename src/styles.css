@@ -6,3 +6,22 @@
     height: 100%;
     overflow: hidden;
 }
+.pac-container {
+    position: fixed !important;
+    top: 63px !important;
+    width: 458px !important;
+    padding: 32px;
+    left: 83px !important;
+}
+.pac-item {
+    padding: 12px;
+}
+.pac-item:hover {
+    background-color: #CCEEEB;
+}
+.pac-item-query {
+    color: #484848;
+    font-size: 15px;
+    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    word-wrap: break-word
+}

@@ -12,7 +12,7 @@
         <input type="text" class="header-search-input" placeholder="홍콩이나 가라" [(ngModel)]="searchInput" (focus)="onFocusSearchInput()">
         <img *ngIf="searchInput" class="icon-clear-input" (click)="clearSearchInput()" src="../../../assets/img/clear-input.svg" alt="clear input">
       </div> -->
-      <input type="text" class="header-search-input" placeholder="'홍콩'에 가보는건 어떠세요?" [(ngModel)]="searchInput" (focus)="onFocusSearchInput()" (blur)="onBlurSearchInput()">
+      <input #headerSearch type="text" class="header-search-input" placeholder="'홍콩'에 가보는건 어떠세요?" [(ngModel)]="searchInput" (focus)="onFocusSearchInput()" (blur)="onBlurSearchInput()">
       <img *ngIf="searchInput" class="icon-clear-input" (click)="clearSearchInput()" src="../../../assets/img/clear-input.svg" alt="clear input">
       <div *ngIf="isInputFocused" class="dropdown-content">
         <div class="recent-search-title">최근 검색 기록</div>

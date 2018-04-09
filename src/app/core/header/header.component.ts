@@ -1,21 +1,32 @@
-import { Component, OnInit, Output, EventEmitter, HostListener, Renderer2 } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener, Renderer2, ViewChild, ElementRef, NgZone, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../login/auth';
 import { Token } from '@angular/compiler';
+import { MapsAPILoader } from '@agm/core';
+import { } from 'googlemaps';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   modal: boolean = false;
   searchInput: string = '';
   navToDropdown: boolean = window.innerWidth < 1228 ? true : false;
   showDropdown: boolean = false;
   isInputFocused: boolean = false;
   
-  constructor(private router: Router, private renderer: Renderer2, public auth: AuthService) {}
+  @ViewChild("headerSearch")
+  public searchElementRef: ElementRef;
+  
+  constructor(
+    private router: Router,
+    private renderer: Renderer2,
+    public auth: AuthService,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
+  ) {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -25,7 +36,36 @@ export class HeaderComponent implements OnInit {
       this.navToDropdown = false;
     }
   }
-  ngOnInit() {}
+
+  ngOnInit() {
+    this.mapsAPILoader.load().then(() => {
+      console.log('maps loaded');
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      console.log('autocomplete', autocomplete);
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          console.log('place', place);
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+          
+          //set latitude, longitude and zoom
+          // this.latitude = place.geometry.location.lat();
+          // this.longitude = place.geometry.location.lng();
+          // this.zoom = 12;
+        });
+      });
+    });
+  }
+
+  ngAfterViewInit() {
+    console.log('[ngAfterViewInit]', this.searchElementRef);
+  }
 
   onLogoClick() {
     if (this.navToDropdown) {
