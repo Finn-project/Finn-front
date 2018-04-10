@@ -57,11 +57,12 @@
 (moveSignUp)="moveSignUp($event)"
 (moveSignIn)= "moveSignIn($event)"
 (move) = "move($event)"></app-login>
-<div id="myNav" class="overlay">
-    <div class="overlay-content">
-      <a routerLink="/">홈</a>
-      <a routerLink="/host">호스팅하기</a>
-      <a (click)="toggleLoginModal()">회원가입</a>
-      <a (click)="toggleSinnUpModal()">로그인</a>
-    </div>
-</div>
+  <div id="myNav" class="overlay" [class.show]="showDropdown">
+      <div class="overlay-content">
+        <a routerLink="/">홈</a>
+        <a routerLink="/host">호스팅하기</a>
+        <a (click)="toggleLoginModal()">회원가입</a>
+        <a (click)="toggleSinnUpModal()">로그인</a>
+      </div>
+  </div>
+

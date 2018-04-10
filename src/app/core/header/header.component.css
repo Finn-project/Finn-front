@@ -176,6 +176,10 @@ a {
   height: 16px;
   margin-right: 8px;
 }
+.nav-dropdown-container {
+  height: 100%;
+  overflow: hidden;
+}
 /* google autocomplete box */
 
 /* google autocomplete box */
@@ -191,6 +195,10 @@ a {
   background-color: transparent; /* Black fallback color */
   overflow-x: hidden; /* Disable horizontal scroll */
   transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+.overlay.show {
+  height: 100%;
 }
 
 /* Position the content inside the overlay */

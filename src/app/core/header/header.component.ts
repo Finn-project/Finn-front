@@ -10,7 +10,7 @@ import { } from 'googlemaps';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit {
   modal: boolean = false;
   login_sign: boolean;
   login_signUp: boolean;
@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   showDropdown: boolean = false;
   isInputFocused: boolean = false;
   
+  @Output() 
   @ViewChild("headerSearch")
   public searchElementRef: ElementRef;
   
@@ -63,10 +64,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         });
       });
     });
-  }
-
-  ngAfterViewInit() {
-    console.log('[ngAfterViewInit]', this.searchElementRef);
   }
 
   onLogoClick() {
@@ -117,14 +114,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   // technique이 부족한 저의 코드..
-  toggleDropdown () {
-    if (this.showDropdown) {
-      document.getElementById("myNav").style.height = "0%";
-      document.body.className = document.body.className.replace(/on-dropdown-show/i, '')
-    } else {
-      document.getElementById("myNav").style.height = "100%";
-      document.body.className += 'on-dropdown-show';
-    }
+  toggleDropdown() {
+    // if (this.showDropdown) {
+    //   document.body.className = document.body.className.replace(/on-dropdown-show/i, '')
+    // } else {
+    //   document.body.className += 'on-dropdown-show';
+    // }
     this.showDropdown = !this.showDropdown;
   }
 
