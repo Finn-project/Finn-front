@@ -13,10 +13,12 @@ import { SocialAuthService } from './social-auth.service';
 import { environment } from '../../../../../environments/environment';
 @Injectable()
 export class AuthService {
+  router: any;
   url = `${environment.apiUrl}`;
   TOKEN_NAME = environment.tokenName;
   user = environment.user;
 
+  Authorization: string;
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelper,
@@ -60,6 +62,8 @@ export class AuthService {
   }
   setToken(token: string): void {
       localStorage.setItem(this.TOKEN_NAME, token);
+      this.Authorization = token;
+      console.log(token);
     }
   getUser(): string {
     return localStorage.getItem(this.user);
@@ -71,17 +75,17 @@ export class AuthService {
 // 삭제
   signout(): void {
     this.removeToken();
+    this.http.post(`${this.url}user/logout/`, this.Authorization)
+      .subscribe(() => this.router.navigate(['']));
   }
   removeToken(): void {
     localStorage.removeItem(this.TOKEN_NAME);
     localStorage.removeItem(this.user);
-
   }
 // jwt 사용 해서 확인하는곧
   isTokenExpired(token: string) {
     return this.jwtHelper.isTokenExpired(token);
   }
-
   getDecodeToken() {
     return this.jwtHelper.decodeToken(this.getToken());
   }

@@ -7,7 +7,9 @@ export interface Token {
     first_name: string,
     last_name: string,
     phone_num: number,
-    signup_type: string,
-    img_profile: any
+    img_profile: any,
+    is_host: boolean,
+    is_email_user: boolean,
+    is_facebook_user: boolean
   };
 }
