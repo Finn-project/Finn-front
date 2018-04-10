@@ -158,7 +158,23 @@ a {
 }
 .search-modal-btn {
   width: 458px;
-  background-color: ivory;
+  height: 48px;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+  padding: 7px 8px;
+  color: #484848;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #DBDBDB;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.icon-magnifying-glass-small {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
 }
 /* google autocomplete box */
 
