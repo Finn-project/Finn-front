@@ -12,11 +12,13 @@ import { HomeComponent } from './feature/home/home.component';
 import { AuthService, AuthModule } from './core/login/auth';
 
 import { AgmCoreModule } from '@agm/core';
+import { ProductDetailsComponent } from './feature/product-details/product-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     BrowserModule,

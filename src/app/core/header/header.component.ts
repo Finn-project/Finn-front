@@ -10,6 +10,7 @@ import { Token } from '@angular/compiler';
 })
 export class HeaderComponent implements OnInit {
   modal: boolean;
+  user = this.auth.getUser();
   login_sign: boolean;
   login_signUp: boolean;
   searchInput: string = '';
@@ -99,4 +100,6 @@ export class HeaderComponent implements OnInit {
   onBlurSearchInput() {
     this.isInputFocused = false;
   }
+
+
 }

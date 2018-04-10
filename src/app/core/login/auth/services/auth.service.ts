@@ -65,11 +65,13 @@ export class AuthService {
       this.Authorization = token;
       console.log(token);
     }
+/* user 값 받아 올떄 사용하기 */
   getUser(): string {
-    return localStorage.getItem(this.user);
+    const user = JSON.parse(localStorage.getItem(this.user));
+    return user;
   }
   setUser(user) {
-    localStorage.setItem(this.user, user);
+    localStorage.setItem(this.user, JSON.stringify(user));
   }
 
 // 삭제
