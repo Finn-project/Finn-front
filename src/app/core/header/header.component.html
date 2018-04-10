@@ -44,17 +44,23 @@
   <nav *ngIf="!navToDropdown" class="header-nav">
     <ul class="header-nav-list">
       <li class="header-nav-list-item"><a routerLink="/host">호스팅하기</a></li>
-      <li class="header-nav-list-item"><a>회원가입</a></li>
-      <li class="header-nav-list-item"><a (click)="toggleLoginModal()">로그인</a></li>
+      <li class="header-nav-list-item"><a (click)="toggleLoginModal()">회원가입</a></li>
+      <li class="header-nav-list-item"><a (click) = "toggleSinnUpModal()">로그인</a></li>
     </ul>
   </nav>
 </div>
-<app-login [modal]="modal" (toggleLoginModal)="toggleLoginModal()"></app-login>
+<app-login [modal]=" modal "
+[login_signUp]=" login_signUp "
+[login_sign]="login_sign"
+(offButton)="offButton($event)"
+(moveSignUp)="moveSignUp($event)"
+(moveSignIn)= "moveSignIn($event)"
+(move) = "move($event)"></app-login>
 <div id="myNav" class="overlay">
     <div class="overlay-content">
       <a routerLink="/">홈</a>
       <a routerLink="/host">호스팅하기</a>
-      <a>회원가입</a>
-      <a (click)="toggleLoginModal()">로그인</a>
+      <a (click)="toggleLoginModal()">회원가입</a>
+      <a (click)="toggleSinnUpModal()">로그인</a>
     </div>
 </div>

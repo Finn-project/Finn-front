@@ -12,6 +12,8 @@ import { } from 'googlemaps';
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   modal: boolean = false;
+  login_sign: boolean;
+  login_signUp: boolean;
   searchInput: string = '';
   navToDropdown: boolean = window.innerWidth < 1228 ? true : false;
   showDropdown: boolean = false;
@@ -74,11 +76,47 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.router.navigate(['']);
     }
   }
-
+/* toggle modal  */
   toggleLoginModal() {
+   this.modal = !this.modal;
+    if (this.login_signUp = false) {
+      this.login_sign = false;
+    }else {
+      this.login_sign = true;
+    }
+  }
+  toggleSinnUpModal() {
     this.modal = !this.modal;
+    if (this.login_sign = false) {
+      this.login_signUp = false;
+    } else {
+      this.login_signUp = true;
+    }
+  }
+  moveSignUp() {
+    this.login_signUp = false;
+    this.login_sign = true;
+    console.log('moveSignUp');
+  }
+  moveSignIn() {
+    this.login_sign = false;
+    this.login_signUp = true;
+    console.log('moveSignIn');
   }
 
+  move() {
+    if (this.login_signUp = false){
+      this.login_sign = true;
+    }
+    else{
+      this.login_signUp = true;
+    }
+  }
+  offButton() {
+    this.modal = false;
+  }
+
+  // technique이 부족한 저의 코드..
   toggleDropdown () {
     if (this.showDropdown) {
       document.getElementById("myNav").style.height = "0%";
@@ -94,7 +132,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.searchInput = '';
   }
 
-  onFocusSearchInput() {    
+  onFocusSearchInput() {
     this.isInputFocused = true;
   }
 

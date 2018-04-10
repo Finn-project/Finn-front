@@ -13,10 +13,13 @@ import { AuthService } from './auth/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @Input() modal;
-  @Output() toggleLoginModal = new EventEmitter();
-  sigin: boolean;
   url = `${environment.apiUrl}`;
+  @Input()  modal;
+  @Input() login_sign;
+  @Input() login_signUp;
+  @Output() offButton = new EventEmitter();
+  @Output() moveSignIn = new EventEmitter();
+  @Output() moveSignUp = new EventEmitter();
 
   userForm: FormGroup;
   message: string;
@@ -44,7 +47,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.signForm = new FormGroup({
-      email: new FormControl('', [
+      username: new FormControl('', [
         Validators.required,
         Validators.pattern(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/)
       ]),
@@ -67,18 +70,10 @@ export class LoginComponent implements OnInit {
       ]),
     });
   }
-  viewStatus() {
-    this.sigin = !this.sigin;
-    console.log(this.signForm.value.email);
-
-  }
-
-
-
   // 회원가입 form
 
-  get email() {
-    return this.signForm.get('email');
+  get username() {
+    return this.signForm.get('username');
   }
   get first_name() {
     return this.signForm.get('first_name');
@@ -110,9 +105,8 @@ export class LoginComponent implements OnInit {
   sign() {
     this.auth.sign(this.signForm.value)
       .subscribe( () => {
-        this.modal = false;
         this.signForm.reset();
-        this.sigin = false;
+        this.modal = !this.modal;
         this.router.navigate(['']);
       }, res => this.status = res.status );
   }
@@ -122,8 +116,8 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.email_test.value, this.password_test.value)
       .subscribe(
       () => {
-        this.modal = false;
-        this.signForm.reset(); },
+        this.signForm.reset();
+        this.modal = !this.modal; },
       () => this.router.navigate(['']),
       );
   }
@@ -132,8 +126,8 @@ export class LoginComponent implements OnInit {
     this.auth.socialSignin(facebook)
       .subscribe(
       () => {
-        this.modal = false;
         this.signForm.reset();
+        this.modal = !this.modal;
         console.log(123124);
         this.router.navigate(['']);
       },

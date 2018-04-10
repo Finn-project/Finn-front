@@ -38,6 +38,22 @@
   cursor: pointer;
 
 }
+/*svg file */
+.off-button {
+  height: 16px;
+  width: 16px; display: block;
+  fill: rgb(118, 118, 118)
+}
+.email-svg {
+  height: 1em; width: 1em; display: block; fill: currentcolor;
+}
+.lcok {
+  height: 1em; width: 1em; display: block; fill: currentcolor;
+}
+.name {
+  height: 1em; width: 1em; display: block; fill: currentcolor
+}
+
 /*login form*/
 .facebook-svg {
   color: white;
