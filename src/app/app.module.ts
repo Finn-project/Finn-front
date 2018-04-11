@@ -12,8 +12,9 @@ import { HomeComponent } from './feature/home/home.component';
 import { AuthService, AuthModule } from './core/login/auth';
 
 import { AgmCoreModule } from '@agm/core';
-import { ProductDetailsComponent } from './feature/product-details/product-details.component';
+import { SharedModule } from './shared/shared.module';
 
+import { ProductDetailsComponent } from './feature/product-details/product-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { ProductDetailsComponent } from './feature/product-details/product-detai
     FormsModule,
     HostRegisterModule,
     CoreModule,
+    SharedModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCxXp7uUGDn2FCzjDg5j5Z-AQlCxcTLOdM'
     }),

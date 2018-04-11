@@ -34,6 +34,7 @@ export class AuthService {
 // 로그인 기능
   login(username , password): Observable<Token> {
     return this.http.post<Token>(`${this.url}user/login/`, { username: username, password: password} )
+    .do(res => console.log(res.user.images))
     .do(res => this.setToken(res.token))
     .do(res => this.setUser(res.user))
 

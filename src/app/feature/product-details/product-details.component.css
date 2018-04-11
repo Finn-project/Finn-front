@@ -1,6 +1,7 @@
 .main {
   width: 100%;
   height: 100%;
+
 }
 .cover-img{
   height: 100%;
@@ -10,6 +11,10 @@
 }
 .img-wrapper{
   height: 400px;
+}
+.container{
+  max-width: 1050px !important;
+  display: flex;
 }
 
 .section{
@@ -24,19 +29,16 @@
 
 }
 .box {
-  height: 100px;
   margin: auto;
+  margin-top: 25px;
 
 }
 .count {
   display: flex;
+  flex-wrap: wrap;
 }
 .count-box{
-  width: 150px;
-  background-color: red;
-}
-.container{
-  max-width: 1050px !important;
+  width: 100px;
   display: flex;
 }
 
@@ -48,14 +50,34 @@
 .facilities li{
   width: 50%;
 }
+.bed{
+  margin: 40px 0;
+  width:200px;
+  height: 150px;
+  border: 1px solid #DBDBDB;
+}
+.bed-wrapper{
+  width:100%;
+  height: 100%;
+  padding: 20px;
+}
+.bed-wrapper p {
+  margin-top: 20px;
+}
 h1 {
-  font-size : 1.3rem;
+  font-size : 1.7rem;
   font-weight: 700;
 }
+
 ul{
   list-style: none;
   padding:0;
   margin:0;
+}
+
+span{
+  color: #484848;
+  font-weight: 700;
 }
 .reservation-desktop{
   width: 560px;
@@ -95,6 +117,9 @@ ul{
   height: 70%;
   margin: 10px;
 }
+
+
+
 @media (max-width: 472px){
   .cover-img {
    height: 4px;
@@ -121,4 +146,10 @@ ul{
    .reservation-mobile{
      display: flex;
    }
+   .main {
+    font-size: 1.3rem;
+  }
+  h1{
+    font-size: 2.0rem;
+  }
 }

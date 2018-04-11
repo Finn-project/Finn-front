@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit {
   moveSignIn() {
     this.login_sign = false;
     this.login_signUp = true;
-    console.log('moveSignIn');
   }
 
   move() {
