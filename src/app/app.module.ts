@@ -15,6 +15,7 @@ import { AgmCoreModule } from '@agm/core';
 import { SharedModule } from './shared/shared.module';
 
 import { ProductDetailsComponent } from './feature/product-details/product-details.component';
+import { SpinnerService } from './shared/spinner/spinner.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,7 @@ import { ProductDetailsComponent } from './feature/product-details/product-detai
     ReactiveFormsModule,
     AuthModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, SpinnerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
