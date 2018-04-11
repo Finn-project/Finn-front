@@ -4,11 +4,13 @@ import { AuthService } from '../login/auth';
 import { Token } from '@angular/compiler';
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
+import { FullModalService } from '../service/full-modal.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  providers: [FullModalService]
 })
 export class HeaderComponent implements OnInit {
   modal: boolean = false;
@@ -28,7 +30,8 @@ export class HeaderComponent implements OnInit {
     private renderer: Renderer2,
     public auth: AuthService,
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private fullModal: FullModalService
   ) {}
 
   @HostListener('window:resize', ['$event'])
@@ -42,11 +45,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.mapsAPILoader.load().then(() => {
-      console.log('maps loaded');
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"]
       });
-      console.log('autocomplete', autocomplete);
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
@@ -56,7 +57,6 @@ export class HeaderComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
-          
           //set latitude, longitude and zoom
           // this.latitude = place.geometry.location.lat();
           // this.longitude = place.geometry.location.lng();
@@ -82,6 +82,7 @@ export class HeaderComponent implements OnInit {
       this.login_sign = true;
     }
   }
+
   toggleSinnUpModal() {
     this.modal = !this.modal;
     if (this.login_sign = false) {
@@ -90,11 +91,13 @@ export class HeaderComponent implements OnInit {
       this.login_signUp = true;
     }
   }
+
   moveSignUp() {
     this.login_signUp = false;
     this.login_sign = true;
     console.log('moveSignUp');
   }
+
   moveSignIn() {
     this.login_sign = false;
     this.login_signUp = true;
@@ -109,6 +112,7 @@ export class HeaderComponent implements OnInit {
       this.login_signUp = true;
     }
   }
+  
   offButton() {
     this.modal = false;
   }
@@ -120,6 +124,7 @@ export class HeaderComponent implements OnInit {
     // } else {
     //   document.body.className += 'on-dropdown-show';
     // }
+    this.fullModal.toggleIsOpen();
     this.showDropdown = !this.showDropdown;
   }
 
