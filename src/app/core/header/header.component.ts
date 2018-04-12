@@ -26,8 +26,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   
   @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
 
-  // @ViewChild('#headerSearch') searchElement: ElementRef;
-
   constructor(
     private router: Router,
     private renderer: Renderer2,
@@ -35,7 +33,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private fullModal: FullModalService
-  ) {}
+  ) {
+    console.log('access_token',localStorage.getItem('access_token'))
+    console.log('user',localStorage.getItem('user'))
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -46,7 +47,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   ngAfterViewInit() {
     this.searchElementList.forEach(child => {
@@ -82,10 +85,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   toggleLoginModal() {
-   this.modal = !this.modal;
+    if (this.showDropdown) {this.toggleDropdown();}
+    this.modal = !this.modal;
     if (this.login_signUp = false) {
       this.login_sign = false;
-    }else {
+    } else {
       this.login_sign = true;
     }
   }
@@ -96,6 +100,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   toggleSinnUpModal() {
+    if (this.showDropdown) {this.toggleDropdown();}
     this.modal = !this.modal;
     if (this.login_sign = false) {
       this.login_signUp = false;
@@ -153,4 +158,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.isModalInputFocused = false;
   }
 
+  hasRole() {
+    return this.auth.getUser();
+  }
 }

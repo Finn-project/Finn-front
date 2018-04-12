@@ -7,8 +7,22 @@
     <img *ngIf="navToDropdown && showDropdown" src="../../../assets/img/chevron_top.svg" alt="chevron top">
   </div>
   <div class="header-search">
-    <input #headerSearch type="text" class="header-search-input" [class.hide]="navToDropdown" placeholder="'홍콩'에 가보는건 어떠세요?" [(ngModel)]="searchInput" (focus)="onFocusSearchInput()" (blur)="onBlurSearchInput()">
-    <img *ngIf="searchInput" class="icon-clear-input" (click)="clearSearchInput()" src="../../../assets/img/clear_input.svg" alt="clear input">
+    <input
+      #headerSearch
+      type="text"
+      class="header-search-input"
+      [class.hide]="navToDropdown"
+      placeholder="'홍콩'에 가보는건 어떠세요?"
+      [(ngModel)]="searchInput"
+      (focus)="onFocusSearchInput()"
+      (blur)="onBlurSearchInput()">
+    <img
+      *ngIf="searchInput"
+      class="icon-clear-input"
+      (click)="clearSearchInput()"
+      src="../../../assets/img/clear_input.svg"
+      alt="clear input">
+      <!-- 코드 중복 1-->
     <div *ngIf="isInputFocused" class="search-dropdown">
       <div class="recent-search-title">최근 검색 기록</div>
       <ul class="recent-search-list">
@@ -40,8 +54,8 @@
   <nav *ngIf="!navToDropdown" class="header-nav">
     <ul class="header-nav-list">
       <li class="header-nav-list-item"><a routerLink="/host">호스팅하기</a></li>
-      <li class="header-nav-list-item"><a (click)="toggleLoginModal()">회원가입</a></li>
-      <li class="header-nav-list-item"><a (click) = "toggleSinnUpModal()">로그인</a></li>
+      <li *ngIf="!hasRole()" class="header-nav-list-item"><a (click)="toggleLoginModal()">회원가입</a></li>
+      <li *ngIf="!hasRole()" class="header-nav-list-item"><a (click) = "toggleSinnUpModal()">로그인</a></li>
     </ul>
   </nav>
 </div>
@@ -54,8 +68,8 @@
 (move) = "move($event)"></app-login>
 <div id="myNav" class="overlay menu" [class.show]="showDropdown">
     <div class="overlay-content menu">
-      <a routerLink="/">홈</a>
-      <a routerLink="/host">호스팅하기</a>
+      <a routerLink="/" (click)="toggleDropdown()">홈</a>
+      <a routerLink="/host" (click)="toggleDropdown()">호스팅하기</a>
       <a (click)="toggleLoginModal()">회원가입</a>
       <a (click)="toggleSinnUpModal()">로그인</a>
     </div>
@@ -74,6 +88,7 @@
         [(ngModel)]="searchModalInput"
         (focus)="onFocusSearchModalInput()"
         (blur)="onBlurSearchModalInput()">
+        <!-- 코드 중복 1-->
       <div *ngIf="isModalInputFocused" class="search-dropdown">
         <div class="recent-search-title">최근 검색 기록</div>
         <ul class="recent-search-list">
