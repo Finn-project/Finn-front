@@ -14,23 +14,42 @@ export class HomeComponent implements OnInit {
   results: any;
   pk: number;
 
+  hi: any;
+  next: any;
+  previous: any;
+
 
   constructor(private http: HttpClient, public spinner: SpinnerService) {}
 
   ngOnInit() {
+    this.spinner.show();
     const params = new HttpParams()
     .set('page', '1')
-    .set('page_size', '5');
+    .set('page_size', '8');
 
       this.http.get<any>(`${this.url}house/`, { params })
         .subscribe(res => {
+          this.next = res.next;
+          this.previous = res.previous;
           this.results = res.results;
+          this.spinner.hide();
+          console.log(this.results[1].img_cover);
         });
   }
   getPk(event) {
     this.pk = event.target.id;
   }
+  test() {
+    console.log(this.next);
 
+    this.http.get<any>(`${this.next}`)
+      .subscribe(res => {
+        this.spinner.hide();
+
+        this.results = [...this.results, ...res.results];
+
+      });
+    }
 }
   // data = [{
   //   title: 'hi hello',

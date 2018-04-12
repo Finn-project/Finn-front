@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from '../feature/home/home.component';
 import { RoomComponent } from '../feature/host-register/room-basic-info/room.component';
 import { ProductDetailsComponent } from '../feature/product-details/product-details.component';
+import { AuthGuard } from './login/auth';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
   {
     path: 'host',
     component: RoomComponent,
-
+    // canActivate: [AuthGuard]
   },
   {
     path: 'detail/:pk',

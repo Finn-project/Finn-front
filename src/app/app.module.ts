@@ -9,7 +9,7 @@ import { HostRegisterModule } from './feature/host-register/host-register.module
 
 import { CoreModule } from './core/core.module';
 import { HomeComponent } from './feature/home/home.component';
-import { AuthService, AuthModule } from './core/login/auth';
+import { AuthService, AuthModule, AuthGuard } from './core/login/auth';
 import { AgmCoreModule } from '@agm/core';
 import { SharedModule } from './shared/shared.module';
 
@@ -35,7 +35,7 @@ import { SpinnerService } from './shared/spinner/spinner.service';
     ReactiveFormsModule,
     AuthModule
   ],
-  providers: [AuthService, SpinnerService],
+  providers: [AuthService, SpinnerService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

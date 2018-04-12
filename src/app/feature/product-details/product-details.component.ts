@@ -43,10 +43,13 @@ export class ProductDetailsComponent implements OnInit {
           this.img_profile = '../../../assets/img/defaultProfileImg.png';
           this.latitude = +res.latitude;
           this.longitude = +res.longitude;
+          this.spinner.hide();
         } else {
           this.img_profile = (res.host.images[1]);
         }
         this.value = res;
+        console.log(this.value);
+        console.log(this.value.img_cover_400_300);
         this.spinner.hide();
       });
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, HostListener, Renderer2, ViewChild, ElementRef, NgZone, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../login/auth';
+import { AuthService, AuthGuard } from '../login/auth';
 import { Token } from '@angular/compiler';
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   showSearchModal: boolean = false;
   isInputFocused: boolean = false;
   isModalInputFocused: boolean = false;
-  
+
   @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
 
   // @ViewChild('#headerSearch') searchElement: ElementRef;
@@ -34,7 +34,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     public auth: AuthService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private fullModal: FullModalService
+    private fullModal: FullModalService,
+    public guard: AuthGuard
   ) {}
 
   @HostListener('window:resize', ['$event'])
@@ -72,7 +73,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       });
     })
   }
-
   onLogoClick() {
     if (this.navToDropdown) {
       this.toggleDropdown();
@@ -123,7 +123,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.login_signUp = true;
     }
   }
-
   offButton() {
     this.modal = false;
   }

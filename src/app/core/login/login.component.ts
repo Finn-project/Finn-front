@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 import { AuthService } from './auth/services/auth.service';
+import { AuthGuard } from './auth';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.userForm = new FormGroup({
       email_test: new FormControl('', [
         Validators.required,
@@ -103,12 +103,13 @@ export class LoginComponent implements OnInit {
   }
 // 회원가입
   sign() {
+    console.log(this.signForm.value);
     this.auth.sign(this.signForm.value)
       .subscribe( () => {
         this.signForm.reset();
         this.modal = !this.modal;
         this.router.navigate(['']);
-      }, res => this.status = res.status );
+      }, res => {this.status = res.status; console.log('dfdfdf',res)} );
   }
 // login
   login() {
@@ -133,7 +134,6 @@ export class LoginComponent implements OnInit {
       },
       );
   }
-
   match () {
     if (this.signForm.value.password !== this.signForm.value.confirm_password) {
       return true;

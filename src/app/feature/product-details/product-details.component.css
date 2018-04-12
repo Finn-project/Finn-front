@@ -1,12 +1,15 @@
 .main {
   width: 100%;
-  height: 2200px;
+  height: 100%;
 }
 .img-wrapper{
   height: 400px;
 }
+.cover-img {
+  background: no-repeat;height: 100%; background-size: cover; background-position: 50%;
+}
 .container{
-  max-width: 1200px !important;
+  max-width: 1100px !important;
   display: flex;
 }
 
@@ -14,16 +17,15 @@
   width:100%;
   margin :auto;
   margin-top: 20px;
-  height: 920px;
 }
 .row{
   display: flex;
-  flex-direction: column;
+  flex-wrap: nowrap;
+  padding-right: 100px;
 }
 .box {
   margin: auto;
   margin-top: 25px;
-
 }
 .count {
   display: flex;
@@ -74,10 +76,9 @@ span{
   width: 400px;
   height: 350px;
   position: sticky;
-  top: 10px;
+  top:100px;
   border: 1px solid #e4e4e4 !important;
   padding: 10px 10px;
-  margin-left: -200px;
 
 }
 .lowest{
