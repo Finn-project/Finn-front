@@ -1,4 +1,7 @@
 <app-header></app-header>
-<router-outlet></router-outlet>
+<div [class.open-modal]="open">
+  <router-outlet></router-outlet>
+</div>
 <app-footer></app-footer>
 <!-- <app-product-details></app-product-details> -->
+
