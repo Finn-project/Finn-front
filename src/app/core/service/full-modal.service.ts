@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 export class FullModalService {
   private isOpen: boolean = false;
 
-  constructor() { }
+  constructor() { 
+    console.log('fullModal Constructor')
+  }
 
-  get open() {
-    console.log('get open')
+  get getIsOpen() {
     return this.isOpen;
   }
 
-  toggleIsOpen() {
-    console.log('toggleIsOpen');
+  toggleFullModal() {
     this.isOpen = !this.isOpen;
   }
 }

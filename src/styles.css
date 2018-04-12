@@ -6,13 +6,13 @@
     height: 100%;
     overflow: hidden;
 }
-.pac-container {
+/* .pac-container {
     position: fixed !important;
     top: 63px !important;
     width: 458px !important;
     padding: 32px;
     left: 83px !important;
-}
+} */
 .pac-item {
     padding: 12px;
 }

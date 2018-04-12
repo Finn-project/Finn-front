@@ -11,7 +11,6 @@ export class AppComponent {
   constructor(private fullModal: FullModalService) {}
 
   get open() {
-    console.log('open')
-    return this.fullModal.open;
+    return this.fullModal.getIsOpen;
   }
 }

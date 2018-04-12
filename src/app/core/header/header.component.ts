@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, HostListener, Renderer2, ViewChild, ElementRef, NgZone, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener, Renderer2, ViewChild, ElementRef, NgZone, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../login/auth';
 import { Token } from '@angular/compiler';
@@ -9,22 +9,24 @@ import { FullModalService } from '../service/full-modal.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
-  providers: [FullModalService]
+  styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   modal: boolean = false;
   login_sign: boolean;
   login_signUp: boolean;
   searchInput: string = '';
+  searchModalInput: string = '';
   navToDropdown: boolean = window.innerWidth < 1228 ? true : false;
   showDropdown: boolean = false;
+  showSearchModal: boolean = false;
   isInputFocused: boolean = false;
+  isModalInputFocused: boolean = false;
   
-  @Output() 
-  @ViewChild("headerSearch")
-  public searchElementRef: ElementRef;
-  
+  @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
+
+  // @ViewChild('#headerSearch') searchElement: ElementRef;
+
   constructor(
     private router: Router,
     private renderer: Renderer2,
@@ -43,27 +45,31 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ["address"]
-      });
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          //get the place result
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          console.log('place', place);
-          //verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-          //set latitude, longitude and zoom
-          // this.latitude = place.geometry.location.lat();
-          // this.longitude = place.geometry.location.lng();
-          // this.zoom = 12;
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.searchElementList.forEach(child => {
+      this.mapsAPILoader.load().then(() => {
+        let autocomplete = new google.maps.places.Autocomplete(child.nativeElement, {
+          types: ["address"]
+        });
+        autocomplete.addListener("place_changed", () => {
+          this.ngZone.run(() => {
+            //get the place result
+            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+            console.log('place', place);
+            //verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+            //set latitude, longitude and zoom
+            // this.latitude = place.geometry.location.lat();
+            // this.longitude = place.geometry.location.lng();
+            // this.zoom = 12;
+          });
         });
       });
-    });
+    })
   }
 
   onLogoClick() {
@@ -73,7 +79,7 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['']);
     }
   }
-/* toggle modal  */
+
   toggleLoginModal() {
    this.modal = !this.modal;
     if (this.login_signUp = false) {
@@ -81,6 +87,11 @@ export class HeaderComponent implements OnInit {
     }else {
       this.login_sign = true;
     }
+  }
+
+  toggleSearchModal() {
+    this.showSearchModal = !this.showSearchModal;
+    this.fullModal.toggleFullModal();
   }
 
   toggleSinnUpModal() {
@@ -112,19 +123,13 @@ export class HeaderComponent implements OnInit {
       this.login_signUp = true;
     }
   }
-  
+
   offButton() {
     this.modal = false;
   }
 
-  // technique이 부족한 저의 코드..
   toggleDropdown() {
-    // if (this.showDropdown) {
-    //   document.body.className = document.body.className.replace(/on-dropdown-show/i, '')
-    // } else {
-    //   document.body.className += 'on-dropdown-show';
-    // }
-    this.fullModal.toggleIsOpen();
+    this.fullModal.toggleFullModal();
     this.showDropdown = !this.showDropdown;
   }
 
@@ -138,5 +143,13 @@ export class HeaderComponent implements OnInit {
 
   onBlurSearchInput() {
     this.isInputFocused = false;
+  }
+
+  onFocusSearchModalInput() {
+    this.isModalInputFocused = true;
+  }
+
+  onBlurSearchModalInput() {
+    this.isModalInputFocused = false;
   }
 }

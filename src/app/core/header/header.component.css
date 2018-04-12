@@ -27,23 +27,23 @@ a {
   align-items: center;
 }
 .header-search-input {
-  flex-grow: 1;
-  margin-top: 3px;
-  border: 0;
-  outline: none;
-  box-shadow:none;
-  padding-left: 11px;
-  font-size: 19px;
-}
-.header-search {
   width: 458px;
-  display: flex;
-  align-items: center;
   height: 48px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   border: 1px solid #DBDBDB;
+  margin-top: 3px;
+  outline: none;
+  padding-left: 40px;
+  padding-right: 40px;
+  font-size: 19px;
+  background-image: url('assets/img/magnifying_glass.svg');
+  background-repeat: no-repeat;
+  background-position: 8px;
+  background-size: 24px 24px;
+}
+.header-search {
   position: relative;
 }
 .icon-magnifying-glass {
@@ -56,6 +56,9 @@ a {
   width: 36px;
   padding: 12px;
   cursor: pointer;
+  position: absolute;
+  top: 8px;
+  left: 420px;
 }
 .search-input-dropdown {
   position: relative;
@@ -69,14 +72,14 @@ a {
 .hide {
   display: none;
 }
-.dropdown-content {
+.search-dropdown {
   display: block;
   position: absolute;
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
   z-index: 1;
-  top: 47px;
+  top: 51px;
   width: 100%;
   padding: 32px;
 }
@@ -88,6 +91,7 @@ a {
   color: #484848;
   font-weight: 700;
   margin-bottom: 24px;
+  text-align: left;
 }
 .icon-clock {
   width: 14px;
@@ -119,6 +123,7 @@ a {
   line-height: 18px;
   letter-spacing: 0.2px;
   color: #484848;
+  text-align: left;
 }
 .recent-search-condition {
   margin: 0px;
@@ -180,6 +185,46 @@ a {
   height: 100%;
   overflow: hidden;
 }
+.icon-x {
+  width: 55px;
+  height: 55px;
+  padding: 20px;
+  cursor: pointer;
+}
+.search-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.search-modal-title {
+  font-weight: normal !important;
+    word-wrap: break-word !important;
+    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+    font-size: 15px !important;
+    line-height: 18px !important;
+    letter-spacing: 0.2px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    color: #484848;
+}
+.search-modal-delete-dropdown {
+  color: #008489;
+  font: inherit;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.search-modal-input {
+  width: 100%;
+  height: 46px;
+  padding: 11px;
+  border: 1px solid #DBDBDB;
+  /* box-shadow: 0 0 2px 0px rgba(22, 22, 22, 0.2); */
+}
+.search-modal-input-container {
+  margin: 0 20px;
+  position: relative;
+}
 /* google autocomplete box */
 
 /* google autocomplete box */
@@ -189,14 +234,15 @@ a {
   height: 0;
   width: 100%;
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 10; /* Sit on top */
   left: 0;
   top: 0px;
   background-color: transparent; /* Black fallback color */
   overflow-x: hidden; /* Disable horizontal scroll */
+}
+.overlay.menu {
   transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
 }
-
 .overlay.show {
   height: 100%;
 }
@@ -206,9 +252,17 @@ a {
   background-color: #fff;
   position: relative;
   height: 100%;
-  top: 81px; /* 25% from the top */
+  top: 0;
   width: 100%; /* 100% width */
   text-align: center; /* Centered text/links */
+}
+.overlay-content.menu {
+  top: 81px;
+}
+.overlay-content.search {
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
 }
 
 /* The navigation links inside the overlay */
