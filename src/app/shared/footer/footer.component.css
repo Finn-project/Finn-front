@@ -1,0 +1,36 @@
+footer{
+  width: 100%;
+  border-top: 1px solid #eee;
+}
+.a{
+  display: flex;
+  justify-content: center;
+}
+.footer-wrapper{
+  display: flex;
+  border-bottom: 1px solid #eee;
+   flex-wrap: nowrap;
+
+}
+.box{
+  margin: 40px 40px;
+}
+ul{
+  list-style: none;
+  padding: 0;
+}
+.span{
+  color: #484848;
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+ul li{
+  color: #767676;
+  font-size: 11px;
+}
+
+@media (max-width: 600px){
+  footer{
+    display: none;
+  }
+}

@@ -13,6 +13,7 @@ import { FullModalService } from '../service/full-modal.service';
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   modal: boolean = false;
+  user = this.auth.getUser();
   login_sign: boolean;
   login_signUp: boolean;
   searchInput: string = '';
@@ -112,7 +113,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   moveSignIn() {
     this.login_sign = false;
     this.login_signUp = true;
-    console.log('moveSignIn');
   }
 
   move() {
@@ -152,4 +152,5 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   onBlurSearchModalInput() {
     this.isModalInputFocused = false;
   }
+
 }

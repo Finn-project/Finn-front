@@ -1,0 +1,155 @@
+.main {
+  width: 100%;
+  height: 100%;
+
+}
+.cover-img{
+  height: 100%;
+  background : url("https://a0.muscache.com/im/pictures/44911e59-6245-4e05-89bf-2bb76c2c4b60.jpg?aki_policy=xx_large") no-repeat;
+  background-size: cover;
+  background-position: 50%;
+}
+.img-wrapper{
+  height: 400px;
+}
+.container{
+  max-width: 1050px !important;
+  display: flex;
+}
+
+.section{
+  width:100%;
+  margin :auto;
+  margin-top: 20px;
+  height: 1000px;
+}
+.row{
+  display: flex;
+  flex-direction: column;
+
+}
+.box {
+  margin: auto;
+  margin-top: 25px;
+
+}
+.count {
+  display: flex;
+  flex-wrap: wrap;
+}
+.count-box{
+  width: 100px;
+  display: flex;
+}
+
+.facilities{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.facilities li{
+  width: 50%;
+}
+.bed{
+  margin: 40px 0;
+  width:200px;
+  height: 150px;
+  border: 1px solid #DBDBDB;
+}
+.bed-wrapper{
+  width:100%;
+  height: 100%;
+  padding: 20px;
+}
+.bed-wrapper p {
+  margin-top: 20px;
+}
+h1 {
+  font-size : 1.7rem;
+  font-weight: 700;
+}
+
+ul{
+  list-style: none;
+  padding:0;
+  margin:0;
+}
+
+span{
+  color: #484848;
+  font-weight: 700;
+}
+.reservation-desktop{
+  width: 560px;
+  height: 300px;
+  position: sticky;
+  top: 50px;
+  border: 1px solid #e4e4e4 !important;
+  padding: 10px 10px;
+
+}
+.lowest{
+  margin: 0;
+  font-size: 12px;
+}
+.reservation-mobile{
+  width: 100%;
+  height: 80px;
+  background-color: #fff;
+  border : 1px solid #DBDBDB !important;
+  position: fixed;
+  bottom: 0px;
+  display: flex;
+}
+
+.reservation-text{
+  width:70%;
+}
+.button {
+  background: #FF5A5F;
+  display: inline-block ;
+  text-align: center ;
+  text-decoration: none ;
+  border-radius: 4px ;
+  border : 0;
+  color : #fff;
+  width:150px;
+  height: 70%;
+  margin: 10px;
+}
+
+
+
+@media (max-width: 472px){
+  .cover-img {
+   height: 4px;
+  }
+  .img-wrapper{
+  height: 500px;
+}
+}
+@media (min-width: 600px){
+
+   .reservation-mobile{
+     display: none;
+   }
+   .img-wrapper{
+   height: 670px;
+}
+
+}
+
+@media (max-width: 900px){
+  .reservation-desktop{
+     display: none;
+   }
+   .reservation-mobile{
+     display: flex;
+   }
+   .main {
+    font-size: 1.3rem;
+  }
+  h1{
+    font-size: 2.0rem;
+  }
+}
