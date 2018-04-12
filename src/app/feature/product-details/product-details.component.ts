@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { SpinnerService } from '../../shared/spinner/spinner.service';
 
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -13,31 +15,34 @@ import { SpinnerService } from '../../shared/spinner/spinner.service';
 })
 export class ProductDetailsComponent implements OnInit {
   url = `${environment.apiUrl}`;
-  constructor(public auth: AuthService, private http: HttpClient, public spinner: SpinnerService) { }
+  constructor(public auth: AuthService,
+    private http: HttpClient,
+    public spinner: SpinnerService,
+    private route: ActivatedRoute) {  }
   img_profile: any;
   value: any;
   user: any;
   zoom = 15;
-
-
-  latitude: any;
-  longitude: any;
+  pk: number;
+// 위도 경도 값
+  latitude: number;
+  longitude: number;
   ngOnInit() {
-    this.img_check();
     this.user = this.auth.getUser();
-    console.log(this.latitude);
     this.spinner.show();
+// pk 값 url 에서 받아오기
+    this.route.params
+    .subscribe(res => this.pk = +res.pk);
+    this.img_check();
   }
+  // house 정보 받아오기 pk 값에 따라서
   img_check() {
-    this.http.get<any>(`${this.url}house/1`)
+    this.http.get<any>(`${this.url}house/${this.pk}`)
       .subscribe(res => {
-        if (this.user.img_profile == null) {
+        if (res.host.images[1] == null) {
           this.img_profile = '../../../assets/img/defaultProfileImg.png';
-          console.log(res);
-          console.log(res.facilities);
           this.latitude = +res.latitude;
           this.longitude = +res.longitude;
-          console.log(typeof this.latitude);
         } else {
           this.img_profile = (res.host.images[1]);
         }
