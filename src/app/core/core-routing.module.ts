@@ -12,8 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'host',
-    component: RoomComponent,
-
+    component: RoomComponent
   }
 ];
 
