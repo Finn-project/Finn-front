@@ -47,9 +47,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.searchElementList.forEach(child => {

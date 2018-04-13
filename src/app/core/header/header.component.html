@@ -53,10 +53,18 @@
   </div>
   <nav *ngIf="!navToDropdown" class="header-nav">
     <ul class="header-nav-list">
-      <li class="header-nav-list-item"><a routerLink="/host">호스팅하기</a></li>
-      <li *ngIf="!hasRole()" class="header-nav-list-item"><a (click)="toggleLoginModal()">회원가입</a></li>
-      <li *ngIf="!hasRole()" class="header-nav-list-item"><a (click) = "toggleSinnUpModal()">로그인</a></li>
-      <li class="header-nav-list-item"><a routerLink="/profile">프로필</a></li>
+      <li class="header-nav-list-item">
+        <a routerLink="/host"><span>호스팅하기</span></a></li>
+      <li *ngIf="!hasRole()" class="header-nav-list-item">
+        <a (click)="toggleLoginModal()"><span>회원가입</span></a>
+      </li>
+      <li *ngIf="!hasRole()" class="header-nav-list-item">
+        <a (click) = "toggleSinnUpModal()"><span>로그인</span></a></li>
+      <li *ngIf="true" class="header-nav-list-item">
+        <a routerLink="/user">
+          <img class="default-profile-image" src="../../../assets/img/defaultProfileImg.png" alt="profile image">
+        </a>
+      </li>
     </ul>
   </nav>
 </div>

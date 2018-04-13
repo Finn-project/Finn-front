@@ -1,0 +1,34 @@
+.profile-container {
+    padding-top: 104px;
+    width: auto;
+    /* display: flex;
+    justify-content: center; */
+}
+.user-nav-list-container {
+    background-color: red;
+}
+.user-router-container {
+    background-color: yellow;
+}
+@media (min-width: 744px) {
+    .profile-container {
+        width: 696px;
+    }
+}
+@media (min-width: 1128px) {
+    .profile-container {
+        width: 1080px;
+    }
+}
+
+
+
+.user-nav-list {
+    list-style: none;
+}
+.user-nav-list-item {
+
+}
+.user-nav-list-item > a {
+    text-decoration : none;
+}
