@@ -13,4 +13,5 @@ export class AppComponent {
   get open() {
     return this.fullModal.getIsOpen;
   }
+
 }

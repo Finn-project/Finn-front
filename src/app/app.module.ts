@@ -9,13 +9,16 @@ import { HostRegisterModule } from './feature/host-register/host-register.module
 
 import { CoreModule } from './core/core.module';
 import { HomeComponent } from './feature/home/home.component';
-import { AuthService, AuthModule } from './core/login/auth';
+import { AuthService, AuthModule, AuthGuard } from './core/login/auth';
 import { AgmCoreModule } from '@agm/core';
 import { SharedModule } from './shared/shared.module';
 
 import { ProductDetailsComponent } from './feature/product-details/product-details.component';
 import { ProfileComponent } from './feature/profile/profile.component';
 import { ProfileEditComponent } from './feature/profile/profile-edit/profile-edit.component';
+import { SpinnerService } from './shared/spinner/spinner.service';
+import { SearchPageComponent } from './feature/search-page/search-page.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +26,7 @@ import { ProfileEditComponent } from './feature/profile/profile-edit/profile-edi
     ProductDetailsComponent,
     ProfileComponent,
     ProfileEditComponent,
+    SearchPageComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,7 @@ import { ProfileEditComponent } from './feature/profile/profile-edit/profile-edi
     ReactiveFormsModule,
     AuthModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, SpinnerService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
