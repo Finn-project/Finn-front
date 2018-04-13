@@ -5,7 +5,13 @@
     justify-content: center; */
 }
 .user-nav-list-container {
-    background-color: red;
+    padding: 0 12px;
+}
+.user-nav-list-container > a{
+    display: block;
+    background-color: burlywood;
+    text-decoration : none;
+    color: #767676;
 }
 .user-router-container {
     background-color: yellow;
@@ -20,15 +26,30 @@
         width: 1080px;
     }
 }
-
-
-
 .user-nav-list {
     list-style: none;
+    padding: 0px;
 }
 .user-nav-list-item {
 
 }
+
 .user-nav-list-item > a {
     text-decoration : none;
+    color: #767676;
+    /* font-weight: bold; */
+    font-size: 16px;
+    font-family: "나눔 고딕","Nanum Gothic","맑은 고딕","Malgun Gothic","Apple Gothic","돋움",Dotum,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding: 6px 0;
+    width: 100%;
+    display: block;
+}
+@media (max-width: 743px) {
+    .user-nav-list-item > a {
+        font-size: 15px;
+    }
+}
+
+.user-nav-list-item > a:hover {
+    color: #bbb;
 }
