@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, HostListener, Renderer2, ViewChild, ElementRef, NgZone, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener,
+Renderer2, ViewChild, ElementRef, NgZone, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, AuthGuard } from '../login/auth';
 import { Token } from '@angular/compiler';
@@ -52,19 +53,19 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.searchElementList.forEach(child => {
       this.mapsAPILoader.load().then(() => {
-        let autocomplete = new google.maps.places.Autocomplete(child.nativeElement, {
-          types: ["address"]
+        const autocomplete = new google.maps.places.Autocomplete(child.nativeElement, {
+          types: ['address']
         });
-        autocomplete.addListener("place_changed", () => {
+        autocomplete.addListener('place_changed', () => {
           this.ngZone.run(() => {
-            //get the place result
-            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+            // get the place result
+            const place: google.maps.places.PlaceResult = autocomplete.getPlace();
             console.log('place', place);
-            //verify result
+            // verify result
             if (place.geometry === undefined || place.geometry === null) {
               return;
             }
-            //set latitude, longitude and zoom
+            // set latitude, longitude and zoom
             // this.latitude = place.geometry.location.lat();
             // this.longitude = place.geometry.location.lng();
             // this.zoom = 12;
@@ -118,8 +119,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   move() {
     if (this.login_signUp = false){
       this.login_sign = true;
-    }
-    else{
+    } else {
       this.login_signUp = true;
     }
   }

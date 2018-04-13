@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 <!--progressbar container-->
 <div class="progress">
   <div class="progress-bar progress-bar-striped progress-bar-animated"
@@ -6,8 +7,21 @@
   aria-valuemax="100" style="width: 0% " id="progressbar">{{progressbarPercentage}}%</div>
 </div>
 
+=======
+>>>>>>> dev
 <!--content container-->
 <div class="content-container container">
+
+  <!--progressbar container-->
+  <div class="row progress-bar-container">
+    <div class="progress col-md-12">
+      <div class="progress-bar progress-bar-striped progress-bar-animated"
+      role="progressbar" aria-valuenow="progressbarPercentage" aria-valuemin="0"
+      aria-valuemax="100" style="width: 10%" id="progressbar">{{progressbarPercentage}}%</div>
+    </div>
+
+  </div>
+
   <div class="row">
       <!--article container-->
     <article class="content-left col-md-6">
@@ -132,7 +146,6 @@
           <ul class="amentities-list">
             <label class="amentities-label" for="{{amentity.name}}"
             *ngFor="let amentity of amentities">
-              <span class="glyphicon glyphicon-ok"></span>
               <li class="amentities-content">
                 <input class="form-check-input" type="checkbox"
                 value="{{amentity.content}}" id="{{amentity.name}}">
@@ -160,27 +173,108 @@
 
       <!--사진정보 container-->
       <div *ngIf="currentState === 'picture'" class="picture-container">
-        <!--편의시설(종류 선택)-->
+
+          <!-- <h3>나만의 숙소 사진을 등록해주세요!</h3>
+          <form class="upload-photo" [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()">
+            <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
+            <input id="upload-photo" type="file" (change)="onFileChange(fileInput.file)" #fileInput>
+            <button type="submit" [disabled]="formGroup.invalid
+                      || formGroup.prestine"></button>
+          </form>
+          <div class="upload-picture-container col-12" (click)="uploadPhoto()">
+            <a class="upload-btn btn btn-primary">사진 업로드</a>
+            <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
+          </div> -->
+
         <h3>나만의 숙소 사진을 등록해주세요!</h3>
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="inputGroupFile01">
-          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        <form class="upload-photo" [formGroup]="form" novalidate (ngSubmit)="onSubmit(fileInput.files)">
+          <div class="form-group">
+            <div class="btns clearfix">
+              <label class="btn btn-file btn-cancel pull-left">Pick an image
+                <input id="upload-photo" type="file" accept="image/*" (change)="onFileChange(fileInput.files)" #fileInput>
+                <div class="preview">
+                  <p>No files currently selected for upload</p>
+                </div>
+              </label>
+              <button type="submit" class="btn btn-save pull-right" [disabled]="form.invalid || loading">
+                Save
+                <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="upload-picture-container col-12" (click)="uploadPhoto()">
+          <img *ngIf="!hideBtn" [src]="imageSrc" class="avatar">
+          <a *ngIf="hideBtn" class="upload-btn btn btn-primary">사진 업로드</a>
         </div>
-        <img src="https://www.bensound.com/bensound-img/betterdays.jpg" alt="sample Image">
       </div>
 
       <!--숙소설명 container-->
       <div *ngIf="currentState === 'description'" class="description-container">
-        <!--편의시설(종류 선택)-->
         <h3>숙소에 대해서 설명해주세요!</h3>
         <input class="description-textbox" type="text" placeholder="역에서 5분거리입니다">
       </div>
 
       <!--숙소이름 container-->
       <div *ngIf="currentState === 'accommodationName'" class="accommodationName-container">
-        <!--편의시설(종류 선택)-->
         <h3>나만의 멋진 숙소이름을 만들어주세요!</h3>
         <input class="accomodation-name" maxlength="10" type="text" placeholder="10글자 이내로 작성해주세요">
+      </div>
+
+      <!--최대 예약가능한 날짜 container-->
+      <div *ngIf="currentState === 'maximumReservationDate'" class="maximumReservationDate-container">
+        <h3>얼마나 먼 날짜까지 예약할 수 있나요? </h3>
+        <div class="avaiability-date">
+          <select class="select-box" name="avaiability-date">
+            <option *ngFor="let availableDate of availableDates">
+              {{availableDate}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!--최소 예약가능한 날짜 container-->
+      <div *ngIf="currentState === 'minimumReservationDate'" class="minimumReservationDate-container">
+        <h3>게스트가 얼마동안 숙박할 수 있나요? </h3>
+        <!--몇박 몇일 선택-->
+        <div class="reservationSetting-container">
+
+          <div class="min-night night-box-container">
+            <input class="night-input-box" id="min-night-input-box" type="number" [value]="minNightCount"
+            (focusout)="changeMinNightCount($event.target.value)" maxlength="4"
+            onKeyPress="if(this.value.length==4) return false;">
+            <label for="min-night-input-box">
+              <span class="minNight-count">박(최소)</span>
+            </label>
+            <button (click)="decreaseMinNight()" class="count-button btn btn-outline-success">-</button>
+            <button (click)="increaseMinNight()" class="count-button btn btn-outline-success">+</button>
+          </div>
+          <div class="max-night night-box-container">
+            <input class="night-input-box" id="max-night-input-box" type="number" value="{{maxNightCount}}"
+            (focusout)="changeMaxNightCount($event.target.value)" maxlength="4"
+            onKeyPress="if(this.value.length==4) return false;">
+            <label for="max-night-input-box" (click)="onMaxNightInputbox()">
+              <span class="maxNight-count">박(최대)</span>
+            </label>
+            <button (click)="decreaseMaxNight()" class="count-button btn btn-outline-success">-</button>
+            <button (click)="increaseMaxNight()" class="count-button btn btn-outline-success">+</button>
+          </div>
+          <div class="min-max-tooltip">
+            <span class="min-max-tooltip-text" *ngIf="minNightCount > maxNightCount">
+              최소 숙박일수는 최대 숙박일수를 넘을 수 없습니다.
+            </span>
+            <span class="min-max-tooltip-text" *ngIf="maxNightCount > maximumNightCount">
+              숙박일수는 10박을 초과할 수 없습니다.
+            </span>
+          </div>
+        </div> <!--setting-->
+      </div> <!--container-->
+
+      <!--숙박가격 container-->
+      <div *ngIf="currentState === 'price'" class="price-container">
+        <!--편의시설(종류 선택)-->
+        <h3>1박 요금을 설정해주세요! </h3>
+        <input class="price-name" maxlength="10" type="text" placeholder="45000원">
       </div>
 
       <!--버튼 panel-->
