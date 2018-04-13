@@ -56,6 +56,7 @@
       <li class="header-nav-list-item"><a routerLink="/host">호스팅하기</a></li>
       <li *ngIf="!hasRole()" class="header-nav-list-item"><a (click)="toggleLoginModal()">회원가입</a></li>
       <li *ngIf="!hasRole()" class="header-nav-list-item"><a (click) = "toggleSinnUpModal()">로그인</a></li>
+      <li class="header-nav-list-item"><a routerLink="/profile">프로필</a></li>
     </ul>
   </nav>
 </div>

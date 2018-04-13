@@ -14,11 +14,13 @@ import { AgmCoreModule } from '@agm/core';
 import { SharedModule } from './shared/shared.module';
 
 import { ProductDetailsComponent } from './feature/product-details/product-details.component';
+import { ProfileComponent } from './feature/profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ProductDetailsComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

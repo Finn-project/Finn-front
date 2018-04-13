@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from '../feature/home/home.component';
 import { RoomComponent } from '../feature/host-register/room-basic-info/room.component';
+import { ProfileComponent } from '../feature/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'host',
     component: RoomComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
 ];
 
