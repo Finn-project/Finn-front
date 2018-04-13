@@ -1,4 +1,4 @@
-<div class="main" *ngIf="value">
+<div class="main" *ngIf="value" >
   <div class="img-wrapper">
      <!-- 이미지 url  -->
      <!-- style=" background : url('https://a0.muscache.com/im/pictures/44911e59-6245-4e05-89bf-2bb76c2c4b60.jpg?aki_policy=xx_large')
@@ -48,15 +48,24 @@
           </p>
           <hr> </div>
         <div class="col-md-8 box">
-          <span>편의시설</span>
-          <ul class="facilities">
-            <li *ngFor="let result of value.facilities">{{result}}</li>
-
-          </ul>
-          <hr>
           <span>편의물품</span>
           <ul class="facilities">
-
+            <li *ngIf= "value.facilities[0]">TV</li>
+            <li *ngIf="value.facilities[1]">에어컨</li>
+            <li *ngIf="value.facilities[2]">전자렌지</li>
+            <li *ngIf="value.facilities[3]">커피포트</li>
+            <li *ngIf="value.facilities[4]">컴퓨터</li>
+            <li *ngIf="value.facilities[5]">공기청정기</li>
+          </ul>
+          <hr>
+          <span>편의시설</span>
+          <ul class="facilities">
+            <li *ngIf="value.amenities[0]">수영장</li>
+            <li *ngIf="value.amenities[1]">엘리베이터</li>
+            <li *ngIf="value.amenities[2]">세탁소</li>
+            <li *ngIf="value.amenities[3]">노래방</li>
+            <li *ngIf="value.amenities[4]">오락실</li>
+            <li *ngIf="value.amenities[5]">온천</li>
           </ul>
           <div class="bed">
             <div class="bed-wrapper">

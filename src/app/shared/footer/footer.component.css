@@ -13,7 +13,7 @@ footer{
 
 }
 .footer-box{
-  margin: 40px 40px;
+  margin: 40px 60px;
 }
 ul{
   list-style: none;
@@ -22,11 +22,11 @@ ul{
 .footer-span{
   color: #484848;
   margin-bottom: 15px;
-  font-size: 13px;
+  font-size: 16px;
 }
 ul li{
   color: #767676;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 @media (max-width: 600px){

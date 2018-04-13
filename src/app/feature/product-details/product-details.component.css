@@ -40,9 +40,11 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 .facilities li{
   width: 50%;
+  margin-top: 10px;
 }
 .bed{
   margin: 40px 0;
@@ -144,6 +146,9 @@ span{
   }
   h1{
     font-size: 2.0rem;
+  }
+  .map-wrapper{
+    display: none;
   }
 }
 

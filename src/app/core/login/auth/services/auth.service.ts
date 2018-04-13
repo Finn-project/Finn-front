@@ -27,6 +27,7 @@ export class AuthService {
 // 회원가입 후 자동 로그인 되게 함
   sign(signForm): Observable<Token> {
     return this.http.post<Token>(`${this.url}user/`, signForm )
+      .do(res => console.log(res , res.user))
       .do(res => this.setToken(res.token))
       .do(res => this.setUser(res.user))
       .shareReplay();

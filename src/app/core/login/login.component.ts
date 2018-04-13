@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
         this.signForm.reset();
         this.modal = !this.modal;
         this.router.navigate(['']);
-      }, res => {this.status = res.status; console.log('dfdfdf',res)} );
+      }, res => {this.status = res.status; } );
   }
 // login
   login() {

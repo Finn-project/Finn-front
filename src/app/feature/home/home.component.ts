@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SpinnerService } from '../../shared/spinner/spinner.service';
 import { environment } from '../../../environments/environment';
@@ -50,6 +50,17 @@ export class HomeComponent implements OnInit {
 
       });
     }
+
+/*scroll window and get data */
+  @HostListener('window:scroll', ['$event'])
+  onScroll($event) {
+    const d = document.documentElement;
+    const offset = d.scrollTop + window.innerHeight;
+    const height = d.offsetHeight;
+    if (offset === height) {
+      this.test();
+    }
+  }
 }
   // data = [{
   //   title: 'hi hello',

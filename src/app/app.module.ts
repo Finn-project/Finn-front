@@ -15,11 +15,15 @@ import { SharedModule } from './shared/shared.module';
 
 import { ProductDetailsComponent } from './feature/product-details/product-details.component';
 import { SpinnerService } from './shared/spinner/spinner.service';
+import { SearchPageComponent } from './feature/search-page/search-page.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ProductDetailsComponent,
+    SearchPageComponent,
+
   ],
   imports: [
     BrowserModule,

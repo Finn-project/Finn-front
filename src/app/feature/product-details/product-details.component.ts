@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthService } from '../../core/login/auth';
 import { environment } from '../../../environments/environment';
@@ -27,6 +27,9 @@ export class ProductDetailsComponent implements OnInit {
 // 위도 경도 값
   latitude: number;
   longitude: number;
+  arr = [
+    'TV', '에어컨', '전자렌지', '커피포트', '컴퓨터' , '공기청정기'
+];
   ngOnInit() {
     this.user = this.auth.getUser();
     this.spinner.show();
@@ -48,9 +51,10 @@ export class ProductDetailsComponent implements OnInit {
           this.img_profile = (res.host.images[1]);
         }
         this.value = res;
-        console.log(this.value);
+        console.log(this.value.facilities[1]);
         console.log(this.value.img_cover_400_300);
         this.spinner.hide();
       });
   }
+
 }

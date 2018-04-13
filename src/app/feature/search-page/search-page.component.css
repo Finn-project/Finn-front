@@ -1,0 +1,100 @@
+.main-room-list-container {
+    padding-top: 100px;
+}
+.main-room-list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 8px 12px 8px;
+    cursor: pointer;
+}
+.main-room-list-item > div {
+    width: 100%;
+}
+.room-list-item-title {
+    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    word-wrap: break-word;
+    font-size: 19px;
+    line-height: 22px;
+    /* width: 100%; */
+    font-weight: 700;
+}
+/* .room-list-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover
+} */
+.room-list-image-container {
+    height: 200px;
+    /* height: 100%; */
+    padding: 8px 0;
+    /* width: 300px; */
+}
+.room-list{
+  width :100%;
+}
+.room-list-item-price {
+    /* width: 100%; */
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    color: #484848;
+    font-weight: 300;
+}
+.room-list-item-type {
+    /* width: 100%; */
+    word-wrap: break-word;
+    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    color: rgb(76, 86, 41);
+    font-weight: 700;
+    padding-top: 8px;
+}
+.embed-responsive-3by2::before {
+    padding-top: 66.6667%;
+}
+
+.map-wrapper{
+  position: sticky;
+  top:100px;
+  right: 0;
+  width: 40%;
+  height: 900px;
+  margin-left: 20px;
+  background-color:red;
+}
+@media(min-width: 1240px) {
+    .finn-col-gl-3 {
+        -ms-flex: 0 0 20%;
+        flex: 0 0 33%;
+        max-width: 33%;
+    }
+    .room-list > .main-room-list-item:nth-child(n+7) {
+        display: block;
+    }
+}
+@media (min-width: 1128px) {
+    .main-room-list-container {
+        position: relative;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+@media (max-width: 1200px) {
+    .map-wrapper{
+      display: none;
+    }
+}
+
+.test{
+  display: flex;
+  justify-content: space-between;
+}
+
+agm-map {
+ width: 100%;
+ height: 100%;
+}
