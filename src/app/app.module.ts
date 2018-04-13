@@ -14,6 +14,8 @@ import { AgmCoreModule } from '@agm/core';
 import { SharedModule } from './shared/shared.module';
 
 import { ProductDetailsComponent } from './feature/product-details/product-details.component';
+import { ProfileComponent } from './feature/profile/profile.component';
+import { ProfileEditComponent } from './feature/profile/profile-edit/profile-edit.component';
 import { SpinnerService } from './shared/spinner/spinner.service';
 import { SearchPageComponent } from './feature/search-page/search-page.component';
 
@@ -22,8 +24,9 @@ import { SearchPageComponent } from './feature/search-page/search-page.component
     AppComponent,
     HomeComponent,
     ProductDetailsComponent,
-    SearchPageComponent,
-
+    ProfileComponent,
+    ProfileEditComponent,
+    SearchPageComponent
   ],
   imports: [
     BrowserModule,
