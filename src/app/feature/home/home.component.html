@@ -1,18 +1,29 @@
 <div class="container-fluid main-room-list-container">
+  <span class="intro">에어비앤비 둘러보기</span>
+  <div class="intro-rooms-wrapper">
+    <div class="intro-rooms">
+      <div class="wrapper">
+        <div class="intro-rooms-img"></div>
+        <div class="intro-text">숙소</div>
+      </div>
+  </div>
+  </div>
   <div class="row room-list">
-      <div *ngFor="let item of data" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
+      <div  *ngFor="let result of results; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
         <div class="embed-responsive embed-responsive-3by2">
-            <img src="{{item.image}}" class="embed-responsive-item" alt="room image">
+            <a [routerLink]= "['/detail', pk]" ><img src="{{result.img_cover_400_300}}" class="embed-responsive-item" alt="room image" (click)="getPk($event)" [id] ="result.pk"></a>
         </div>
-        <div class="room-list-item-type">
-            {{item.roomType}}
+        <div class="room-list-item-type" >
+            {{result.house_type}}
           </div>
         <div class="room-list-item-title">
-            {{item.title}}
+            {{result.name}}
         </div>
         <div class="room-list-item-price">
-          ₩{{item.price}}
+          ₩{{result.price_per_night}}
         </div>
       </div>
   </div>
 </div>
+
+

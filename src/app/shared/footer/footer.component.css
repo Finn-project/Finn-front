@@ -2,31 +2,31 @@ footer{
   width: 100%;
   border-top: 1px solid #eee;
 }
-.a{
+.footer-main{
   display: flex;
   justify-content: center;
 }
 .footer-wrapper{
   display: flex;
   border-bottom: 1px solid #eee;
-   flex-wrap: nowrap;
+  flex-wrap: nowrap;
 
 }
-.box{
-  margin: 40px 40px;
+.footer-box{
+  margin: 40px 60px;
 }
 ul{
   list-style: none;
   padding: 0;
 }
-.span{
+.footer-span{
   color: #484848;
   margin-bottom: 15px;
-  font-size: 13px;
+  font-size: 16px;
 }
 ul li{
   color: #767676;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 @media (max-width: 600px){
