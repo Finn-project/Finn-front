@@ -27,8 +27,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
 
-  // @ViewChild('#headerSearch') searchElement: ElementRef;
-
   constructor(
     private router: Router,
     private renderer: Renderer2,
@@ -83,10 +81,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   toggleLoginModal() {
-   this.modal = !this.modal;
+    if (this.showDropdown) {this.toggleDropdown();}
+    this.modal = !this.modal;
     if (this.login_signUp = false) {
       this.login_sign = false;
-    }else {
+    } else {
       this.login_sign = true;
     }
   }
@@ -97,6 +96,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   toggleSinnUpModal() {
+    if (this.showDropdown) {this.toggleDropdown();}
     this.modal = !this.modal;
     if (this.login_sign = false) {
       this.login_signUp = false;
@@ -152,4 +152,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.isModalInputFocused = false;
   }
 
+  hasRole() {
+    return this.auth.getUser();
+  }
 }
