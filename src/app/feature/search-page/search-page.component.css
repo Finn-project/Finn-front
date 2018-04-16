@@ -64,7 +64,6 @@
   width: 40%;
   height: 800px;
   margin-left: 20px;
-  background-color:red;
 }
 
 .search-footer{
@@ -142,4 +141,9 @@ agm-map {
 }
 ::ng-deep footer {
   display: none;
+}
+.marker {
+  font-weight: 800;
+  color: red;
+  background-color: red;
 }

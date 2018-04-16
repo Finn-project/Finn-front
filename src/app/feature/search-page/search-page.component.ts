@@ -10,7 +10,7 @@ export class SearchPageComponent implements OnInit {
 
   latitude = 12.123123;
   longitude = 12.23213;
-  zoom = 15;
+  zoom = 12;
   data = [{
     title: 'hi hello',
     roomType: '개인실',
