@@ -7,6 +7,7 @@ import { ProfileComponent } from '../feature/profile/profile.component';
 import { ProfileEditComponent } from '../feature/profile/profile-edit/profile-edit.component';
 import { ProductDetailsComponent } from '../feature/product-details/product-details.component';
 import { AuthGuard } from './login/auth';
+import { ProfileImageComponent } from '../feature/profile/profile-image/profile-image.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
     component: ProfileComponent,
     children: [
       { path: '', redirectTo: '/user/edit',  pathMatch: 'full' },
-      { path: 'edit', component: ProfileEditComponent }
+      { path: 'edit', component: ProfileEditComponent },
+      { path: 'image', component: ProfileImageComponent }
     ]
   },
   {

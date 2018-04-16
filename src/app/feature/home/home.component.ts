@@ -26,30 +26,29 @@ export class HomeComponent implements OnInit {
     const params = new HttpParams()
     .set('page', '1')
     .set('page_size', '8');
-
-      this.http.get<any>(`${this.url}house/`, { params })
-        .subscribe(res => {
-          this.next = res.next;
-          this.previous = res.previous;
-          this.results = res.results;
-          this.spinner.hide();
-          console.log(this.results[1].img_cover);
-        });
+    
+    this.http.get<any>(`${this.url}house/`, { params })
+      .subscribe(res => {
+        this.next = res.next;
+        this.previous = res.previous;
+        this.results = res.results;
+        this.spinner.hide();
+        console.log(this.results[1].img_cover);
+      });
   }
+
   getPk(event) {
     this.pk = event.target.id;
   }
-  test() {
-    console.log(this.next);
 
+  test() {
+    console.log('test next', this.next);
     this.http.get<any>(`${this.next}`)
       .subscribe(res => {
         this.spinner.hide();
-
         this.results = [...this.results, ...res.results];
-
-      });
-    }
+    });
+  }
 
 /*scroll window and get data */
   @HostListener('window:scroll', ['$event'])

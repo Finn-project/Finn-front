@@ -18,6 +18,7 @@ import { ProfileComponent } from './feature/profile/profile.component';
 import { ProfileEditComponent } from './feature/profile/profile-edit/profile-edit.component';
 import { SpinnerService } from './shared/spinner/spinner.service';
 import { SearchPageComponent } from './feature/search-page/search-page.component';
+import { ProfileImageComponent } from './feature/profile/profile-image/profile-image.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SearchPageComponent } from './feature/search-page/search-page.component
     ProductDetailsComponent,
     ProfileComponent,
     ProfileEditComponent,
-    SearchPageComponent
+    SearchPageComponent,
+    ProfileImageComponent
   ],
   imports: [
     BrowserModule,

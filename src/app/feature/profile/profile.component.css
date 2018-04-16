@@ -9,12 +9,22 @@
 }
 .user-nav-list-container > a{
     display: block;
-    background-color: burlywood;
     text-decoration : none;
-    color: #767676;
+    margin-top: 24px;
+    white-space: normal;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #c4c4c4;
+    font-weight: bold;
+    line-height: 1.43;
+    padding: 7px 21px;
+    font-size: 14px;
+    text-align: center;
+    color: #484848;
+    cursor: pointer;
 }
 .user-router-container {
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 @media (min-width: 744px) {
     .profile-container {
@@ -33,7 +43,6 @@
 .user-nav-list-item {
 
 }
-
 .user-nav-list-item > a {
     text-decoration : none;
     color: #767676;
@@ -49,7 +58,6 @@
         font-size: 15px;
     }
 }
-
 .user-nav-list-item > a:hover {
     color: #bbb;
 }
