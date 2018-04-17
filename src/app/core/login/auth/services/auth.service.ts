@@ -54,6 +54,22 @@ export class AuthService {
       .do(res => this.setUser(res.user))
       .shareReplay();
   }
+
+// 유저 정보 수정
+  patchUser(patchData): Observable<any> {
+    const endpoint = `${this.url}user/`;
+    console.log('endpoint', endpoint);
+    const headerConfig = {
+      Authorization: this.getToken()
+    };
+    console.log('headerConfig', headerConfig);
+    console.log('user', this.getUser());
+    patchData = Object.assign({}, {email: this.getUser().username}, patchData);
+    console.log('patchData',patchData);
+
+    return this.http
+      .patch(endpoint, patchData, { headers: headerConfig })
+  }
 // 인증 관련 함수들
   isAuthenticated(): boolean {
     const token = this.getToken();
@@ -68,7 +84,7 @@ export class AuthService {
       console.log(token);
     }
 /* user 값 받아 올떄 사용하기 */
-  getUser(): string {
+  getUser(): User {
     const user = JSON.parse(localStorage.getItem(this.user));
     return user;
   }
