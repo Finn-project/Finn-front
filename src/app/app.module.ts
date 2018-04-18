@@ -13,20 +13,19 @@ import { AuthService, AuthModule, AuthGuard } from './core/login/auth';
 import { AgmCoreModule } from '@agm/core';
 import { SharedModule } from './shared/shared.module';
 
-import { ProductDetailsComponent } from './feature/product-details/product-details.component';
 import { ProfileComponent } from './feature/profile/profile.component';
 import { ProfileEditComponent } from './feature/profile/profile-edit/profile-edit.component';
 import { SpinnerService } from './shared/spinner/spinner.service';
 import { SearchPageComponent } from './feature/search-page/search-page.component';
+import { ProductDetailModule } from './feature/product-details/product-detail.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ProductDetailsComponent,
     ProfileComponent,
     ProfileEditComponent,
-    SearchPageComponent
+    SearchPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +34,7 @@ import { SearchPageComponent } from './feature/search-page/search-page.component
     HostRegisterModule,
     CoreModule,
     SharedModule,
+    ProductDetailModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCxXp7uUGDn2FCzjDg5j5Z-AQlCxcTLOdM',
       libraries: ["places"]

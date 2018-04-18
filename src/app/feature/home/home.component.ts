@@ -32,12 +32,16 @@ export class HomeComponent implements OnInit {
           this.next = res.next;
           this.previous = res.previous;
           this.results = res.results;
+          console.log(this.results);
           this.spinner.hide();
-          console.log(this.results[1].img_cover);
+          if (this.results.img_cover == null){
+            this.results.img_cover = './../../../assets/img/default-image.png';
+          }
         });
   }
   getPk(event) {
     this.pk = event.target.id;
+    console.log('aaa', event.target.id);
   }
   test() {
     console.log(this.next);

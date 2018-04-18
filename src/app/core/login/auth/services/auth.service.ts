@@ -17,6 +17,7 @@ export class AuthService {
   url = `${environment.apiUrl}`;
   TOKEN_NAME = environment.tokenName;
   user = environment.user;
+  pk : number;
 
   Authorization: string;
   constructor(
@@ -53,6 +54,16 @@ export class AuthService {
       .do(res => console.log(res.token))
       .do(res => this.setUser(res.user))
       .shareReplay();
+  }
+
+  img_check(pk : number): Observable<any> {
+    return this.http.get(`${this.url}house/${pk}` )
+    .do(res => this.pk = res.pk)
+    .shareReplay();
+  }
+
+  getpk() {
+    return this.pk;
   }
 // 인증 관련 함수들
   isAuthenticated(): boolean {

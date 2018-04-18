@@ -15,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductDetailsComponent implements OnInit {
   url = `${environment.apiUrl}`;
+  modal: boolean;
   constructor(public auth: AuthService,
     private http: HttpClient,
     public spinner: SpinnerService,
@@ -24,12 +25,11 @@ export class ProductDetailsComponent implements OnInit {
   user: any;
   zoom = 15;
   pk: number;
+  disableDay: any;
 // 위도 경도 값
   latitude: number;
   longitude: number;
-  arr = [
-    'TV', '에어컨', '전자렌지', '커피포트', '컴퓨터' , '공기청정기'
-];
+
   ngOnInit() {
     this.user = this.auth.getUser();
     this.spinner.show();
@@ -39,22 +39,41 @@ export class ProductDetailsComponent implements OnInit {
     this.img_check();
   }
   // house 정보 받아오기 pk 값에 따라서
+  // img_check() {
+  //   this.http.get<any>(`${this.url}house/${this.pk}`)
+  //     .subscribe(res => {
+  //       if (res.host.images == null) {
+  //         this.img_profile = '../../../assets/img/defaultProfileImg.png';
+  //         this.latitude = +res.latitude;
+  //         this.longitude = +res.longitude;
+  //         this.spinner.hide();
+  //       } else {
+  //         this.img_profile = (res.host.images);
+  //       }
+  //       this.value = res;
+  //       this.spinner.hide();
+  //     });
+  // }
+
   img_check() {
-    this.http.get<any>(`${this.url}house/${this.pk}`)
+    console.log(this.pk);
+    this.auth.img_check(this.pk)
       .subscribe(res => {
-        if (res.host.images[1] == null) {
+        if (res.host.images == null) {
           this.img_profile = '../../../assets/img/defaultProfileImg.png';
           this.latitude = +res.latitude;
           this.longitude = +res.longitude;
           this.spinner.hide();
         } else {
-          this.img_profile = (res.host.images[1]);
+          this.img_profile = (res.host.images);
         }
         this.value = res;
-        console.log(this.value.facilities[1]);
-        console.log(this.value.img_cover_400_300);
         this.spinner.hide();
       });
+  }
+
+  reservationModal() {
+    this.modal = !this.modal;
   }
 
 }

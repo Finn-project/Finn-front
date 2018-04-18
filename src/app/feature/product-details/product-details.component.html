@@ -3,7 +3,7 @@
      <!-- 이미지 url  -->
      <!-- style=" background : url('https://a0.muscache.com/im/pictures/44911e59-6245-4e05-89bf-2bb76c2c4b60.jpg?aki_policy=xx_large')
     no-repeat; height: 100%; background-size: cover; background-position: 50%;" -->
-    <div class="cover-img" [ngStyle]="{'background-image': 'url(' + value.img_cover_400_300 + ')'}">
+    <div class="cover-img" [ngStyle]="{'background-image': 'url(' + value.img_cover + ')'}">
     </div>
   </div>
   <div class=" container section">
@@ -116,10 +116,14 @@
 
         </div>
       </div>
+
       <div class="reservation-desktop">
-        <p class="lowest">최저</p>
-        <span class="price">\{{value.price_per_night}}</span>
-        <span class="lowest">/박</span>
+         <app-reservation></app-reservation>
+      </div>
+      <div *ngIf="modal" class="reservation-modal">
+        <app-reservation [modal]= "modal"
+         [pk]="pk" [disableDay] = "disableDay"
+        (reservationModal)= "reservationModal($event)"></app-reservation>
       </div>
     </div>
   </div>
@@ -129,7 +133,7 @@
       <span>\{{value.price_per_night}}</span>
     </div>
     <p>
-      <div class="reservation-button">
+      <div style= "cursor: pointer;"class="reservation-button" (click)= "reservationModal()">
         <button class="button">
           예약요청
         </button>
