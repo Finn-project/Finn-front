@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   showSearchModal: boolean = false;
   isInputFocused: boolean = false;
   isModalInputFocused: boolean = false;
+  profilePath: string = '';
 
   @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
 
@@ -72,6 +73,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       });
     })
   }
+
   onLogoClick() {
     if (this.navToDropdown) {
       this.toggleDropdown();
@@ -108,7 +110,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   moveSignUp() {
     this.login_signUp = false;
     this.login_sign = true;
-    console.log('moveSignUp');
   }
 
   moveSignIn() {
@@ -154,5 +155,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   hasRole() {
     return this.auth.getUser();
+  }
+
+  getProfileImage() {
+    const defaultImgDir = '../../../assets/img/defaultProfileImg.png';
+    const images = this.auth.getUser() ? this.auth.getUser().images : null;
+    return images ? images.img_profile_28 : defaultImgDir;
   }
 }

@@ -62,7 +62,7 @@
         <a (click) = "toggleSinnUpModal()"><span>로그인</span></a></li>
       <li *ngIf="true" class="header-nav-list-item">
         <a routerLink="/user">
-          <img class="default-profile-image" src="../../../assets/img/defaultProfileImg.png" alt="profile image">
+          <img class="default-profile-image" [src]="profilePath" alt="profile image" (error)="profilePath = '/path/to/fallback.jpg'">
         </a>
       </li>
     </ul>

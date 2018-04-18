@@ -56,19 +56,15 @@ export class AuthService {
   }
 
 // 유저 정보 수정
-  patchUser(patchData): Observable<any> {
-    const endpoint = `${this.url}user/`;
-    console.log('endpoint', endpoint);
+  patchUser(formData): Observable<any> {
+    const endpoint = `${this.url}user/${this.getUser().pk}/`;
     const headerConfig = {
-      Authorization: this.getToken()
+      Authorization: `token ${this.getToken()}`
     };
-    console.log('headerConfig', headerConfig);
-    console.log('user', this.getUser());
-    patchData = Object.assign({}, {email: this.getUser().username}, patchData);
-    console.log('patchData',patchData);
-
+    formData.append('email', this.getUser().username);
     return this.http
-      .patch(endpoint, patchData, { headers: headerConfig })
+      .patch(endpoint, formData, { headers: headerConfig })
+      .do(res => {this.setUser(res)});
   }
 // 인증 관련 함수들
   isAuthenticated(): boolean {
@@ -89,9 +85,9 @@ export class AuthService {
     return user;
   }
   setUser(user) {
+    console.log('setUser', user);
     localStorage.setItem(this.user, JSON.stringify(user));
   }
-
 // 삭제
   signout(): void {
     this.removeToken();

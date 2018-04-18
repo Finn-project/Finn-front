@@ -23,14 +23,9 @@ export class ProfileImageComponent implements OnInit {
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
-    console.log('fileToUpload', this.fileToUpload);
-    const formData: FormData = new FormData();
+    let formData: FormData = new FormData();
     formData.append('img_profile', this.fileToUpload);
-    console.log('formData', formData);
-    const patchData = {
-      img_profile: formData
-    };
-    this.auth.patchUser(patchData).subscribe((result) => {
+    this.auth.patchUser(formData).subscribe((result) => {
       console.log('result', result)
     }, (error) => {
       console.log('patch user error', error);
