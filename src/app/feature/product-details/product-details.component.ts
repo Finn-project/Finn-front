@@ -26,17 +26,18 @@ export class ProductDetailsComponent implements OnInit {
   zoom = 15;
   pk: number;
   disableDay: any;
+  value_pk: any;
 // 위도 경도 값
   latitude: number;
   longitude: number;
-
   ngOnInit() {
     this.user = this.auth.getUser();
     this.spinner.show();
 // pk 값 url 에서 받아오기
     this.route.params
-    .subscribe(res => this.pk = +res.pk);
+    .subscribe(res => {this.pk = +res.pk});
     this.img_check();
+
   }
   // house 정보 받아오기 pk 값에 따라서
   // img_check() {

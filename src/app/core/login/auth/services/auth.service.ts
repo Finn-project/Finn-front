@@ -17,12 +17,13 @@ export class AuthService {
   url = `${environment.apiUrl}`;
   TOKEN_NAME = environment.tokenName;
   user = environment.user;
-  pk : number;
-  disableDay : any;
+  pk: number;
+  disableDay: any;
   price: number;
-  minimum_check_in_duation : number;
+  minimum_check_in_duation: number;
   maximum_check_in_range: number;
   Authorization: string;
+
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelper,
@@ -59,9 +60,8 @@ export class AuthService {
       .shareReplay();
   }
 
-  img_check(pk : number): Observable<object> {
+  img_check(pk: number): Observable<object> {
     return this.http.get(`${this.url}house/${pk}` )
-      .do(res => console.log(res))
       .do(res =>  this.price = res.price_per_night)
       .do(res =>  this.pk = res.pk )
       .do(res => this.disableDay = res.disable_days)
@@ -70,9 +70,6 @@ export class AuthService {
     .shareReplay();
   }
 
-  getpk() {
-    return this.pk;
-  }
   disable() {
     return this.disableDay;
   }

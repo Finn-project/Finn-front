@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit {
     .set('page', '1')
     .set('page_size', '8');
 
-      this.http.get<any>(`${this.url}house/`, { params })
+    this.http.get<any>(`${this.url}house/?fields=pk,host,img_cover_thumbnail,house_type
+    ,name,price_per_night`, { params })
         .subscribe(res => {
           this.next = res.next;
           this.previous = res.previous;

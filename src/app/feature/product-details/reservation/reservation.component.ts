@@ -29,20 +29,19 @@ export class ReservationComponent implements OnInit {
   result = 0;
   data : any;
   days_value : number;
-    
-
 
   value = this.auth.disable();
   price = this.auth.getprice();
+
   @Input() modal;
   @Output() reservationModal = new EventEmitter();
 
+   constructor(public auth: AuthService) { this.date(); }
 
-   constructor(public auth: AuthService) {
-    this.date();
-    
-  }
+
   ngOnInit() { console.log(this.auth.disable()); }
+
+
   date() {
     let array = [];
     const data = ['2018-05-01', '2018-05-02', '2018-05-04'];
