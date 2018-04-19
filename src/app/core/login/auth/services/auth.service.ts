@@ -18,7 +18,10 @@ export class AuthService {
   TOKEN_NAME = environment.tokenName;
   user = environment.user;
   pk : number;
-
+  disableDay : any;
+  price: number;
+  minimum_check_in_duation : number;
+  maximum_check_in_range: number;
   Authorization: string;
   constructor(
     private http: HttpClient,
@@ -56,15 +59,34 @@ export class AuthService {
       .shareReplay();
   }
 
-  img_check(pk : number): Observable<any> {
+  img_check(pk : number): Observable<object> {
     return this.http.get(`${this.url}house/${pk}` )
-    .do(res => this.pk = res.pk)
+      .do(res => console.log(res))
+      .do(res =>  this.price = res.price_per_night)
+      .do(res =>  this.pk = res.pk )
+      .do(res => this.disableDay = res.disable_days)
+      .do(res => this.minimum_check_in_duation = res.minimum_check_in_duration)
+      .do(res => this.maximum_check_in_range = res.maximum_check_in_range)
     .shareReplay();
   }
 
   getpk() {
     return this.pk;
   }
+  disable() {
+    return this.disableDay;
+  }
+  getprice() {
+    return this.price;
+  }
+  getMinimum_check_in_duation() {
+    console.log(this.minimum_check_in_duation);
+    return this.minimum_check_in_duation;
+  }
+  getMaximum_check_in_range() {
+    return this.maximum_check_in_range;
+  }
+
 // 인증 관련 함수들
   isAuthenticated(): boolean {
     const token = this.getToken();

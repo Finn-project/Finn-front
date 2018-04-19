@@ -122,21 +122,21 @@
       </div>
       <div *ngIf="modal" class="reservation-modal">
         <app-reservation [modal]= "modal"
-         [pk]="pk" [disableDay] = "disableDay"
         (reservationModal)= "reservationModal($event)"></app-reservation>
       </div>
     </div>
   </div>
   <div class="reservation-mobile">
-    <p>최저</p>
-    <div class="reservation-text">
-      <span>\{{value.price_per_night}}</span>
-    </div>
-    <p>
-      <div style= "cursor: pointer;"class="reservation-button" (click)= "reservationModal()">
-        <button class="button">
-          예약요청
-        </button>
+      <div class="reservation-text-wrapper">
+        <p>최저</p>
+        <div class="reservation-text">
+          <span>\{{value.price_per_night}}</span>
+        </div>
       </div>
+        <div style="cursor: pointer;" class="reservation-button" (click)="reservationModal()">
+          <button class="button">
+            예약요청
+          </button>
+        </div>
   </div>
 </div>

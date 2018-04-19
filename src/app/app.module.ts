@@ -18,6 +18,7 @@ import { ProfileEditComponent } from './feature/profile/profile-edit/profile-edi
 import { SpinnerService } from './shared/spinner/spinner.service';
 import { SearchPageComponent } from './feature/search-page/search-page.component';
 import { ProductDetailModule } from './feature/product-details/product-detail.module';
+import { PaymentComponent } from './feature/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ProductDetailModule } from './feature/product-details/product-detail.mo
     ProfileComponent,
     ProfileEditComponent,
     SearchPageComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,

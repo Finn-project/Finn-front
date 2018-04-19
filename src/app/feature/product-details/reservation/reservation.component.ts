@@ -16,62 +16,73 @@ import { AuthService } from '../../../core/login/auth';
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css']
 })
-export class ReservationComponent implements OnInit{
+export class ReservationComponent implements OnInit {
   propsDRP: any;
   selectedDateRange: any;
   selectedDateRangeAdv: any;
   dateRangePickerProps: any;
+
   disabledDays: any;
   showdropdown: boolean;
   acount: number = 0;
   bcount: number = 0;
   result = 0;
+  data : any;
+  days_value : number;
+    
 
 
+  value = this.auth.disable();
+  price = this.auth.getprice();
   @Input() modal;
-  @Input() pk;
-  @Input() disableDay;
   @Output() reservationModal = new EventEmitter();
 
 
    constructor(public auth: AuthService) {
     this.date();
-
+    
   }
-  ngOnInit() {
-    console.log('ttt', this.auth.getpk());
-  }
+  ngOnInit() { console.log(this.auth.disable()); }
   date() {
-    const startTime = moment();
-    const endTime = moment('2018-05-19').format();
+    let array = [];
+    const data = ['2018-05-01', '2018-05-02', '2018-05-04'];
 
-    const duration = moment.duration(moment(endTime).diff(startTime));
-    const days = duration.asDays();
-    const test = Math.round(days) + 1;
+    for (let i = 0; i < data.length; i++) {
+      const startTime = moment();
+      const endTime = moment(data[i]).format('YYYY MM DD');
 
+      const duration = moment.duration(moment(endTime).diff(startTime));
+      const days = duration.asDays();
+      const test = Math.round(days) + 1;
 
-    const datesList = [
-      moment().add(test, 'days'),
+      array = array.concat(test);
+
+    }
+    let datesList = [
+      moment().add(array[0], 'days'),
     ];
+
+    for (let i = 0; i < array.length; i++) {
+      datesList = datesList.concat(moment().add(array[i], 'days'));
+    }
+
     // 일별 블럭
     const isDayBlocked = day1 => datesList.some(day2 => isSameDay(day1, day2));
 
-    // 현재 날 부터 3 개월 막기 and 현재일 뒷 날짜 막기
-
     const isOutsideRange = day =>
-      isInclusivelyAfterDay(day, moment().add(3, 'months')) || !isInclusivelyAfterDay(day, moment().subtract(0, 'months'));
+      isInclusivelyAfterDay(day, moment().add(this.auth.getMaximum_check_in_range(), 'months'))
+      || !isInclusivelyAfterDay(day, moment().subtract(0, 'months'));
     this.propsDRP = {
       startDatePlaceholderText: '체크인',
       endDatePlaceholderText: '체크아웃',
-      startDate : true,
+      startDate: true,
       endDate: true,
       showClearDates: true,
       numberOfMonths: 2,
       daySize: 30,
-      minimumNights: 3,
-      maximumNights: 10,
+      minimumNights: this.auth.getMinimum_check_in_duation(),
       isOutsideRange: isOutsideRange,
-      enableOutsideDays: true,
+      enableOutsideDays: false,
       isDayBlocked: isDayBlocked,
     };
     this.dateRangePickerProps = Object.assign({}, this.propsDRP);
@@ -80,8 +91,17 @@ export class ReservationComponent implements OnInit{
     const check_in_date = moment(this.selectedDateRange.start).format('YYYY-MM-DD');
     const check_out_date = moment(this.selectedDateRange.end).format('YYYY-MM-DD');
     console.log(check_in_date, check_out_date);
+
+    const duration = moment.duration(moment(this.selectedDateRange.end).diff(this.selectedDateRange.start));
+    const days = duration.asDays();
+    this.days_value = Math.round(days) + 1;
+
+    this.data = { check_in_date: check_in_date , check_out_date: check_out_date,
+    house_num : this.auth.getpk(), guest_num : this.totalcount() };
+    console.log(this.data);
   }
 
+// drop down menu function
   dropdown() {
     this.showdropdown = !this.showdropdown;
   }
@@ -106,6 +126,26 @@ export class ReservationComponent implements OnInit{
       this.result = this.acount + this.bcount;
       return this.result;
     }
-
   }
 }
+
+
+
+  // const startTime = moment();
+    // const endTime = moment('2018-05-20').format();
+
+    // const duration = moment.duration(moment(endTime).diff(startTime));
+    // const days = duration.asDays();
+    // const test = Math.round(days) + 1;
+
+
+    // const datesList = [
+    //   moment().add(test, 'days'),
+    // ];
+    // // 일별 블럭
+    // const isDayBlocked = day1 => datesList.some(day2 => isSameDay(day1, day2));
+
+    // 현재 날 부터 3 개월 막기 and 현재일 뒷 날짜 막기
+
+    // const isOutsideRange = day =>
+    //   isInclusivelyAfterDay(day, moment().add(3, 'months')) || !isInclusivelyAfterDay(day, moment().subtract(0, 'months'));

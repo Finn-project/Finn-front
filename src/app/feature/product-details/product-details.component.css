@@ -106,13 +106,23 @@ span{
   height: 60px;
   background-color: #fff;
   border : 1px solid #DBDBDB !important;
+  padding: 0 40px;
   position: fixed;
   bottom: 0px;
   display: flex;
 }
 
-.reservation-text{
-  width:70%;
+.reservation-text-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 20px 0;
+}
+.reservation-text-wrapper p{
+  font-size: 13px;
+
+}
+.reservation-text-wrapper div {
+  font-size: 17px;
 }
 .button {
   background: #FF5A5F;
@@ -126,8 +136,6 @@ span{
   height: 70%;
   margin: 10px;
 }
-
-
 
 @media (max-width: 472px){
   .cover-img {

@@ -3,14 +3,16 @@
     <img class="off-button " src="../../../assets/img/login-image/off-button.svg" alt="off button">
   </button>
   <p class="lowest">최저</p>
-  <span class="price">가격</span>
-  <span class="lowest">/박</span>
+  <span class="price">{{price}}</span>
+  <span class="price">/박</span>
   <div class= "wrapper">
     <div class= "input-wrapper">
       <p>날짜</p>
       <div class="row">
         <div class="col-sm-6">
-          <angular-date-range-picker [(ngModel)]="selectedDateRange" [props]="dateRangePickerProps" regular></angular-date-range-picker>
+          <angular-date-range-picker [(ngModel)]="selectedDateRange"
+          [props]="dateRangePickerProps"
+          regular></angular-date-range-picker>
         </div>
       </div>
     </div>
@@ -20,7 +22,8 @@
         <div class= "checkperson-wrapper">
           <div class= "checkperson">
             <div class= "input-value-wrapper">
-             <span style= "margin-right: 5px; font-weight: 200; color: #484848;">게스트</span>{{ totalcount()}}
+             <span *ngIf= "totalcount() !== 0" style= "margin-right: 5px; font-weight: 200; color: #484848;">게스트 {{ totalcount()}} </span>
+            <span  *ngIf= "totalcount() == 0"style="margin-right: 5px; font-weight: 200; color: #484848;">인원을 선택해 주세요</span>
             </div>
             <div class= "img-wrapper"(click)="dropdown()">
               <button >
@@ -51,14 +54,21 @@
           </div>
         </div>
       </div>
-      <div class= "button-wrapper input-wrapper" (click) = "giveDate()" *ngIf= "auth.isAuthenticated()">
-        <button class= "reservation-button" >예약 요청</button>
-      </div>
+      <a routerLink="payment">
+        <div class="button-wrapper input-wrapper" (click)="giveDate()" *ngIf="auth.isAuthenticated()">
+          <button class="reservation-button">
+            예약 요청
+          </button>
+          <p class="ptag">예약 확정 전에는 요금이 청구되지 않습니다</p>
+        </div>
+      </a>
+
       <div class="button-wrapper input-wrapper"*ngIf="!auth.isAuthenticated()">
         <button class="reservation-button">로그인 후 이용 가능 합니다.</button>
+        <p class="ptag">예약 확정 전에는 요금이 청구되지 않습니다</p>
       </div>
-      <p class="ptag">예약 확정 전에는 요금이 청구되지 않습니다</p>
     </div>
   </div>
 </div>
 
+<!-- [routerLink]= "['/payment', data]" -->

@@ -12,6 +12,9 @@ p{
 .wrapper {
   margin-top:25px;
 }
+.price {
+  font-size: 16px;
+}
 .input-wrapper{
   margin:20px 0;
   height: 100%;
@@ -124,3 +127,7 @@ a {
   margin: 0 10px;
 }
 
+.ptag {
+  margin: 0 auto;
+  font-size: 12px;
+}

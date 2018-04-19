@@ -1,0 +1,137 @@
+::ng-deep footer {
+  display: none;
+}
+::ng-deep header{
+  display: none;
+}
+
+.logo {
+  color : #FF5A5F;
+  font-size : 34px;
+  display: flex;
+  padding-left: 24px;
+  padding-right: 24px;
+  cursor: pointer;
+  height: 80px;
+  align-items: center;
+}
+.header{
+  display: flex;
+}
+
+.header-txt span {
+  line-height: 80px;
+  font-weight: 500px;
+  margin-left: 50px;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+.row {
+  height: 100%;
+}
+
+.h1-wrapper {
+  margin-bottom: 50px;
+}
+.info {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.info-detail {
+  font-size: 20px;
+}
+/* 예약 텍스트 */
+
+.reservation-text{
+  width: 80%;
+  height: 400px;
+  border: 1px solid #e4e4e4;
+  padding: 20px;
+  margin-bottom: 10px;
+
+}
+.footer{
+  height: 70px;
+  width: 100%;
+}
+.img-wrapper{
+  width: 100px;
+  height: 80px;
+  background-color: red;
+}
+.reservation-wrapper {
+  display: flex;
+}
+.room-info {
+  width: 100%;
+}
+.room-info span {
+  font-size: 14px;
+}
+.Room-name {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.room-text{
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #DBDBDB;
+}
+.romm-picture {
+  width: 100px;
+  height: 80px;
+}
+.option {
+  margin : 10px 0;
+}
+.option span {
+  font-size: 18px;
+}
+.man{
+  width: 14px;
+}
+
+.price-text{
+  display: flex;
+  justify-content: space-between;
+
+  padding: 20px 0;
+}
+
+.final-price {
+  font-weight: 700;
+}
+
+.payment {
+  width : 100px;
+  height: 50px;
+  background-color:#008489;
+  line-height: 50px;
+  color: white;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.payment span {
+  margin-left: 15px;
+  cursor: pointer;
+}
+.ttt {
+  margin-top: 100px;
+}
+.footer {
+  border-top: 2px solid #DBDBDB;
+  padding: 20px;
+  display: flex;
+}
+.footer-logo{
+  width : 25px;
+  line-height: 50px;
+}
