@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild,
-  ElementRef, NgZone, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+  ElementRef, NgZone, ViewChildren, AfterViewInit, QueryList, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewChecked } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
@@ -17,14 +17,14 @@ interface LocationData {
   district: string;
   dong: string;
   address1: string;
-  address2: string;
   premise: string;
   political:string;
   locality: string;
   administrative_area_level_1: string;
   postal_code: string;
-  sublocality_level_2: string;
   sublocality_level_1: string;
+  sublocality_level_2: string;
+  sublocality_level_3: string;
 }
 
 interface RoomData {
@@ -46,10 +46,11 @@ interface RoomData {
   district: string;
   dong: string;
   address1: string;
-  address2: string;
   latitude: number;
   longitude: number;
-  disable_days: string;
+  disable_days: string[];
+  img_cover: File;
+  house_images: File[];
 }
 
 interface Offering {
@@ -63,7 +64,8 @@ interface Offering {
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.css']
 })
-export class RoomComponent implements OnInit, AfterViewInit {
+export class RoomComponent implements OnInit, AfterViewInit, DoCheck, AfterContentInit,
+AfterContentChecked, AfterViewChecked {
 
 //#region variable(변수)
 
@@ -146,14 +148,14 @@ export class RoomComponent implements OnInit, AfterViewInit {
     district: '',
     dong: '',
     address1: '',
-    address2: '',
     premise: '',
     political: '',
     locality: '',
     administrative_area_level_1: '',
     postal_code: '',
+    sublocality_level_3: '',
     sublocality_level_2: '',
-    sublocality_level_1: '',
+    sublocality_level_1: ''
   };
 
   // 위도
@@ -186,9 +188,9 @@ export class RoomComponent implements OnInit, AfterViewInit {
   // Local 임시저장 데이터
   roomLocalData: RoomData =
     {
-      house_type: '',
-      name: '',
-      description: '',
+      house_type: 'AP',
+      name: 's',
+      description: 's',
       room: 1,
       bed: 1,
       bathroom: 0,
@@ -204,10 +206,11 @@ export class RoomComponent implements OnInit, AfterViewInit {
       district: '',
       dong: '',
       address1: '',
-      address2: '',
       latitude: 0,
       longitude: 0,
-      disable_days: ''
+      disable_days: ['2017-04-15'],
+      img_cover: null,
+      house_images: []
     }
   ;
 
@@ -221,11 +224,11 @@ export class RoomComponent implements OnInit, AfterViewInit {
   reservationForm: FormGroup;
 
   // 사진 업로드
-  apiUrl = 'http://localhost:5500';
+  apiUrl = 'https://himanmen.com/';
   form: FormGroup;
   loading = false;
   hideBtn = true;
-  imageSrc = '/assets/images/john-resig.jpeg';
+  imageSrc = '';
 
   result; // file upload 수행 이후 서버로부터 수신한 데이터
 
@@ -238,9 +241,17 @@ export class RoomComponent implements OnInit, AfterViewInit {
     administrative_area_level_1: 'short_name',
     country: 'long_name',
     postal_code: 'short_name',
-    sublocality_level_2: 'long_name',
     sublocality_level_1: 'long_name',
+    sublocality_level_2: 'long_name',
+    sublocality_level_3: 'long_name'
   };
+
+  // 전송할 폼데이터
+  formData: FormData;
+
+  imageList = [
+    { id: this.getImageListNextId(), caption: '', image: null, available: false }
+  ]
 
 //#region 함수모음(function)
 
@@ -254,6 +265,25 @@ constructor(
     this.form = this.fb.group({
       avatar: ['', Validators.required]
     });
+  }
+
+  ngOnChanges () {
+    console.log('1: ngOnChange실행');
+  }
+  ngDoCheck () {
+    // 변화를 감지 할시 실행됨 실행순서 1번
+    // console.log('2: ngDoCheck실행');
+  }
+  ngAfterContentInit () {
+    // console.log('3: ngAfterConetetnInit실행');
+  }
+  ngAfterContentChecked () {
+    // 변화를 감지 할시 실행됨 실행순서 2번
+    // console.log('4: ngAfterConentChecked실행');
+  }
+  ngAfterViewChecked () {
+    // 변화를 감지 할시 실행됨 실행순서 3번
+    // console.log('5: ngAfterViewChecked실행');
   }
 
   ngAfterViewInit () {
@@ -304,37 +334,69 @@ constructor(
     });
   }
 
-  onFileChange(files: FileList) {
+  getImageListId () {
+    return this.imageList.map(image => image.id);
+  }
+
+  getImageListNextId() {
+    return this.imageList ? Math.max.apply(null, this.getImageListId()) + 1 : 1;
+  }
+
+  onFileChange(files: FileList, imageId:string) {
+
     if (files && files.length > 0) {
       // For Preview
       const file = files[0];
       const reader = new FileReader();
-      reader.readAsDataURL(file);
-      // 실험
 
+      reader.readAsDataURL(file);
       reader.onload = () => {
-        this.imageSrc = reader.result;
+        // 파일이 성공적으로 등록되면 HTML에 있는 img src를 변경
+        this.imageList = this.imageList.map(image => {
+          return +imageId == image.id ?
+            Object.assign({}, image, {caption: reader.result, available: true}) : image;
+        });
       };
-      this.avatar.setValue(file.name);
-      this.hideBtn = false;
+
+      // 커버이미지 등록
+      this.roomLocalData.img_cover = files.item(0);
+
+      // 하우스이미지 등록
+      if (this.roomLocalData.house_images.length < 1) {
+        this.roomLocalData.house_images = [files.item(0)];
+      } else {
+        this.roomLocalData.house_images = [...this.roomLocalData.house_images, files.item(0)];
+      }
+
+      // 하우스 이미지 formdata에 append
+      for (var i = 0; i < this.roomLocalData.house_images.length; i++) {
+        this.formData.append('house_images', this.roomLocalData.house_images[i]);
+      }
+
+      // 하우스이미지 4개 제한
+      if (this.imageList.length < 4) {
+        this.imageList = [...this.imageList, { id: this.getImageListNextId(),
+        caption: '', image: null, available: false }];
+      }
     }
   }
 
-  onSubmit(files: FileList) {
-    const formData = new FormData();
-    formData.append('avatar', files[0]);
+  sendingLocalData() {
 
-    this.loading = true;
-    // Send data (payload = formData)
-    console.log(formData.get('avatar'));
+    for (let key of Object.keys(this.roomLocalData)) {
+      if (key === 'house_images') {
+        continue;
+      }
+      this.formData.append(key, this.roomLocalData[key]);
+    }
+    console.log(this.roomLocalData);
+    // const headers = new HttpHeaders()
+    //   .set('Authorization', 'Token ccf9ec87c75370b9c702ad28ab20795a0622f364');
 
-    // 폼데이터를 서버로 전송한다.
-    this.http.post(`${this.apiUrl}/upload`, formData)
-      .subscribe(res => {
-        this.result = res;
-        this.loading = false;
-        this.avatar.setValue(null);
-      });
+    // this.http.post('https://himanmen.com/house/', this.formData, { headers })
+    //   .subscribe(response => {
+    //     console.log(response);
+    //   })
   }
 
   get avatar() {
@@ -374,9 +436,9 @@ constructor(
     upload.click();
   }
 
+  // 주소 정보 초기화
   resetAddressData () {
     this.locationFields.address1 = '';
-    this.locationFields.address2 = '';
     this.locationFields.administrative_area_level_1 = '';
     this.locationFields.city = '';
     this.locationFields.country = '';
@@ -388,10 +450,20 @@ constructor(
     this.locationFields.premise = '';
     this.locationFields.sublocality_level_1 = '';
     this.locationFields.sublocality_level_2 = '';
+    this.locationFields.sublocality_level_3 = '';
+
+    this.roomLocalData.city = '';
+    this.roomLocalData.country = '';
+    this.roomLocalData.district = '';
+    this.roomLocalData.dong = '';
+    this.roomLocalData.address1 = '';
+
   }
 
+  // ccf9ec87c75370b9c702ad28ab20795a0622f364
+
   // google map GEO(위도,경도 및 요청정보) 얻기
-  findLocation(location: string, address) {
+  findLocation(location: string, address: any) {
     this.location = location;
     this.http.get<any>('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
@@ -400,8 +472,13 @@ constructor(
       }
     })
     .subscribe(response => {
-      // console.dir(response);
+      console.dir(response);
+      if (!response.results.length) {
+        address.style.color = 'red';
+        return this.formattedLocation = '올바른 주소를 입력 해 주세요.'
+      }
 
+      this.formattedLocation = '';
       // 입력하기전 필드셋 초기화
       this.resetAddressData();
       // 검색후 주소 결과 값 길이
@@ -439,10 +516,13 @@ constructor(
     });
   }
 
+
   // 현재 페이지를 변경
   changePageState () {
     switch (this.currentState) {
       case 'room': this.currentState = this.pageStates[this.stateCount];
+        // formdata 형성
+        this.formData = new FormData();
         this.roomLocalData.room = this.selectedRoomCount;
         this.roomLocalData.personnel = this.selectedRoomCapacity;
         this.roomLocalData.house_type = this.selectedRoomType;
@@ -458,24 +538,25 @@ constructor(
 
         this.roomLocalData.country = this.locationFields.country;
         this.roomLocalData.city = this.locationFields.administrative_area_level_1;
-        this.roomLocalData.district = this.locationFields.district;
-        this.roomLocalData.dong = this.locationFields.sublocality_level_1;
-        this.roomLocalData.address1 = this.locationFields.sublocality_level_2;
-        this.roomLocalData.address2 = this.locationFields.premise;
+        this.roomLocalData.district = this.locationFields.sublocality_level_1;
+        this.roomLocalData.dong += this.locationFields.sublocality_level_2;
+        this.roomLocalData.address1 += this.locationFields.sublocality_level_3;
+        this.roomLocalData.address1 += this.locationFields.premise;
         this.roomLocalData.latitude = this.latitude;
         this.roomLocalData.longitude = this.longitude; break;
 
       case 'amenities': this.currentState = this.pageStates[this.stateCount];
         this.roomLocalData.amenities =
           this.amenities.filter(amenity => amenity.available)
-          .map(userAmenity => userAmenity.id);
+          .map(userAmenity => +userAmenity.id);
 
       case 'spaces': this.currentState = this.pageStates[this.stateCount];
         this.roomLocalData.facilities =
           this.spaces.filter(space => space.available)
-          .map(userSpace => userSpace.id); break;
+          .map(userSpace => +userSpace.id); break;
 
-      case 'picture': this.currentState = this.pageStates[this.stateCount]; break;
+      case 'picture': this.currentState = this.pageStates[this.stateCount];
+      break;
 
       case 'description': this.currentState = this.pageStates[this.stateCount];
         this.roomLocalData.description = this.roomDescription; break;
@@ -489,7 +570,7 @@ constructor(
       case 'minMaxReservationDate': this.currentState = this.pageStates[this.stateCount];
         this.roomLocalData.minimum_check_in_duration = this.minNightCount;
         this.roomLocalData.maximum_check_in_duration = this.maxNightCount;
-        this.roomLocalData.disable_days = this.disableDays; break;
+        // this.roomLocalData.disable_days = this.disableDays; break;
 
       case 'price': this.currentState = this.pageStates[this.stateCount];
         this.roomLocalData.price_per_night = this.price; break;
@@ -497,6 +578,8 @@ constructor(
       default: this.currentState = this.pageStates[this.stateCount]; break;
     }
   }
+
+
 
   // 뒤로 버튼
   backPageState () {

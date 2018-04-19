@@ -1,3 +1,7 @@
+.row {
+  margin: 0;
+}
+
 /* progress bar */
 .progress{
   margin-top: 30px;
@@ -64,25 +68,41 @@ label.amenities-label {
 
 /* 사진업로드 */
 .upload-picture-container {
-  height: 350px;
+  height: 200px;
   cursor: pointer;
   border: dashed 3px gray;
   background-color : #efefef;
   background-repeat : repeat-x;
+  padding: 0;
 }
 
-.row {
-  margin: 0;
+/* 업로드버튼 중간고정 */
+.upload-btn-container {
+  display: contents;
 }
+
+.image-list-container {
+  height: 325px;
+  overflow-y: scroll;
+}
+
+.image-list {
+  padding-bottom: 15px;
+}
+
+.image-caption-contatiner {
+  padding : 0;
+}
+
+.image-caption {
+  width: 100%;
+}
+
+
 
 .upload-photo {
-  /* width: 540px;
-  height: 350px; */
-  /* padding-top : -30px; */
-  opacity: 0;
-  width: 0.1px;
-  height: 0.0px;
-  /* position: relative; */
+  /* 브라우져 제공 삭제 */
+  display: none;
 }
 
 .photo-panel {
@@ -90,14 +110,11 @@ label.amenities-label {
   height: 165px;
 }
 
-.upload-picture-container {
-  padding: 0;
-}
-
-.avatar {
+.image-box {
   position: absolute;
   width: 100%;
   height: 100%;
+  margin-top: -19px
 }
 
 .upload-btn {
