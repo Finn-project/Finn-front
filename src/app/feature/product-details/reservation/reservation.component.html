@@ -37,24 +37,24 @@
               <div class= "person">
                 <li>성인</li>
                 <div class= "btn-wrapper">
-                  <button (click)= "aminus()" [disabled]="acount == 0">-</button>
+                  <button (click)= "aminus()" [disabled]= "acount == 0">-</button>
                   <div class= "number">{{acount}}</div>
-                  <button (click)= "aplus()">+</button>
+                  <button (click)= "aplus()" [disabled]= "totalcount() == house_value.personnel">+</button>
                 </div>
               </div>
               <div class= "person">
                 <li>어린이</li>
                 <div class="btn-wrapper">
-                  <button (click)= "bminus()"  [disabled]="bcount == 0">-</button>
+                  <button (click)= "bminus()"  [disabled]= "bcount == 2">-</button>
                   <div class= "number">{{bcount}}</div>
-                  <button (click)= "bplus()">+</button>
+                  <button (click)= "bplus()" [disabled]= "totalcount() == house_value.personnel">+</button>
                 </div>
               </div>
             </ul>
           </div>
         </div>
       </div>
-      <a routerLink="payment">
+      <a>
         <div class="button-wrapper input-wrapper" (click)="giveDate()" *ngIf="auth.isAuthenticated()">
           <button class="reservation-button">
             예약 요청

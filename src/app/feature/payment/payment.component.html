@@ -11,44 +11,44 @@
       <span>확인 및 결재</span>
     </div>
   </div>
-    <div class="container">
+    <div class="container" *ngIf ="value">
       <div class="row">
         <div class= "col-sm-6">
             <div class="reservation-text">
               <div class="reservation-wrapper">
                 <div class="room-info">
-                  <p class= "Room-name">The Lake Tahoe Chalet</p>
-                  <span>사우스 레이크 타호의 집 전체</span>
+                  <p class= "Room-name">{{ value.name}}t</p>
+                  <span>{{value.description}}</span>
                 </div>
                 <div class="img-wrapper">
-                  <img class= "romm-picture"src="./../../../assets/img/defaultProfileImg.png">
+                  <img class= "romm-picture" src= "{{value.img}}" >
                 </div>
               </div>
               <div>
                   <div class= "room-text">
                     <div class= "option">
                       <img class="man" src="./../../../assets/img/man.svg">
-                      <span>게스트 0명</span>
+                      <span>게스트 {{value.guest_num}}명</span>
                     </div>
                    <div  class= "option">
                       <img class="man" src="./../../../assets/img/date.svg">
-                      <span>2018년 4월 22일 ~ 2018년 4월 25일</span>
+                      <span>{{value.check_in_date}} ~ {{value.check_out_date}}</span>
                    </div>
                   </div>
                   <div style= "border-bottom: 1px solid #DBDBDB;"class= "option price-text">
-                    <span>₩123.355 x 3박</span>
-                    <span>₩412,066</span>
+                    <span>₩{{value.price}} x {{value.date}}박</span>
+                    <span>₩{{value.price * value.date}}</span>
                   </div>
                    <div class= "option price-text">
                   <span>총 합계 (KRW)</span>
-                  <span class= "final-price">₩412,066</span>
+                  <span class= "final-price">₩{{value.price * value.date}}</span>
                   </div>
               </div>
             </div>
               <div>
                 <span>결제 방법</span>
-                <div class= "payment">
-                  <span>걸제 완료</span>
+                <div class= "payment" (click)= "testest()">
+                  <span>결제 진행</span>
                 </div>
                 <span>신한은행 <110-357-045410> </span>
               </div>

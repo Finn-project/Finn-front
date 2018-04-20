@@ -25,8 +25,6 @@ export class ProductDetailsComponent implements OnInit {
   user: any;
   zoom = 15;
   pk: number;
-  disableDay: any;
-  value_pk: any;
 // 위도 경도 값
   latitude: number;
   longitude: number;
@@ -35,10 +33,30 @@ export class ProductDetailsComponent implements OnInit {
     this.spinner.show();
 // pk 값 url 에서 받아오기
     this.route.params
-    .subscribe(res => {this.pk = +res.pk});
+    .subscribe(res => {this.pk = +res.pk;});
     this.img_check();
 
   }
+  img_check() {
+    console.log(this.pk);
+    this.auth.img_check(this.pk)
+      .subscribe(res => {
+        if (res.host.images == null) {
+          this.img_profile = '../../../assets/img/defaultProfileImg.png';
+          this.latitude = +res.latitude;
+          this.longitude = +res.longitude;
+          this.spinner.hide();
+        } else {
+          this.img_profile = (res.host.images.img_profile_28);
+        }
+        this.value = res;
+        this.spinner.hide();
+      });
+    }
+  reservationModal() {
+    this.modal = !this.modal;
+  }
+}
   // house 정보 받아오기 pk 값에 따라서
   // img_check() {
   //   this.http.get<any>(`${this.url}house/${this.pk}`)
@@ -55,26 +73,3 @@ export class ProductDetailsComponent implements OnInit {
   //       this.spinner.hide();
   //     });
   // }
-
-  img_check() {
-    console.log(this.pk);
-    this.auth.img_check(this.pk)
-      .subscribe(res => {
-        if (res.host.images == null) {
-          this.img_profile = '../../../assets/img/defaultProfileImg.png';
-          this.latitude = +res.latitude;
-          this.longitude = +res.longitude;
-          this.spinner.hide();
-        } else {
-          this.img_profile = (res.host.images);
-        }
-        this.value = res;
-        this.spinner.hide();
-      });
-  }
-
-  reservationModal() {
-    this.modal = !this.modal;
-  }
-
-}

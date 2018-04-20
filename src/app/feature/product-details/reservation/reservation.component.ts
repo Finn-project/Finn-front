@@ -10,6 +10,7 @@ import * as  END_DATE from 'react-dates/constants';
 import { isSameDay } from 'react-dates';
 import * as moment from 'moment';
 import { AuthService } from '../../../core/login/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservation',
@@ -30,36 +31,50 @@ export class ReservationComponent implements OnInit {
   data : any;
   days_value : number;
 
-  value = this.auth.disable();
-  price = this.auth.getprice();
+  res: any;
+  local: any;
 
+  // set test(data) {
+  //   this.auth.test = data;
+  // }
+
+  house_value = this.auth.gethouse_value();
+  price = this.house_value.price_per_night;
   @Input() modal;
   @Output() reservationModal = new EventEmitter();
 
-   constructor(public auth: AuthService) { this.date(); }
+   constructor(public auth: AuthService,
+  private router: Router) { this.date();}
 
 
-  ngOnInit() { console.log(this.auth.disable()); }
+  ngOnInit() {
+    console.log('value', this.house_value);
+    console.log('maxmun', this.house_value.maximum_check_in_range);
+    console.log('disable', this.house_value.disable_days);
+    console.log('reserve', this.house_value.reserve_days);
+  }
 
 
   date() {
     let array = [];
-    const data = ['2018-05-01', '2018-05-02', '2018-05-04'];
+    let data = this.house_value.disable_days;
+    const reserve = this.house_value.reserve_days;
 
+    if (reserve == null) {
+      return false;
+    }
+    data = data.concat(...reserve);
     for (let i = 0; i < data.length; i++) {
       const startTime = moment();
       const endTime = moment(data[i]).format('YYYY MM DD');
-
       const duration = moment.duration(moment(endTime).diff(startTime));
       const days = duration.asDays();
-      const test = Math.round(days) + 1;
-
-      array = array.concat(test);
+      const days_value = Math.round(days) + 1;
+      array = array.concat(days_value);
 
     }
-    let datesList = [
-      moment().add(array[0], 'days'),
-    ];
+    console.log('array_check', array);
+    let datesList = [ ];
 
     for (let i = 0; i < array.length; i++) {
       datesList = datesList.concat(moment().add(array[i], 'days'));
@@ -69,7 +84,7 @@ export class ReservationComponent implements OnInit {
     const isDayBlocked = day1 => datesList.some(day2 => isSameDay(day1, day2));
 
     const isOutsideRange = day =>
-      isInclusivelyAfterDay(day, moment().add(this.auth.getMaximum_check_in_range(), 'months'))
+      isInclusivelyAfterDay(day, moment().add(this.house_value.maximum_check_in_range, 'days'))
       || !isInclusivelyAfterDay(day, moment().subtract(0, 'months'));
     this.propsDRP = {
       startDatePlaceholderText: '체크인',
@@ -79,7 +94,7 @@ export class ReservationComponent implements OnInit {
       showClearDates: true,
       numberOfMonths: 2,
       daySize: 30,
-      minimumNights: this.auth.getMinimum_check_in_duation(),
+      minimumNights: this.house_value.minimum_check_in_duration,
       isOutsideRange: isOutsideRange,
       enableOutsideDays: false,
       isDayBlocked: isDayBlocked,
@@ -95,10 +110,26 @@ export class ReservationComponent implements OnInit {
     const days = duration.asDays();
     this.days_value = Math.round(days) + 1;
 
-    this.data = { check_in_date: check_in_date , check_out_date: check_out_date,
-    house_num : this.auth.getpk(), guest_num : this.totalcount() };
-    console.log(this.data);
+    this.data = { check_in_date: check_in_date ,
+       check_out_date: check_out_date,
+      house: this.house_value.pk,
+       guest_num : this.totalcount(),
+      name : this.house_value.name ,
+      description: this.house_value.description,
+      img: this.house_value.img_cover_thumbnail,
+      price: this.house_value.price_per_night,
+      date : this.days_value
+     };
+    this.setData();
+    this.router.navigate(['/payment']);
+    // this.test = this.data;
+
   }
+
+    setData() {
+      localStorage.setItem('house_data', JSON.stringify(this.data));
+    }
+
 
 // drop down menu function
   dropdown() {
@@ -121,7 +152,7 @@ export class ReservationComponent implements OnInit {
   totalcount() {
     if (this.acount + this.bcount === 0) {
       return 0;
-    } else {
+    }  else {
       this.result = this.acount + this.bcount;
       return this.result;
     }
