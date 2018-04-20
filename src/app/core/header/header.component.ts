@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isInputFocused: boolean = false;
   isModalInputFocused: boolean = false;
   profilePath: string = '';
+  isUserMenuOpen: boolean = false;
 
   @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
 
@@ -47,7 +48,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.profilePath = this.user ? this.user.images.img_profile_28 : '';
+  }
 
   ngAfterViewInit() {
     this.searchElementList.forEach(child => {
@@ -154,12 +157,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   hasRole() {
-    return this.auth.getUser();
+    return this.user;
   }
 
   getProfileImage() {
-    const defaultImgDir = '../../../assets/img/defaultProfileImg.png';
-    const images = this.auth.getUser() ? this.auth.getUser().images : null;
+    const defaultImgDir = 'assets/img/defaultProfileImg.png';
+    const images = this.user ? this.auth.getUser().images : null;
     return images ? images.img_profile_28 : defaultImgDir;
+  }
+  testFunc() {
+    this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 }
