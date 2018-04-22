@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
     
     this.http.get<any>(`${this.url}house/`, { params })
       .subscribe(res => {
+        console.log('response', res)
         this.next = res.next;
         this.previous = res.previous;
         this.results = res.results;
