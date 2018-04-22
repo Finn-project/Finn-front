@@ -166,7 +166,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   getProfileImage() {
     const defaultImgDir = 'assets/img/defaultProfileImg.png';
     const images = this.user ? this.user.images : null;
-    return images ? images.img_profile_28 : defaultImgDir;
+    return images && images.img_profile_28 ? images.img_profile_28 : defaultImgDir;
   }
   
   logout() {
