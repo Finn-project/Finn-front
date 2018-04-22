@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../../core/login/auth';
+import { User } from '../../../core/login/auth/models/user';
 
 @Component({
   selector: 'app-profile-image',
@@ -16,6 +17,10 @@ export class ProfileImageComponent implements OnInit {
     private auth: AuthService
   ) { }
 
+  get user(): User {
+    return this.auth.getUser();
+  }
+  
   ngOnInit() {
     this.profileForm = this.fb.group({
     });
@@ -32,4 +37,15 @@ export class ProfileImageComponent implements OnInit {
     });
   }
 
+  onDeleteProfile() {
+    this.auth.deleteProfileImage().subscribe((result) => {
+      console.log('delete image result', result);
+    });
+  }
+
+  getProfileImage() {
+    const defaultImgDir = 'assets/img/defaultProfileImg.png';
+    const images = this.user ? this.user.images : null;
+    return images ? images.img_profile_225 : defaultImgDir;
+  }
 }

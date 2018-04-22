@@ -6,6 +6,7 @@ import { Token } from '@angular/compiler';
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
 import { FullModalService } from '../service/full-modal.service';
+import { User } from '../login/auth/models/user';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,6 @@ import { FullModalService } from '../service/full-modal.service';
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   modal: boolean = false;
-  user = this.auth.getUser();
   login_sign: boolean;
   login_signUp: boolean;
   searchInput: string = '';
@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isInputFocused: boolean = false;
   isModalInputFocused: boolean = false;
   profilePath: string = '';
-  isUserMenuOpen: boolean = false;
 
   @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
 
@@ -46,6 +45,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     } else {
       this.navToDropdown = false;
     }
+  }
+
+  get user() {
+    return this.auth.getUser();
   }
 
   ngOnInit() {
@@ -157,15 +160,17 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   hasRole() {
-    return this.user;
+    return this.auth.getUser();
   }
 
   getProfileImage() {
     const defaultImgDir = 'assets/img/defaultProfileImg.png';
-    const images = this.user ? this.auth.getUser().images : null;
+    const images = this.user ? this.user.images : null;
     return images ? images.img_profile_28 : defaultImgDir;
   }
-  testFunc() {
-    this.isUserMenuOpen = !this.isUserMenuOpen;
+  
+  logout() {
+    this.auth.signout();
+    this.router.navigate(['']);
   }
 }

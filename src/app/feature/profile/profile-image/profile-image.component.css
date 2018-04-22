@@ -46,3 +46,19 @@
     font-weight: bold;
     line-height: 1.43;
 }
+.icon-trash {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    padding: 4px;
+    width: 24px;
+    height: 24px;
+    background-color: #c4c4c4;
+}
+.user-profile-container {
+    position: relative;
+}
+.user-profile-container:hover > .icon-trash{
+    display: block;
+}

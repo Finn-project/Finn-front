@@ -6,7 +6,11 @@
         </div>
         <div class="container-fluid user-form-container">
           <div class="user-form-row">
-            <img class="user-profile-image" src="../../../../assets/img/defaultProfileImg.png" alt="">
+            <div class="user-profile-container">
+              <img class="user-profile-image" [src]="getProfileImage()" alt="profile image">
+              <img class="icon-trash" src="assets/img/trashcan.svg" alt="delete profile image" (click)="onDeleteProfile()">
+              <!-- <span class="glyphicon glyphicon-trash icon-trash"></span> -->
+            </div>
             <div class="user-profile-desc">
               <p>
                 호스트와 게스트가 서로를 알 수 있도록 선명하게 나온 얼굴 정면 사진을 사용하는 것이 중요합니다.

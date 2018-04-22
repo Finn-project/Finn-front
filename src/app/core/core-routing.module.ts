@@ -22,6 +22,7 @@ const routes: Routes = [
   {
     path: 'user',
     component: ProfileComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: '/user/edit',  pathMatch: 'full' },
       { path: 'edit', component: ProfileEditComponent },

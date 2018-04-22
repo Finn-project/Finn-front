@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../../../core/login/auth';
+import { User } from '../../../core/login/auth/models/user';
 
 @Component({
   selector: 'app-profile-edit',
@@ -8,8 +10,11 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 })
 export class ProfileEditComponent implements OnInit {
   userForm: FormGroup;
+  constructor(private fb: FormBuilder, private auth: AuthService) { 
+  }
 
-  constructor(private fb: FormBuilder) { 
+  get user(): User {
+    return this.auth.getUser();
   }
 
   ngOnInit() {
@@ -20,8 +25,9 @@ export class ProfileEditComponent implements OnInit {
         ]]
       })
     });
-
-    console.log(this.userForm);
   }
 
+  onSubmit() {
+    console.log('submit');
+  }
 }

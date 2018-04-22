@@ -60,20 +60,20 @@
       </li>
       <li *ngIf="!hasRole()" class="header-nav-list-item">
         <a (click) = "toggleSinnUpModal()"><span>로그인</span></a></li>
-      <li *ngIf="true" class="header-nav-list-item user">
-        <label for="user-menu">
-          <img
+      <li *ngIf="hasRole()" class="header-nav-list-item user">
+        <div class="dropdown user-menu">
+          <button class="user-menu-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img
             class="default-profile-image"
-            [src]="profilePath" alt="profile image"
-            (error)="profilePath = 'assets/img/defaultProfileImg.png'">
-        </label>
-        <input type="checkbox" id="user-menu" [(ngModel)]="isUserMenuOpen" class="hide">
+            [src]="getProfileImage()" alt="profile image">
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" routerLink="/user">프로필 수정</a>
+            <a class="dropdown-item" (click)="logout()">로그아웃</a>
+          </div>
+        </div>
       </li>
     </ul>
-    <div *ngIf="isUserMenuOpen" class="user-dropdown">
-        <li><a routerLink="/user">프로필 수정</a></li>
-        <li>로그아웃</li>
-    </div>
   </nav>
 </div>
 <app-login [modal]=" modal "

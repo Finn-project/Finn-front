@@ -165,11 +165,14 @@ a {
   width: 280px;
   background-color: rosybrown;
   clear: both;
+  float: right;
 }
-.header-nav-list-item > label {
+.header-nav-list-item > button {
   height: 80px;
   line-height: 80px;
   cursor: pointer;
+  border: none;
+  outline: none;
 }
 .header-nav-list-item > a {
   height: 80px;
@@ -185,7 +188,7 @@ a {
 .header-nav-list-item > a > span {
   padding: 0 8px;
 }
-.header-nav-list-item > a:hover, .header-nav-list-item > label:hover {
+.header-nav-list-item > a:hover, .header-nav-list-item > button:hover {
   border-bottom: 2px solid #767676;
 }
 .search-modal-btn {
@@ -259,7 +262,14 @@ a {
   box-shadow: 0 0 0 2px #DBDBDB;
   margin: 0 8px;
 }
-
+.user-menu {
+  height: 100%;  
+}
+.user-menu-btn {
+  height: 100%;
+  border: none;
+  
+}
 /* google autocomplete box */
 
 /* google autocomplete box */

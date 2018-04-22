@@ -66,6 +66,15 @@ export class AuthService {
       .patch(endpoint, formData, { headers: headerConfig })
       .do(res => {this.setUser(res)});
   }
+
+  deleteProfileImage() {
+    const endpoint = `${this.url}user/${this.getUser().pk}/noimage`;
+    const headerConfig = {
+      Authorization: `token ${this.getToken()}`
+    };
+    return this.http
+      .delete(endpoint, {headers: headerConfig});
+  }
 // 인증 관련 함수들
   isAuthenticated(): boolean {
     const token = this.getToken();
@@ -75,10 +84,10 @@ export class AuthService {
     return localStorage.getItem(this.TOKEN_NAME);
   }
   setToken(token: string): void {
-      localStorage.setItem(this.TOKEN_NAME, token);
-      this.Authorization = token;
-      console.log(token);
-    }
+    localStorage.setItem(this.TOKEN_NAME, token);
+    this.Authorization = token;
+    console.log(token);
+  }
 /* user 값 받아 올떄 사용하기 */
   getUser(): User {
     const user = JSON.parse(localStorage.getItem(this.user));
