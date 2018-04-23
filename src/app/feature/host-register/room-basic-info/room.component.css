@@ -1,3 +1,7 @@
+.row {
+  margin: 0;
+}
+
 /* progress bar */
 .progress{
   margin-top: 30px;
@@ -48,11 +52,11 @@
 }
 
 /* 편의물품 */
-.amentities-label {
+.amenities-label {
   display: block;
 }
 
-label.amentities-label {
+label.amenities-label {
   width: 150px;
   cursor: pointer;
 }
@@ -64,25 +68,41 @@ label.amentities-label {
 
 /* 사진업로드 */
 .upload-picture-container {
-  height: 350px;
+  height: 200px;
   cursor: pointer;
   border: dashed 3px gray;
   background-color : #efefef;
   background-repeat : repeat-x;
+  padding: 0;
 }
 
-.row {
-  margin: 0;
+/* 업로드버튼 중간고정 */
+.upload-btn-container {
+  display: contents;
 }
+
+.image-list-container {
+  height: 325px;
+  overflow-y: scroll;
+}
+
+.image-list {
+  padding-bottom: 15px;
+}
+
+.image-caption-contatiner {
+  padding : 0;
+}
+
+.image-caption {
+  width: 100%;
+}
+
+
 
 .upload-photo {
-  /* width: 540px;
-  height: 350px; */
-  /* padding-top : -30px; */
-  opacity: 0;
-  width: 0.1px;
-  height: 0.0px;
-  /* position: relative; */
+  /* 브라우져 제공 삭제 */
+  display: none;
 }
 
 .photo-panel {
@@ -90,14 +110,11 @@ label.amentities-label {
   height: 165px;
 }
 
-.upload-picture-container {
-  padding: 0;
-}
-
-.avatar {
+.image-box {
   position: absolute;
   width: 100%;
   height: 100%;
+  margin-top: -19px
 }
 
 .upload-btn {
@@ -118,11 +135,6 @@ label.amentities-label {
 
 
 /* 숙박가능기간 */
-.night-box-container{
-  border: solid 1px gray;
-  margin: 5px 0;
-  position: relative;
-}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -154,6 +166,27 @@ input::-webkit-inner-spin-button {
   color: black;
 }
 
+/* 가격 */
+.number-box {
+  border: solid 1px gray;
+  margin: 5px 0;
+  position: relative;
+}
+
+.number-box span {
+  font-size: 19px;
+  margin-left: 12px
+}
+
+.price-box {
+  font-size: 20px;
+  width: 100px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 0;
+  outline: 0;
+}
+
 
 /* hosting 버튼 패널 */
 .hosting-button-panel {
@@ -170,6 +203,10 @@ input::-webkit-inner-spin-button {
   font-size: 1.5em;
   width: 100px;
   height: 50px;
+}
+
+.block-button {
+  background-color: #fff;
 }
 
 /* 개수 버튼 */
@@ -214,7 +251,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* 제목요소 */
-h1, h3 {
+h2, h3 {
   margin: 15px 0;
 }
 
@@ -222,12 +259,157 @@ h1, h3 {
 ul {
   margin: 0;
   padding: 0 20px;
+  list-style: none;
+}
+
+/* hosting 앞으로,뒤로 3D 버튼 */
+
+.btn3d {
+  position:relative;
+  top: -6px;
+  border:0;
+  transition: all 40ms linear;
+  margin-top:10px;
+  margin-bottom:10px;
+  margin-left:2px;
+  margin-right:2px;
+}
+.btn3d:active:focus,
+.btn3d:focus:hover,
+.btn3d:focus {
+  outline:medium none;
+}
+.btn3d:active, .btn3d.active {
+    top:2px;
+}
+.btn3d.btn-primary {
+    box-shadow:0 0 0 1px #417fbd inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 8px 0 0 #4D5BBE, 0 8px 8px 1px rgba(0,0,0,0.5);
+    background-color:#4274D7;
+}
+.btn3d.btn-primary:active, .btn3d.btn-primary.active {
+    box-shadow:0 0 0 1px #417fbd inset, 0 0 0 1px rgba(255,255,255,0.15) inset, 0 1px 3px 1px rgba(0,0,0,0.3);
+    background-color:#4274D7;
+}
+
+/* 버튼 클릭 불가  */
+
+.invalid {
+  opacity: 0.5;
+  /* pointer-events: none; */
+}
+
+/* 증감버튼 설명 Label */
+.bedroom-label, .bathroom-label {
+  width: 40%;
+}
+
+.button-label {
+  display: inline-block;
+}
+
+.button-label span {
+  font-size: 1.5em;
 }
 
 
-/* test */
+/* 증감버튼 */
+.btn-circle {
+  margin: 0 20px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  line-height: 0;
+  border-radius: 25px;
+  border-color: #008489;
+  color: #008489;
+  background: transparent;
+}
 
-/* test */
+/* 체크박스 */
+.span_pseudo, .chiller_cb span:before, .chiller_cb span:after {
+  content: "";
+  display: inline-block;
+  background: #fff;
+  width: 0;
+  height: 0.2rem;
+  position: absolute;
+  transform-origin: 0% 0%;
+}
+
+.chiller_cb {
+  position: relative;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+}
+.chiller_cb input {
+  display: none;
+}
+
+.chiller_cb .checked ~ span {
+  background: #008489;
+  border-color: #008489;
+}
+.chiller_cb .checked ~ span:before {
+  width: 1rem;
+  height: 0.15rem;
+  transition: width 0.1s;
+  transition-delay: 0.3s;
+}
+.chiller_cb .checked ~ span:after {
+  width: 0.4rem;
+  height: 0.15rem;
+  transition: width 0.1s;
+  transition-delay: 0.2s;
+}
+
+.chiller_cb input:disabled ~ span {
+  background: #ececec;
+  border-color: #dcdcdc;
+}
+.chiller_cb input:disabled ~ label {
+  color: #dcdcdc;
+}
+.chiller_cb input:disabled ~ label:hover {
+  cursor: default;
+}
+.chiller_cb label {
+  padding-left: 2rem;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  margin-bottom:0;
+}
+.chiller_cb span {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid #ccc;
+  position: absolute;
+  left: 0;
+  transition: all 0.2s;
+  z-index: 1;
+  box-sizing: content-box;
+}
+.chiller_cb span:before {
+  transform: rotate(-55deg);
+  top: 1rem;
+  left: 0.37rem;
+}
+.chiller_cb span:after {
+  transform: rotate(35deg);
+  bottom: 0.35rem;
+  left: 0.2rem;
+}
 
 /* uploadfile */
 .custom-file {

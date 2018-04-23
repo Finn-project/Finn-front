@@ -1,27 +1,57 @@
 <div class="container-fluid main-room-list-container">
   <div class="test">
-    <div class="row room-list">
-      <div *ngFor="let result of data; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
-        <div class="embed-responsive embed-responsive-3by2">
-          <img src="{{result.image}}" class="embed-responsive-item" alt="room image">
-        </div>
-        <div class="room-list-item-type">
-          {{result.roomType}}
-        </div>
-        <div class="room-list-item-title">
-          {{result.title}}
-        </div>
-        <div class="room-list-item-price">
-          ₩{{result.price}}
+    <div style="width:100%; height: 100%;">
+      <div class="row room-list">
+        <div *ngFor="let result of data; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
+          <div class="embed-responsive embed-responsive-3by2">
+            <img src="{{result.image}}" class="embed-responsive-item" alt="room image">
+          </div>
+          <div class="room-list-item-type">
+            {{result.roomType}}
+          </div>
+          <div class="room-list-item-title">
+            {{result.title}}
+          </div>
+          <div class="room-list-item-price">
+            ₩{{result.price}}
+          </div>
         </div>
       </div>
+      <div>
+        <div class="search-footer">
+          <div class="search-next-button">
+            <div class="arrow-right">
+              <svg viewBox="0 0 18 18" role="img" aria-label="이전" focusable="false" style="height: 1em; width: 1em; display: block; fill: currentcolor;">
+                <path d="m13.7 16.29a1 1 0 1 1 -1.42 1.41l-8-8a1 1 0 0 1 0-1.41l8-8a1 1 0 1 1 1.42 1.41l-7.29 7.29z" fill-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div class="arrow-right">
+              <svg viewBox="0 0 18 18" role="img" aria-label="다음" focusable="false" style="height: 1em; width: 1em; display: block; fill: currentcolor;">
+                <path d="m4.29 1.71a1 1 0 1 1 1.42-1.41l8 8a1 1 0 0 1 0 1.41l-8 8a1 1 0 1 1 -1.42-1.41l7.29-7.29z" fill-rule="evenodd"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="search-text">
+            <p>전체 요금을 보려면 날짜를 입력하세요. 추가 요금이 적용되고 세금이 추가될 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="search-position">
+        <span>나라 > </span><span>지역</span>
+      </div>
     </div>
+
     <div class="map-wrapper">
-      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"  >
         <agm-marker [latitude]="latitude" [longitude]="longitude">
           <agm-info-window></agm-info-window>
         </agm-marker>
+        <agm-marker [latitude]="12.13123" [longitude]="12.2323">
+          <agm-info-window  class ="marker" isOpen="true">{{10000}}</agm-info-window>
+        </agm-marker>
       </agm-map>
+
     </div>
   </div>
 </div>
+<!-- (boundsChange)="centerChanged($event)" -->

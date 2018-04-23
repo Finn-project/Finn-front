@@ -7,21 +7,19 @@
     <div class="progress col-md-12">
       <div class="progress-bar progress-bar-striped progress-bar-animated"
       role="progressbar" aria-valuenow="progressbarPercentage" aria-valuemin="0"
-      aria-valuemax="100" style="width: 10%" id="progressbar">{{progressbarPercentage}}%</div>
+      aria-valuemax="100" style="width: 0%" id="progressbar">{{progressbarPercentage}}%</div>
     </div>
-
   </div>
-
   <div class="row">
       <!--article container-->
-    <article class="content-left col-md-6">
 
+    <article class="content-left col-md-6">
       <!--숙소정보 container-->
       <div *ngIf="currentState === 'room'" class="room-container">
         <div class="greeting">
-          <h1 class="greeting-title">
+          <h2 class="greeting-title">
             회원님 안녕하세요! 회원님의 숙소 등록을 도와드리겠습니다.
-          </h1>
+          </h2>
         </div>
         <div class="room-title">
           <h3>회원님의 숙소 정보를 입력해주세요!</h3>
@@ -32,27 +30,27 @@
 
           <!--방 개수 설정-->
           <div class="room-count-selectbox">
-            <select class="select-box" name="room-count">
-              <option *ngFor="let roomCount of roomCounts">
-                {{roomCount}}
+            <select class="select-box" (change)="chageRoomCount($event.target.value)" name="room-count">
+              <option value="{{roomCount}}" *ngFor="let roomCount of roomCounts">
+                방 {{roomCount}} 개
               </option>
             </select>
           </div>
 
           <!--최대수용인원 설정-->
           <div class="room-capacity-selectbox">
-            <select class="select-box" name="room-capacity">
-              <option *ngFor="let roomCapacity of roomCapacities">
-                {{roomCapacity}}
+            <select class="select-box" (change)="chageRoomCapacity($event.target.value)" name="room-capacity">
+              <option value="{{roomCapacity}}" *ngFor="let roomCapacity of roomCapacities">
+              최대 {{roomCapacity}}명 숙박 가능
               </option>
             </select>
           </div>
 
           <!--숙소유형 설정(아파트,주택 등등)-->
           <div class="room-type-selectbox">
-            <select class="select-box" name="room-type-category">
-              <option *ngFor="let roomCategory of roomCategories">
-                {{roomCategory}}
+            <select class="select-box" (change)="chageRoomType($event.target.value)" name="room-type-category">
+              <option value="{{roomCategory.type}}" *ngFor="let roomCategory of roomCategories">
+                {{roomCategory.content}}
               </option>
             </select>
           </div>
@@ -66,23 +64,36 @@
         <!--침대(갯수 선택)-->
         <div class="bedroom">
           <h3 class="bedroom-title">
-            게스트가 사용할 수 있는 침대는 몇 개인가요?
+            사용할 수 있는 침대는 몇 개인가요?
           </h3>
           <!--Bedroom관련 selectBox들 설정-->
           <div class="bedroom-selectbox">
             <!--침대 유형 설정-->
-            <div class="bedroom-type">
+            <!-- <div class="bedroom-type">
               <select name="bedroom-type">
                 <option *ngFor="let bedroomType of bedroomTypes">
                   {{bedroomType}}
                 </option>
               </select>
-            </div>
+            </div> -->
             <!--침대 갯수 설정-->
             <div class="bedroom-count-container">
-              <button (click)="decreaseBedroomCount()" class="count-button btn btn-outline-success">-</button>
-              <span class="bedroom-count">{{bedroomCount}}</span>
-              <button (click)="increaseBedroomCount()" class="count-button btn btn-outline-success">+</button>
+              <div class="bedroom-label button-label">
+                <span class="bedroom-count">
+                  침대
+                </span>
+              </div>
+              <div class="bedroom-button button-label">
+                <button type="button" class="btn btn-success btn-circle btn-lg"
+                (click)="decreaseBedroomCount()">
+                  <i class="glyphicon glyphicon-link">-</i>
+                </button>
+                <span>{{bedroomCount}}</span>
+                <button type="button" class="btn btn-success btn-circle btn-lg"
+                (click)="increaseBedroomCount()">
+                  <i class="glyphicon glyphicon-link">+</i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -96,9 +107,21 @@
 
         <!--욕실(갯수 선택)-->
         <div class="bathoom-count-container">
-          <button (click)="decreaseBathroomCount()" class="count-button btn btn-outline-success">-</button>
-          <span class="bathoom-count">{{bathroomCount}}</span>
-          <button (click)="increaseBathroomCount()" class="count-button btn btn-outline-success">+</button>
+
+          <div class="bathoom-label button-label">
+            <span class="bathoom-count">
+              욕실 수
+            </span>
+          </div>
+          <div class="bathoom-button button-label">
+            <button type="button" class="btn btn-success btn-circle btn-lg" (click)="decreaseBathroomCount()">
+              <i class="glyphicon glyphicon-link">-</i>
+            </button>
+            <span>{{bathroomCount}}</span>
+            <button type="button" class="btn btn-success btn-circle btn-lg" (click)="increaseBathroomCount()">
+              <i class="glyphicon glyphicon-link">+</i>
+            </button>
+          </div>
         </div>
 
       </div>
@@ -106,15 +129,15 @@
       <!--위치정보 container-->
       <div *ngIf="currentState === 'location'" class="location-container">
         <!--위치(설정)-->
-        <h3>숙소의 위치를 설정해주세요!</h3>
+        <h3>숙소의 위치를 알려주세요.</h3>
         <div class="location-searchbar">
           <span>주소입력 </span>
-          <input type="text" placeholder="Enter Location!" (keyup.enter)="findLocation($event.target.value)">
+          <input type="text" placeholder="Enter Location!" (keyup.enter)="findLocation($event.target.value, showAddress)" #address>
         </div>
         <div class="location-field">
           <span>숙소의 위치가</span>
             <div>
-              <em class="user-location">{{formattedLocation}}</em>
+              <em class="user-location" #showAddress>{{formattedLocation}}</em>
             </div>
           <span>가 맞나요?</span>
         </div>
@@ -129,107 +152,95 @@
       </div>
 
       <!--편의물품 container-->
-      <div *ngIf="currentState === 'amentities'" class="amentities-container">
+      <div *ngIf="currentState === 'amenities'" class="amenities-container">
         <!--편의물품(종류 선택)-->
-        <h3>숙소에 어떤 편의물품을 제공하시나요?</h3>
-        <div class="amentities-info">
-          <ul class="amentities-list">
-            <label class="amentities-label" for="{{amentity.name}}"
-            *ngFor="let amentity of amentities">
-              <li class="amentities-content">
-                <input class="form-check-input" type="checkbox"
-                value="{{amentity.content}}" id="{{amentity.name}}">
-                {{amentity.content}}
-              </li>
-            </label>
-          </ul>
+        <h3>어떤 편의시설을 제공하시나요?</h3>
+        <div class="amenity-list">
+            <div class="chiller_cb" *ngFor="let amenity of amenities">
+              <input type="checkbox" value="{{amenity.id}}" id="{{amenity.id}}"
+              (change)="changeAmenity(amenityList)" [class.checked]="amenity.available"
+              #amenityList>
+              <label for="{{amenity.id}}">{{amenity.content}}</label>
+              <span></span>
+            </div>
         </div>
       </div>
 
       <!--편의시설 container-->
       <div *ngIf="currentState === 'spaces'" class="spaces-container">
         <!--편의시설(종류 선택)-->
-        <h3>어떤 편의시설을 제공하시나요?</h3>
-        <div class="space-info">
-          <ul class="space-list">
-            <label class="space-label" for="{{space.name}}" *ngFor="let space of spaces">
-              <li class="space-content">
-                <input class="form-check-input" type="checkbox" value="{{space.content}}" id="{{space.name}}"> {{space.content}}
-              </li>
-            </label>
-          </ul>
+        <h3>게스트에게 회원님의 공간에 대해 설명해주세요.</h3>
+
+        <div class="space-list">
+          <div class="chiller_cb" *ngFor="let space of spaces">
+            <input type="checkbox" value="{{space.id}}" id="{{space.id}}"
+            (change)="changeSpace(spaceList)" [class.checked]="space.available"
+            #spaceList>
+            <label for="{{space.id}}">{{space.content}}</label>
+            <span></span>
+          </div>
         </div>
       </div>
 
       <!--사진정보 container-->
       <div *ngIf="currentState === 'picture'" class="picture-container">
 
-          <!-- <h3>나만의 숙소 사진을 등록해주세요!</h3>
-          <form class="upload-photo" [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()">
-            <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
-            <input id="upload-photo" type="file" (change)="onFileChange(fileInput.file)" #fileInput>
-            <button type="submit" [disabled]="formGroup.invalid
-                      || formGroup.prestine"></button>
-          </form>
-          <div class="upload-picture-container col-12" (click)="uploadPhoto()">
-            <a class="upload-btn btn btn-primary">사진 업로드</a>
-            <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
-          </div> -->
-
-        <h3>나만의 숙소 사진을 등록해주세요!</h3>
-        <form class="upload-photo" [formGroup]="form" novalidate (ngSubmit)="onSubmit(fileInput.files)">
-          <div class="form-group">
-            <div class="btns clearfix">
-              <label class="btn btn-file btn-cancel pull-left">Pick an image
-                <input id="upload-photo" type="file" accept="image/*" (change)="onFileChange(fileInput.files)" #fileInput>
-                <div class="preview">
-                  <p>No files currently selected for upload</p>
+          <h3>나만의 숙소 사진을 등록해주세요!</h3>
+          <div class="row image-list-container">
+            <div class="image-list col-6" *ngFor="let image of imageList">
+              <input id="{{image.id}}" accept="image/*" class="upload-photo" type="file"
+              (change)="onFileChange($event.target.files, image.id)">
+              <label for="{{image.id}}" class="upload-picture-container col-12">
+                <div class="upload-btn-container">
+                  <a class="upload-btn btn btn-primary">사진 업로드</a>
+                  <img class="image-box" *ngIf="image.available" src="{{image.caption}}">
                 </div>
               </label>
-              <button type="submit" class="btn btn-save pull-right" [disabled]="form.invalid || loading">
-                Save
-                <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
-              </button>
-            </div>
-          </div>
-        </form>
-        <div class="upload-picture-container col-12" (click)="uploadPhoto()">
-          <img *ngIf="!hideBtn" [src]="imageSrc" class="avatar">
-          <a *ngIf="hideBtn" class="upload-btn btn btn-primary">사진 업로드</a>
-        </div>
+            </div> <!--image-list-->
+          </div> <!--row-->
+
       </div>
 
       <!--숙소설명 container-->
       <div *ngIf="currentState === 'description'" class="description-container">
-        <h3>숙소에 대해서 설명해주세요!</h3>
-        <input class="description-textbox" type="text" placeholder="역에서 5분거리입니다">
+        <h3>숙소에 대해서 설명해주세요.</h3>
+        <input autofocus class="description-textbox" type="text" placeholder="역에서 5분거리입니다"
+        (keyup)="checkNextButtonState()"
+        [(ngModel)]="roomDescription">
       </div>
 
       <!--숙소이름 container-->
       <div *ngIf="currentState === 'accommodationName'" class="accommodationName-container">
-        <h3>나만의 멋진 숙소이름을 만들어주세요!</h3>
-        <input class="accomodation-name" maxlength="10" type="text" placeholder="10글자 이내로 작성해주세요">
+        <h3>숙소이름 입력 해주세요.</h3>
+          <input autofocus type="text" placeholder="숙소 이름"
+           class="accomodation-name" maxlength="10"
+           (keyup)="checkNextButtonState()"
+           [(ngModel)]="roomName">
+        <!-- <input autofocus class="accomodation-name" maxlength="10" type="text" placeholder="10글자 이내로 작성해주세요"
+        [(ngModel)]="roomName"> -->
       </div>
 
-      <!--최대 예약가능한 날짜 container-->
-      <div *ngIf="currentState === 'maximumReservationDate'" class="maximumReservationDate-container">
+
+      <!--예약 한도일 container-->
+      <div *ngIf="currentState === 'maximumCheckInRange'" class="maximumCheckInRange-container">
         <h3>얼마나 먼 날짜까지 예약할 수 있나요? </h3>
         <div class="avaiability-date">
-          <select class="select-box" name="avaiability-date">
-            <option *ngFor="let availableDate of availableDates">
+          <select class="select-box" (change)="chageAvailableDate($event.target.value)" name="avaiability-date">
+            <option value="{{availableDate}}" *ngFor="let availableDate of availableDates">
               {{availableDate}}
             </option>
           </select>
         </div>
       </div>
 
-      <!--최소 예약가능한 날짜 container-->
-      <div *ngIf="currentState === 'minimumReservationDate'" class="minimumReservationDate-container">
+
+      <!--최소 최대 예약가능한 날짜 container-->
+      <div *ngIf="currentState === 'minMaxReservationDate'" class="minMaxReservationDate-container">
         <h3>게스트가 얼마동안 숙박할 수 있나요? </h3>
         <!--몇박 몇일 선택-->
         <div class="reservationSetting-container">
 
-          <div class="min-night night-box-container">
+          <div class="min-night number-box">
             <input class="night-input-box" id="min-night-input-box" type="number" [value]="minNightCount"
             (focusout)="changeMinNightCount($event.target.value)" maxlength="4"
             onKeyPress="if(this.value.length==4) return false;">
@@ -239,7 +250,7 @@
             <button (click)="decreaseMinNight()" class="count-button btn btn-outline-success">-</button>
             <button (click)="increaseMinNight()" class="count-button btn btn-outline-success">+</button>
           </div>
-          <div class="max-night night-box-container">
+          <div class="max-night number-box">
             <input class="night-input-box" id="max-night-input-box" type="number" value="{{maxNightCount}}"
             (focusout)="changeMaxNightCount($event.target.value)" maxlength="4"
             onKeyPress="if(this.value.length==4) return false;">
@@ -256,6 +267,12 @@
             <span class="min-max-tooltip-text" *ngIf="maxNightCount > maximumNightCount">
               숙박일수는 10박을 초과할 수 없습니다.
             </span>
+            <span class="min-max-tooltip-text" *ngIf="maxNightCount >= 1 && maxNightCount === minNightCount">
+              최소 숙박일수와 최대 숙박일수는 동일 할 수 없습니다.
+            </span>
+            <span class="min-max-tooltip-text" *ngIf="maxNightCount >= 1 && minNightCount === 0">
+              최소 숙박일수는 0일 수 없습니다.
+            </span>
           </div>
         </div> <!--setting-->
       </div> <!--container-->
@@ -263,30 +280,47 @@
       <!--숙박가격 container-->
       <div *ngIf="currentState === 'price'" class="price-container">
         <!--편의시설(종류 선택)-->
-        <h3>1박 요금을 설정해주세요! </h3>
-        <input class="price-name" maxlength="10" type="text" placeholder="45000원">
+        <h3>모든 날짜에 동일하게 적용할 기본 요금을 설정하세요</h3>
+        <div class="number-box">
+          <span>₩</span>
+          <input autofocus class="price-box" type="number" placeholder="45000"
+          (keyup)="checkNextButtonState()"
+          [value]="price"
+          (focusout)="changePrice($event.target.value)"
+          onKeyPress="if(this.value.length==8) return false;">
+        </div>
+
+        <div class="min-max-tooltip">
+          <div *ngIf="price > 1">
+            <span class="min-max-tooltip-text" *ngIf="price < 10670 || price > 10669995 ">
+              최소 ₩10,670부터 최대 ₩10,669,995의 기본 요금을 설정하세요.
+            </span>
+          </div>
+        </div>
       </div>
 
       <!--버튼 panel-->
       <div class="row justify-content-between hosting-button-panel">
+        <button type="button" class="btn btn-primary btn-lg btn3d"
+        (click)="sendingLocalData()">임시버튼</button>
         <div class="hosting-button-back">
-          <a class="register-button btn btn-primary" (click)="backPageState()">
-            뒤로
-          </a>
+          <button type="button" class="btn btn-primary btn-lg btn3d" (click)="backPageState()">
+          <span class="glyphicon glyphicon-cloud"></span> 뒤로</button>
         </div>
         <div class="hosting-button-next">
-          <a class="register-button btn btn-primary" (click)="nextPageState()">
-            다음
-          </a>
+          <button id="next-button" type="button" class="btn btn-primary btn-lg btn3d"
+          (click)="nextPageState()">
+          <span class="glyphicon glyphicon-cloud"></span> 다음</button>
         </div>
       </div>
     </article>
+
 
     <!--aside container-->
     <aside class="content-right col-md-6">
       <div class="help-panel">
         <div class="aside-panel-body d-flex justify-content-center">
-          <p>이곳에 도움말을 적어주세요!</p>
+          <pre>{{nextButtonState | json}}</pre>
         </div>
       </div>
     </aside>
