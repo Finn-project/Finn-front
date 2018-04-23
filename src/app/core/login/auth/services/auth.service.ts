@@ -17,8 +17,8 @@ export class AuthService {
   url = `${environment.apiUrl}`;
   TOKEN_NAME = environment.tokenName;
   user = environment.user;
-
   Authorization: string;
+  house_value: any;
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelper,
@@ -55,6 +55,15 @@ export class AuthService {
       .shareReplay();
   }
 
+  img_check(pk: number): Observable<any> {
+    return this.http.get<any>(`${this.url}house/${pk}`)
+      .do(res => this.house_value = res)
+    .shareReplay();
+  }
+  gethouse_value() {
+    return this.house_value;
+  }
+
 // 유저 정보 수정
   patchUser(formData): Observable<any> {
     const endpoint = `${this.url}user/${this.getUser().pk}/`;
@@ -64,7 +73,7 @@ export class AuthService {
     formData.append('email', this.getUser().username);
     return this.http
       .patch(endpoint, formData, { headers: headerConfig })
-      .do(res => {this.setUser(res)});
+      .do(res => {this.setUser(res); });
   }
 
   deleteProfileImage() {

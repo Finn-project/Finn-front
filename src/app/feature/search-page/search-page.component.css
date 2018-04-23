@@ -62,9 +62,50 @@
   top:100px;
   right: 0;
   width: 40%;
-  height: 900px;
+  height: 800px;
   margin-left: 20px;
-  background-color:red;
+}
+
+.search-footer{
+  width : 95%;
+  height: 120px;
+  margin: 10px 0;
+  border-bottom: 1px solid #D8D8D8;
+}
+.search-next-button{
+  width : 100%;
+  height: 70px;
+   display: flex;
+   justify-content: center;
+}
+.search-text{
+  text-align: center;
+  color: #767676;
+  font-size: 15px;
+}
+.search-position{
+  height: 50px;
+  color: #484848 ;
+  font-weight: 300 ;
+   font-size: 15px;
+}
+.arrow-right{
+  background-color: transparent !important;
+    border-color: #008489 !important;
+    color: #008489 !important;
+    border: 1px solid !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 16px !important;
+    position: relative;
+    cursor: pointer;
+    margin: 0 50px;
+}
+.arrow-right svg{
+  position: absolute;
+  top: 6px;
+  left: 7px;
+  text-align: center;
 }
 @media(min-width: 1240px) {
     .finn-col-gl-3 {
@@ -97,4 +138,12 @@
 agm-map {
  width: 100%;
  height: 100%;
+}
+::ng-deep footer {
+  display: none;
+}
+.marker {
+  font-weight: 800;
+  color: red;
+  background-color: red;
 }

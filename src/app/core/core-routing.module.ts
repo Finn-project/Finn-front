@@ -6,6 +6,8 @@ import { RoomComponent } from '../feature/host-register/room-basic-info/room.com
 import { ProfileComponent } from '../feature/profile/profile.component';
 import { ProfileEditComponent } from '../feature/profile/profile-edit/profile-edit.component';
 import { ProductDetailsComponent } from '../feature/product-details/product-details.component';
+import { PaymentComponent } from '../feature/payment/payment.component';
+import { SearchPageComponent } from './../feature/search-page/search-page.component';
 import { AuthGuard } from './login/auth';
 import { ProfileImageComponent } from '../feature/profile/profile-image/profile-image.component';
 
@@ -32,7 +34,16 @@ const routes: Routes = [
   {
     path: 'detail/:pk',
     component: ProductDetailsComponent,
+  },
+  {
+    path: 'payment',
+    component: PaymentComponent,
+  },
+  {
+    path: 'search_page',
+    component: SearchPageComponent
   }
+
 ];
 
 
