@@ -15,10 +15,12 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductDetailsComponent implements OnInit {
   url = `${environment.apiUrl}`;
   modal: boolean;
-  constructor(public auth: AuthService,
+  constructor (
+    public auth: AuthService,
     private http: HttpClient,
     public spinner: SpinnerService,
-    private route: ActivatedRoute) {  }
+    private route: ActivatedRoute
+  ) {}
   img_profile: any;
   value: any;
   user: any;
@@ -34,7 +36,6 @@ export class ProductDetailsComponent implements OnInit {
     this.route.params
     .subscribe(res => {this.pk = +res.pk;});
     this.img_check();
-
   }
   img_check() {
     console.log(this.pk);
@@ -52,7 +53,7 @@ export class ProductDetailsComponent implements OnInit {
         this.spinner.hide();
       });
     }
-  reservationModal() {
+    reservationModal() {
     this.modal = !this.modal;
   }
 }

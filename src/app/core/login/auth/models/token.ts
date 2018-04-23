@@ -13,8 +13,8 @@ export interface Token {
     is_facebook_user: boolean,
     images: [
       {
-      img_profile_150: any,
-      img_profile_300: any,
+      img_profile_28: any,
+      img_profile_225: any,
       img_profile: any
       }
     ]
