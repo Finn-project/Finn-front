@@ -28,6 +28,7 @@ export class ProfileEditComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('userForm', this.userForm);
     console.log('submit');
   }
 }

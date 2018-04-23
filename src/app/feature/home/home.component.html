@@ -9,19 +9,19 @@
   </div>
   </div>
   <div class="row room-list">
-      <div  *ngFor="let result of results; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
-        <div class="embed-responsive embed-responsive-3by2">
-            <a [routerLink]= "['/detail', pk]" ><img src="{{result.img_cover_400_300}}" class="embed-responsive-item" alt="room image" (click)="getPk($event)" [id] ="result.pk"></a>
-        </div>
-        <div class="room-list-item-type" >
-            {{result.house_type}}
-          </div>
-        <div class="room-list-item-title">
-            {{result.name}}
-        </div>
-        <div class="room-list-item-price">
-          ₩{{result.price_per_night}}
-        </div>
+    <div  *ngFor="let result of results; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
+      <div class="embed-responsive embed-responsive-3by2">
+          <a [routerLink]= "['/detail', pk]" ><img src="{{result.img_cover_400_300}}" class="embed-responsive-item" alt="room image" (click)="getPk($event)" [id] ="result.pk"></a>
       </div>
+      <div class="room-list-item-type" >
+          {{result.house_type}}
+      </div>
+      <div class="room-list-item-title">
+          {{result.name}}
+      </div>
+      <div class="room-list-item-price">
+        ₩{{result.price_per_night}}
+      </div>
+    </div>
   </div>
 </div>
