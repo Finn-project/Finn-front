@@ -48,7 +48,7 @@ export class ProductDetailsComponent implements OnInit {
           this.longitude = +res.longitude;
           this.spinner.hide();
         } else {
-          this.img_profile = (res.host.images.img_profile_150);
+          this.img_profile = (res.host.images.img_profile_28);
         }
         this.value = res;
         this.spinner.hide();

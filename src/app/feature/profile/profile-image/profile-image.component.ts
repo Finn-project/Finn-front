@@ -30,7 +30,7 @@ export class ProfileImageComponent implements OnInit {
     this.fileToUpload = files.item(0);
     let formData: FormData = new FormData();
     formData.append('img_profile', this.fileToUpload);
-    this.auth.patchUser(formData).subscribe((result) => {
+    this.auth.patchUserImage(formData).subscribe((result) => {
       console.log('result', result)
     }, (error) => {
       console.log('patch user error', error);
@@ -44,7 +44,6 @@ export class ProfileImageComponent implements OnInit {
   }
 
   getProfileImage() {
-    // console.log('hasProfileImage', this.hasProfileImage());
     if (this.hasProfileImage()) {
       console.log('hasit', this.hasProfileImage());
     } else {
@@ -52,11 +51,11 @@ export class ProfileImageComponent implements OnInit {
     }
     const defaultImgDir = 'assets/img/defaultProfileImg.png';
     const images = this.user ? this.user.images : null;
-    return images && images.img_profile_300 ? images.img_profile_300 : defaultImgDir;
+    return images && images.img_profile_225 ? images.img_profile_225 : defaultImgDir;
   }
 
   hasProfileImage() {
     const images = this.user ? this.user.images : null;
-    return images && images.img_profile_300
+    return images && images.img_profile_225
   }
 }
