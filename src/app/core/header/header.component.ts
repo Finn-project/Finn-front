@@ -103,8 +103,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.fullModal.toggleFullModal();
   }
 
-  toggleSinnUpModal() {
-    if (this.showDropdown) {this.toggleDropdown(); }
+  toggleSignUpModal() {
+    if (this.showDropdown) { this.toggleDropdown(); }
     this.modal = !this.modal;
     if (this.login_sign = false) {
       this.login_signUp = false;
@@ -130,6 +130,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.login_signUp = true;
     }
   }
+
   offButton() {
     this.modal = false;
   }
@@ -168,6 +169,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     const images = this.user ? this.user.images : null;
     return images && images.img_profile_28 ? images.img_profile_28 : defaultImgDir;
   }
+
   logout() {
     this.auth.signout();
     this.router.navigate(['']);
