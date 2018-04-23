@@ -15,7 +15,7 @@ import { AuthGuard } from './auth';
 })
 export class LoginComponent implements OnInit {
   url = `${environment.apiUrl}`;
-  @Input()  modal;
+  @Input() modal;
   @Input() login_sign;
   @Input() login_signUp;
   @Output() offButton = new EventEmitter();
@@ -118,7 +118,10 @@ export class LoginComponent implements OnInit {
       .subscribe(
       () => {
         this.signForm.reset();
-        this.modal = !this.modal; },
+        console.log('login success');
+        this.modal = !this.modal;
+        console.log('login after', this.modal);
+       },
       () => this.router.navigate(['']),
       );
   }
