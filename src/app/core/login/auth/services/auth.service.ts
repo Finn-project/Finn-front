@@ -55,7 +55,6 @@ export class AuthService {
       .shareReplay();
   }
 
-<<<<<<< HEAD
   img_check(pk: number): Observable<any> {
     return this.http.get<any>(`${this.url}house/${pk}`)
       .do(res => this.house_value = res)
@@ -65,7 +64,6 @@ export class AuthService {
     return this.house_value;
   }
 
-=======
 // 유저 정보 수정
   patchUser(formData): Observable<any> {
     const endpoint = `${this.url}user/${this.getUser().pk}/`;
@@ -75,7 +73,7 @@ export class AuthService {
     formData.append('email', this.getUser().username);
     return this.http
       .patch(endpoint, formData, { headers: headerConfig })
-      .do(res => {this.setUser(res)});
+      .do(res => {this.setUser(res); });
   }
 
   deleteProfileImage() {
@@ -86,7 +84,6 @@ export class AuthService {
     return this.http
       .delete(endpoint, {headers: headerConfig});
   }
->>>>>>> dev
 // 인증 관련 함수들
   isAuthenticated(): boolean {
     const token = this.getToken();

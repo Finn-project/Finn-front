@@ -17,12 +17,9 @@ import { ProfileComponent } from './feature/profile/profile.component';
 import { ProfileEditComponent } from './feature/profile/profile-edit/profile-edit.component';
 import { SpinnerService } from './shared/spinner/spinner.service';
 import { SearchPageComponent } from './feature/search-page/search-page.component';
-<<<<<<< HEAD
 import { ProductDetailModule } from './feature/product-details/product-detail.module';
 import { PaymentComponent } from './feature/payment/payment.component';
-=======
 import { ProfileImageComponent } from './feature/profile/profile-image/profile-image.component';
->>>>>>> dev
 
 @NgModule({
   declarations: [
@@ -31,11 +28,8 @@ import { ProfileImageComponent } from './feature/profile/profile-image/profile-i
     ProfileComponent,
     ProfileEditComponent,
     SearchPageComponent,
-<<<<<<< HEAD
     PaymentComponent,
-=======
     ProfileImageComponent
->>>>>>> dev
   ],
   imports: [
     BrowserModule,

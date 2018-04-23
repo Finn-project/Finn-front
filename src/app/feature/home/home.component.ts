@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
     const params = new HttpParams()
     .set('page', '1')
     .set('page_size', '8');
-<<<<<<< HEAD
 
     this.http.get<any>(`${this.url}house/?fields=pk,host,img_cover_thumbnail,house_type
     ,name,price_per_night`, { params })
@@ -36,22 +35,19 @@ export class HomeComponent implements OnInit {
           this.results = res.results;
           console.log(this.results);
           this.spinner.hide();
-          if (this.results.img_cover == null){
+          if (this.results.img_cover == null) {
             this.results.img_cover = './../../../assets/img/default-image.png';
           }
         });
-=======
-    
     this.http.get<any>(`${this.url}house/`, { params })
       .subscribe(res => {
-        console.log('response', res)
+        console.log('response', res);
         this.next = res.next;
         this.previous = res.previous;
         this.results = res.results;
         this.spinner.hide();
         console.log(this.results[1].img_cover);
       });
->>>>>>> dev
   }
 
   getPk(event) {
