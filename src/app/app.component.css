@@ -1,3 +1,8 @@
 .open-modal {
     position: fixed;
 }
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

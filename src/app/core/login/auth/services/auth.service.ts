@@ -27,6 +27,7 @@ export class AuthService {
 // 회원가입 후 자동 로그인 되게 함
   sign(signForm): Observable<Token> {
     return this.http.post<Token>(`${this.url}user/`, signForm )
+      .do(res => console.log(res , res.user))
       .do(res => this.setToken(res.token))
       .do(res => this.setUser(res.user))
       .shareReplay();
@@ -53,6 +54,27 @@ export class AuthService {
       .do(res => this.setUser(res.user))
       .shareReplay();
   }
+
+// 유저 정보 수정
+  patchUser(formData): Observable<any> {
+    const endpoint = `${this.url}user/${this.getUser().pk}/`;
+    const headerConfig = {
+      Authorization: `token ${this.getToken()}`
+    };
+    formData.append('email', this.getUser().username);
+    return this.http
+      .patch(endpoint, formData, { headers: headerConfig })
+      .do(res => {this.setUser(res)});
+  }
+
+  deleteProfileImage() {
+    const endpoint = `${this.url}user/${this.getUser().pk}/noimage`;
+    const headerConfig = {
+      Authorization: `token ${this.getToken()}`
+    };
+    return this.http
+      .delete(endpoint, {headers: headerConfig});
+  }
 // 인증 관련 함수들
   isAuthenticated(): boolean {
     const token = this.getToken();
@@ -62,19 +84,19 @@ export class AuthService {
     return localStorage.getItem(this.TOKEN_NAME);
   }
   setToken(token: string): void {
-      localStorage.setItem(this.TOKEN_NAME, token);
-      this.Authorization = token;
-      console.log(token);
-    }
+    localStorage.setItem(this.TOKEN_NAME, token);
+    this.Authorization = token;
+    console.log(token);
+  }
 /* user 값 받아 올떄 사용하기 */
-  getUser(): string {
+  getUser(): User {
     const user = JSON.parse(localStorage.getItem(this.user));
     return user;
   }
   setUser(user) {
+    console.log('setUser', user);
     localStorage.setItem(this.user, JSON.stringify(user));
   }
-
 // 삭제
   signout(): void {
     this.removeToken();

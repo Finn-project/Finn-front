@@ -1,0 +1,14 @@
+<div class="container-fluid profile-container">
+  <div class="row">
+      <div class="col-md-3 user-nav-list-container">
+          <ul class="user-nav-list">
+              <li class="user-nav-list-item"><a [routerLink]="['/user', 'edit']">프로필 수정</a></li>
+              <li class="user-nav-list-item"><a [routerLink]="['/user', 'image']">사진</a></li>
+          </ul>
+          <a [routerLink]="['/user', 'edit']">프로필 보기</a>
+      </div>
+      <div class="col-md-9 user-router-container">
+        <router-outlet></router-outlet>
+      </div>
+  </div>
+</div>

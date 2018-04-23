@@ -22,6 +22,7 @@ export class SocialAuthService {
       FACEBOOK_AUTH_CONFIG,
     );
   }
+  
   getSocialCredential(provider: string): Observable<Credential> {
     return Observable.create((observer: Observer<Credential>) => {
       switch (provider) {
@@ -49,12 +50,11 @@ export class SocialAuthService {
       }});
   }
 
- private fetchFacebookCredential(authResponse): Credential {
-   console.log('fetchFacebookCredential', authResponse);
-  return {
-    access_token: authResponse
-    };
+  private fetchFacebookCredential(authResponse): Credential {
+    console.log('fetchFacebookCredential', authResponse);
+    return { access_token: authResponse };
   }
+
   private initProviderConfig(...configs: SocialAuthConfig[]) {
     configs.forEach(this.loadScript);
   }

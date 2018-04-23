@@ -1,19 +1,15 @@
 .main {
   width: 100%;
   height: 100%;
-
-}
-.cover-img{
-  height: 100%;
-  background : url("https://a0.muscache.com/im/pictures/44911e59-6245-4e05-89bf-2bb76c2c4b60.jpg?aki_policy=xx_large") no-repeat;
-  background-size: cover;
-  background-position: 50%;
 }
 .img-wrapper{
   height: 400px;
 }
+.cover-img {
+  background: no-repeat;height: 100%; background-size: cover; background-position: 50%;
+}
 .container{
-  max-width: 1050px !important;
+  max-width: 1100px !important;
   display: flex;
 }
 
@@ -21,17 +17,15 @@
   width:100%;
   margin :auto;
   margin-top: 20px;
-  height: 1000px;
 }
 .row{
   display: flex;
-  flex-direction: column;
-
+  flex-wrap: nowrap;
+  padding-right: 100px;
 }
 .box {
   margin: auto;
   margin-top: 25px;
-
 }
 .count {
   display: flex;
@@ -46,9 +40,11 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 .facilities li{
   width: 50%;
+  margin-top: 10px;
 }
 .bed{
   margin: 40px 0;
@@ -74,16 +70,15 @@ ul{
   padding:0;
   margin:0;
 }
-
 span{
   color: #484848;
   font-weight: 700;
 }
 .reservation-desktop{
-  width: 560px;
-  height: 300px;
+  width: 400px;
+  height: 350px;
   position: sticky;
-  top: 50px;
+  top:100px;
   border: 1px solid #e4e4e4 !important;
   padding: 10px 10px;
 
@@ -94,7 +89,7 @@ span{
 }
 .reservation-mobile{
   width: 100%;
-  height: 80px;
+  height: 60px;
   background-color: #fff;
   border : 1px solid #DBDBDB !important;
   position: fixed;
@@ -122,7 +117,7 @@ span{
 
 @media (max-width: 472px){
   .cover-img {
-   height: 4px;
+   height: 400px;
   }
   .img-wrapper{
   height: 500px;
@@ -152,4 +147,20 @@ span{
   h1{
     font-size: 2.0rem;
   }
+  .map-wrapper{
+    display: none;
+  }
 }
+
+/* 구글 맵 관련 css*/
+agm-map {
+ width: 100%;
+ height: 300px;
+}
+.map h1{
+  margin: 20px 0;
+}
+.map-wrapper {
+  margin-bottom: 20px;
+}
+

@@ -1,11 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, HostListener,
 Renderer2, ViewChild, ElementRef, NgZone, AfterViewInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../login/auth';
+import { AuthService, AuthGuard } from '../login/auth';
 import { Token } from '@angular/compiler';
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
 import { FullModalService } from '../service/full-modal.service';
+import { User } from '../login/auth/models/user';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,6 @@ import { FullModalService } from '../service/full-modal.service';
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   modal: boolean = false;
-  user = this.auth.getUser();
   login_sign: boolean;
   login_signUp: boolean;
   searchInput: string = '';
@@ -24,10 +24,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   showSearchModal: boolean = false;
   isInputFocused: boolean = false;
   isModalInputFocused: boolean = false;
+  profilePath: string = '';
 
   @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
-
-  // @ViewChild('#headerSearch') searchElement: ElementRef;
 
   constructor(
     private router: Router,
@@ -35,7 +34,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     public auth: AuthService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private fullModal: FullModalService
+    private fullModal: FullModalService,
+    public guard: AuthGuard
   ) {}
 
   @HostListener('window:resize', ['$event'])
@@ -47,7 +47,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {}
+  get user() {
+    return this.auth.getUser();
+  }
+
+  ngOnInit() {
+    this.profilePath = this.user ? this.user.images.img_profile_28 : '';
+  }
 
   ngAfterViewInit() {
     this.searchElementList.forEach(child => {
@@ -83,10 +89,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   toggleLoginModal() {
-   this.modal = !this.modal;
+    if (this.showDropdown) {this.toggleDropdown();}
+    this.modal = !this.modal;
     if (this.login_signUp = false) {
       this.login_sign = false;
-    }else {
+    } else {
       this.login_sign = true;
     }
   }
@@ -97,6 +104,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   toggleSinnUpModal() {
+    if (this.showDropdown) {this.toggleDropdown();}
     this.modal = !this.modal;
     if (this.login_sign = false) {
       this.login_signUp = false;
@@ -108,7 +116,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   moveSignUp() {
     this.login_signUp = false;
     this.login_sign = true;
-    console.log('moveSignUp');
   }
 
   moveSignIn() {
@@ -123,7 +130,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.login_signUp = true;
     }
   }
-
   offButton() {
     this.modal = false;
   }
@@ -153,4 +159,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.isModalInputFocused = false;
   }
 
+  hasRole() {
+    return this.auth.getUser();
+  }
+
+  getProfileImage() {
+    const defaultImgDir = 'assets/img/defaultProfileImg.png';
+    const images = this.user ? this.user.images : null;
+    return images && images.img_profile_28 ? images.img_profile_28 : defaultImgDir;
+  }
+  
+  logout() {
+    this.auth.signout();
+    this.router.navigate(['']);
+  }
 }

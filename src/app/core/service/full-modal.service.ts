@@ -4,9 +4,7 @@ import { Injectable } from '@angular/core';
 export class FullModalService {
   private isOpen: boolean = false;
 
-  constructor() { 
-    console.log('fullModal Constructor')
-  }
+  constructor() {}
 
   get getIsOpen() {
     return this.isOpen;
