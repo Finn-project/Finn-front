@@ -6,13 +6,14 @@ import { ReservationComponent } from './reservation/reservation.component';
 
 import { FormsModule } from '@angular/forms';
 import { AngularReactDatesModule } from 'angular-react-dates';
-
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     AgmCoreModule,
     FormsModule,
+    SharedModule,
     AngularReactDatesModule.forRoot(),
 
   ],

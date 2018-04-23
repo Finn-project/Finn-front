@@ -10,6 +10,7 @@ import { PaymentComponent } from '../feature/payment/payment.component';
 import { SearchPageComponent } from './../feature/search-page/search-page.component';
 import { AuthGuard } from './login/auth';
 import { ProfileImageComponent } from '../feature/profile/profile-image/profile-image.component';
+import { NotFoundComponent } from '../feature/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'search_page',
     component: SearchPageComponent
+  },
+  {
+    path: 'not-found',
+    component: NotFoundComponent
   }
 
 ];
