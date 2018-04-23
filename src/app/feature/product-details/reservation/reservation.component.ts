@@ -1,7 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
-import 'react-dates/initialize';
-
 import { isInclusivelyAfterDay } from 'react-dates';
 import { isInclusivelyBeforeDay } from 'react-dates';
 
