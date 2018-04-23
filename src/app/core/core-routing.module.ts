@@ -9,6 +9,7 @@ import { ProductDetailsComponent } from '../feature/product-details/product-deta
 import { PaymentComponent } from '../feature/payment/payment.component';
 import { SearchPageComponent } from './../feature/search-page/search-page.component';
 import { AuthGuard } from './login/auth';
+import { ProfileImageComponent } from '../feature/profile/profile-image/profile-image.component';
 
 const routes: Routes = [
   {
@@ -23,9 +24,11 @@ const routes: Routes = [
   {
     path: 'user',
     component: ProfileComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: '/user/edit',  pathMatch: 'full' },
-      { path: 'edit', component: ProfileEditComponent }
+      { path: 'edit', component: ProfileEditComponent },
+      { path: 'image', component: ProfileImageComponent }
     ]
   },
   {

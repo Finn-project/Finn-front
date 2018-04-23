@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
     const params = new HttpParams()
     .set('page', '1')
     .set('page_size', '8');
+<<<<<<< HEAD
 
     this.http.get<any>(`${this.url}house/?fields=pk,host,img_cover_thumbnail,house_type
     ,name,price_per_night`, { params })
@@ -39,22 +40,33 @@ export class HomeComponent implements OnInit {
             this.results.img_cover = './../../../assets/img/default-image.png';
           }
         });
+=======
+    
+    this.http.get<any>(`${this.url}house/`, { params })
+      .subscribe(res => {
+        console.log('response', res)
+        this.next = res.next;
+        this.previous = res.previous;
+        this.results = res.results;
+        this.spinner.hide();
+        console.log(this.results[1].img_cover);
+      });
+>>>>>>> dev
   }
+
   getPk(event) {
     this.pk = event.target.id;
     console.log('aaa', event.target.id);
   }
-  test() {
-    console.log(this.next);
 
+  test() {
+    console.log('test next', this.next);
     this.http.get<any>(`${this.next}`)
       .subscribe(res => {
         this.spinner.hide();
-
         this.results = [...this.results, ...res.results];
-
-      });
-    }
+    });
+  }
 
 /*scroll window and get data */
   @HostListener('window:scroll', ['$event'])

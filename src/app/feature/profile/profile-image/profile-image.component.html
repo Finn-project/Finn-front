@@ -1,0 +1,33 @@
+<div>
+    <form [formGroup]="profileForm" novalidate>
+      <div class="user-form-division">
+        <div class="user-form-division-header">
+          프로필 사진
+        </div>
+        <div class="container-fluid user-form-container">
+          <div class="user-form-row">
+            <div class="user-profile-container">
+              <img class="user-profile-image" [src]="getProfileImage()" alt="profile image">
+              <img class="icon-trash" src="assets/img/trashcan.svg" alt="delete profile image" (click)="onDeleteProfile()">
+              <!-- <span class="glyphicon glyphicon-trash icon-trash"></span> -->
+            </div>
+            <div class="user-profile-desc">
+              <p>
+                호스트와 게스트가 서로를 알 수 있도록 선명하게 나온 얼굴 정면 사진을 사용하는 것이 중요합니다.
+                풍경 사진을 올리면 호스트가 알아보기 힘들겠죠?
+                회원님의 얼굴이 선명하게 보이며 호스트나 게스트에게 공개하고 싶지 않은 개인 정보나 민감한 정보가 나타나지 않은 사진을 사용하세요.
+              </p>
+              <div>
+                <label for="file" class="input-file-btn">파일 업로드 하기</label>
+                <input
+                  class="hide"
+                  type="file"
+                  id="file"
+                  (change)="handleFileInput($event.target.files)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
