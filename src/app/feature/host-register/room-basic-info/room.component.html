@@ -7,10 +7,9 @@
     <div class="progress col-md-12">
       <div class="progress-bar progress-bar-striped progress-bar-animated"
       role="progressbar" aria-valuenow="progressbarPercentage" aria-valuemin="0"
-      aria-valuemax="100" style="width: 10%" id="progressbar" #progressbar>{{progressbarPercentage}}%</div>
+      aria-valuemax="100" style="width: 0%" id="progressbar">{{progressbarPercentage}}%</div>
     </div>
   </div>
-
   <div class="row">
       <!--article container-->
 
@@ -135,10 +134,6 @@
           <span>주소입력 </span>
           <input type="text" placeholder="Enter Location!" (keyup.enter)="findLocation($event.target.value, showAddress)" #address>
         </div>
-        <!-- <div class="form-group">
-          <input placeholder="search for location" type="text" class="form-control"
-          #search>
-        </div> -->
         <div class="location-field">
           <span>숙소의 위치가</span>
             <div>
@@ -160,25 +155,6 @@
       <div *ngIf="currentState === 'amenities'" class="amenities-container">
         <!--편의물품(종류 선택)-->
         <h3>어떤 편의시설을 제공하시나요?</h3>
-        <!-- <div class="bg">
-          <div>
-            <div class="chiller_cb">
-              <input id="myCheckbox" type="checkbox" checked>
-              <label for="myCheckbox">Checkbox checked</label>
-              <span></span>
-            </div>
-            <div class="chiller_cb">
-              <input id="myCheckbox2" type="checkbox">
-              <label for="myCheckbox2">Checkbox unchecked</label>
-              <span></span>
-            </div>
-            <div class="chiller_cb">
-              <input id="myCheckbox3" type="checkbox" disabled>
-              <label for="myCheckbox3">Checkbox disabled</label>
-              <span></span>
-            </div>
-          </div>
-        </div> -->
         <div class="amenity-list">
             <div class="chiller_cb" *ngFor="let amenity of amenities">
               <input type="checkbox" value="{{amenity.id}}" id="{{amenity.id}}"
@@ -229,22 +205,28 @@
       <div *ngIf="currentState === 'description'" class="description-container">
         <h3>숙소에 대해서 설명해주세요.</h3>
         <input autofocus class="description-textbox" type="text" placeholder="역에서 5분거리입니다"
+        (keyup)="checkNextButtonState()"
         [(ngModel)]="roomDescription">
       </div>
 
       <!--숙소이름 container-->
       <div *ngIf="currentState === 'accommodationName'" class="accommodationName-container">
         <h3>숙소이름 입력 해주세요.</h3>
-        <input autofocus class="accomodation-name" maxlength="10" type="text" placeholder="10글자 이내로 작성해주세요"
-        [(ngModel)]="roomName">
+          <input autofocus type="text" placeholder="숙소 이름"
+           class="accomodation-name" maxlength="10"
+           (keyup)="checkNextButtonState()"
+           [(ngModel)]="roomName">
+        <!-- <input autofocus class="accomodation-name" maxlength="10" type="text" placeholder="10글자 이내로 작성해주세요"
+        [(ngModel)]="roomName"> -->
       </div>
+
 
       <!--예약 한도일 container-->
       <div *ngIf="currentState === 'maximumCheckInRange'" class="maximumCheckInRange-container">
         <h3>얼마나 먼 날짜까지 예약할 수 있나요? </h3>
         <div class="avaiability-date">
-          <select class="select-box" (change)="chageRoomType($event.target.value)" name="avaiability-date">
-            <option value="{{roomCount}}" *ngFor="let availableDate of availableDates">
+          <select class="select-box" (change)="chageAvailableDate($event.target.value)" name="avaiability-date">
+            <option value="{{availableDate}}" *ngFor="let availableDate of availableDates">
               {{availableDate}}
             </option>
           </select>
@@ -285,6 +267,12 @@
             <span class="min-max-tooltip-text" *ngIf="maxNightCount > maximumNightCount">
               숙박일수는 10박을 초과할 수 없습니다.
             </span>
+            <span class="min-max-tooltip-text" *ngIf="maxNightCount >= 1 && maxNightCount === minNightCount">
+              최소 숙박일수와 최대 숙박일수는 동일 할 수 없습니다.
+            </span>
+            <span class="min-max-tooltip-text" *ngIf="maxNightCount >= 1 && minNightCount === 0">
+              최소 숙박일수는 0일 수 없습니다.
+            </span>
           </div>
         </div> <!--setting-->
       </div> <!--container-->
@@ -296,14 +284,18 @@
         <div class="number-box">
           <span>₩</span>
           <input autofocus class="price-box" type="number" placeholder="45000"
-          [(ngModel)]="price"
+          (keyup)="checkNextButtonState()"
+          [value]="price"
+          (focusout)="changePrice($event.target.value)"
           onKeyPress="if(this.value.length==8) return false;">
         </div>
 
         <div class="min-max-tooltip">
-          <span class="min-max-tooltip-text" *ngIf="price < 10670 || price > 10669995 ">
-            최소 ₩10,670부터 최대 ₩10,669,995의 기본 요금을 설정하세요.
-          </span>
+          <div *ngIf="price > 1">
+            <span class="min-max-tooltip-text" *ngIf="price < 10670 || price > 10669995 ">
+              최소 ₩10,670부터 최대 ₩10,669,995의 기본 요금을 설정하세요.
+            </span>
+          </div>
         </div>
       </div>
 
@@ -314,16 +306,11 @@
         <div class="hosting-button-back">
           <button type="button" class="btn btn-primary btn-lg btn3d" (click)="backPageState()">
           <span class="glyphicon glyphicon-cloud"></span> 뒤로</button>
-          <!-- <a class="register-button btn btn-primary" (click)="backPageState()">
-            뒤로
-          </a> -->
         </div>
         <div class="hosting-button-next">
-          <button type="button" class="btn btn-primary btn-lg btn3d" (click)="nextPageState()">
+          <button id="next-button" type="button" class="btn btn-primary btn-lg btn3d"
+          (click)="nextPageState()">
           <span class="glyphicon glyphicon-cloud"></span> 다음</button>
-          <!-- <a class="register-button btn btn-primary block-button" (click)="nextPageState()">
-            다음
-          </a> -->
         </div>
       </div>
     </article>
@@ -333,7 +320,7 @@
     <aside class="content-right col-md-6">
       <div class="help-panel">
         <div class="aside-panel-body d-flex justify-content-center">
-          <pre>{{roomLocalData | json}}</pre>
+          <pre>{{nextButtonState | json}}</pre>
         </div>
       </div>
     </aside>

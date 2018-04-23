@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild,
-  ElementRef, NgZone, ViewChildren, AfterViewInit, QueryList, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewChecked } from '@angular/core';
+  ElementRef, NgZone, ViewChildren, AfterViewInit,
+   QueryList, OnChanges } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { } from 'googlemaps';
@@ -9,7 +10,7 @@ import { FormControl } from '@angular/forms';
 export type PageState = 'room' | 'bedroom'
 | 'bathroom' | 'location' | 'amenities' | 'spaces'
 | 'picture' | 'description' | 'accommodationName'
-  | 'maximumCheckInRange' | 'minMaxReservationDate' |'price';
+| 'maximumCheckInRange' | 'minMaxReservationDate' |'price';
 
 interface LocationData {
   country: string;
@@ -64,8 +65,7 @@ interface Offering {
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.css']
 })
-export class RoomComponent implements OnInit, AfterViewInit, DoCheck, AfterContentInit,
-AfterContentChecked, AfterViewChecked {
+export class RoomComponent {
 
 //#region variable(변수)
 
@@ -131,14 +131,11 @@ AfterContentChecked, AfterViewChecked {
   // 최대 체크인 기간
   maxNightCount: number = 0;
 
-  // 체크인 가능 날수
-  maxCheckinRange: number = 0;
-
   // 숙박 제한일
   maximumNightCount: number = 10;
 
   // 하루 요금
-  price: number;
+  price: number = 0;
 
   // 주소 저장
   locationFields: LocationData =
@@ -183,23 +180,32 @@ AfterContentChecked, AfterViewChecked {
   currentState: PageState = this.pageStates[this.stateCount];
 
   // 유효정보 체크
-  invalidData: boolean;
+  nextButtonState = {
+    location_status: false,
+    amenities_status: false,
+    spaces_status: false,
+    picture_status: false,
+    description_status: false,
+    accommodationName_status: false,
+    minMaxReservationDate_status: false,
+    price_status: false
+  }
 
   // Local 임시저장 데이터
   roomLocalData: RoomData =
     {
       house_type: 'AP',
-      name: 's',
-      description: 's',
-      room: 1,
-      bed: 1,
+      name: '',
+      description: '',
+      room: 0,
+      bed: 0,
       bathroom: 0,
       personnel: 1,
       amenities: [],
       facilities: [],
       minimum_check_in_duration: 0,
       maximum_check_in_duration: 0,
-      maximum_check_in_range: 0,
+      maximum_check_in_range: 30,
       price_per_night: 0,
       country: '',
       city: '',
@@ -208,17 +214,17 @@ AfterContentChecked, AfterViewChecked {
       address1: '',
       latitude: 0,
       longitude: 0,
-      disable_days: ['2017-04-15'],
+      disable_days: ['2017-04-23'],
       img_cover: null,
       house_images: []
     }
   ;
 
   // page에 따른 진척도 %표시
-  progressbarPercentage = 10;
+  progressbarPercentage = 0;
 
   // available-setting
-  availableDates = ['1개월', '2개월', '3개월', '항상'];
+  availableDates = ['1개월', '2개월', '3개월'];
 
   // 숙박일 validator
   reservationForm: FormGroup;
@@ -231,8 +237,6 @@ AfterContentChecked, AfterViewChecked {
   imageSrc = '';
 
   result; // file upload 수행 이후 서버로부터 수신한 데이터
-
-  checked: boolean = false;
 
   componentForm = {
     premise: 'short_name',
@@ -249,9 +253,10 @@ AfterContentChecked, AfterViewChecked {
   // 전송할 폼데이터
   formData: FormData;
 
+  // 사진 정보 임시저장공간
   imageList = [
     { id: this.getImageListNextId(), caption: '', image: null, available: false }
-  ]
+  ];
 
 //#region 함수모음(function)
 
@@ -266,82 +271,77 @@ constructor(
       avatar: ['', Validators.required]
     });
   }
-
-  ngOnChanges () {
-    console.log('1: ngOnChange실행');
-  }
-  ngDoCheck () {
-    // 변화를 감지 할시 실행됨 실행순서 1번
-    // console.log('2: ngDoCheck실행');
-  }
-  ngAfterContentInit () {
-    // console.log('3: ngAfterConetetnInit실행');
-  }
-  ngAfterContentChecked () {
-    // 변화를 감지 할시 실행됨 실행순서 2번
-    // console.log('4: ngAfterConentChecked실행');
-  }
-  ngAfterViewChecked () {
-    // 변화를 감지 할시 실행됨 실행순서 3번
-    // console.log('5: ngAfterViewChecked실행');
-  }
-
-  ngAfterViewInit () {
-    // this.addressList.forEach(searchBox => {
-    //   this.mapsAPILoader.load().then(() => {
-    //     const autocomplete = new google.maps.places.Autocomplete(searchBox.nativeElement, {
-    //       types: ['address']
-    //     });
-    //     autocomplete.addListener('place_changed', () => {
-    //       this.ngZone.run(() => {
-    //         // get the place result
-    //         const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-    //         // verify result
-    //         if (place.geometry === undefined || place.geometry === null) {
-    //           return;
-    //         }
-    //       });
-    //     });
-    //   });
-    // })
-  }
-
-  ngOnInit () {
-
-  }
-
+  // 방 개수 변경시
   chageRoomCount (roomCount) {
     this.selectedRoomCount = roomCount;
   }
 
+  // 인원 변경
   chageRoomCapacity (roomCapacity) {
     this.selectedRoomCapacity = roomCapacity;
   }
 
+  // 방 유형변경
   chageRoomType (roomType) {
     this.selectedRoomType = roomType;
   }
 
+  // 최대 체크인 가능기간 설정
+  chageAvailableDate (availableDate) {
+    switch (availableDate) {
+      case '1개월': this.roomLocalData.maximum_check_in_range = 30; break;
+      case '2개월' : this.roomLocalData.maximum_check_in_range = 60; break;
+      case '3개월' : this.roomLocalData.maximum_check_in_range = 90; break;
+      default : this.roomLocalData.maximum_check_in_range = 30; break;
+    }
+  }
+
+  // 편의물품 체크
   changeAmenity(event) {
+
     this.amenities = this.amenities.map(amenity => {
       return amenity.id === +event.value ? Object.assign({}, amenity, { available: !amenity.available }) : amenity;
     });
+
+    this.roomLocalData.amenities =
+    this.amenities.filter(amenity => amenity.available)
+    .map(userAmenity => +userAmenity.id);
+
+    if (this.roomLocalData.amenities.length) {
+      this.switchNextButtonValid();
+    } else {
+      this.switchNextButtonInvalid();
+    }
   }
 
+  // 편의시설 체크
   changeSpace(event) {
     this.spaces = this.spaces.map(space => {
       return space.id === +event.value ? Object.assign({}, space, { available: !space.available }) : space;
     });
+
+    this.roomLocalData.facilities =
+      this.spaces.filter(space => space.available)
+        .map(userSpace => +userSpace.id);
+
+    if (this.roomLocalData.facilities.length) {
+      this.switchNextButtonValid();
+    } else {
+      this.switchNextButtonInvalid();
+    }
   }
 
+  // 사진 번호 얻어오기
   getImageListId () {
     return this.imageList.map(image => image.id);
   }
 
+  // 사진 다음 번호 얻기
   getImageListNextId() {
     return this.imageList ? Math.max.apply(null, this.getImageListId()) + 1 : 1;
   }
 
+  // 사진 등록
   onFileChange(files: FileList, imageId:string) {
 
     if (files && files.length > 0) {
@@ -378,11 +378,20 @@ constructor(
         this.imageList = [...this.imageList, { id: this.getImageListNextId(),
         caption: '', image: null, available: false }];
       }
+
+      // 사진 페이지 상태
+      if (this.roomLocalData.house_images.length) {
+        this.nextButtonState.picture_status = true;
+        this.switchNextButtonValid();
+      } else {
+        this.nextButtonState.picture_status = false;
+        this.switchNextButtonValid();
+      }
     }
   }
 
+  // 임시버튼
   sendingLocalData() {
-
     for (let key of Object.keys(this.roomLocalData)) {
       if (key === 'house_images') {
         continue;
@@ -390,28 +399,18 @@ constructor(
       this.formData.append(key, this.roomLocalData[key]);
     }
     console.log(this.roomLocalData);
-    // const headers = new HttpHeaders()
-    //   .set('Authorization', 'Token ccf9ec87c75370b9c702ad28ab20795a0622f364');
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Token ccf9ec87c75370b9c702ad28ab20795a0622f364');
 
-    // this.http.post('https://himanmen.com/house/', this.formData, { headers })
-    //   .subscribe(response => {
-    //     console.log(response);
-    //   })
+    this.http.post('https://himanmen.com/house/', this.formData, { headers })
+      .subscribe(response => {
+        console.log(response);
+      })
   }
 
   get avatar() {
     return this.form.get('avatar');
   }
-
-  // returnFileSize(number) {
-  //   if (number < 1024) {
-  //     return number + 'bytes';
-  //   } else if (number > 1024 && number < 1048576) {
-  //     return (number / 1024).toFixed(1) + 'KB';
-  //   } else if (number > 1048576) {
-  //     return (number / 1048576).toFixed(1) + 'MB';
-  //   }
-  // }
 
   // 최소숙박수를 입력받아 number로 변경해서 저장
   changeMinNightCount(event: string) {
@@ -420,6 +419,7 @@ constructor(
     const parseNumber = parseInt(formattedNum, 10);
     const absNum = Math.abs(parseNumber);
     this.minNightCount = absNum;
+    this.checkNextButtonState();
   }
 
   // 최대숙박수를 입력받아 number로 변경해서 저장
@@ -429,11 +429,17 @@ constructor(
     const parseNumber = parseInt(formattedNum, 10);
     const absNum = Math.abs(parseNumber);
     this.maxNightCount = absNum;
+    this.checkNextButtonState();
   }
 
-  uploadPhoto () {
-    const upload = document.getElementById('upload-photo');
-    upload.click();
+  // 요금을 입력받아 number로 변경해서 저장
+  changePrice (event: string) {
+    const checkNum = /[0-9]+/g;
+    const formattedNum = event.match(checkNum).join('');
+    const parseNumber = parseInt(formattedNum, 10);
+    const absNum = Math.abs(parseNumber);
+    this.price = absNum;
+    this.checkNextButtonState();
   }
 
   // 주소 정보 초기화
@@ -457,10 +463,7 @@ constructor(
     this.roomLocalData.district = '';
     this.roomLocalData.dong = '';
     this.roomLocalData.address1 = '';
-
   }
-
-  // ccf9ec87c75370b9c702ad28ab20795a0622f364
 
   // google map GEO(위도,경도 및 요청정보) 얻기
   findLocation(location: string, address: any) {
@@ -472,11 +475,15 @@ constructor(
       }
     })
     .subscribe(response => {
-      console.dir(response);
       if (!response.results.length) {
+        this.nextButtonState.location_status = false;
+        this.switchNextButtonInvalid();
         address.style.color = 'red';
         return this.formattedLocation = '올바른 주소를 입력 해 주세요.'
       }
+
+      address.style.color = 'black';
+      // 주소 입력 확인 여부
 
       this.formattedLocation = '';
       // 입력하기전 필드셋 초기화
@@ -504,21 +511,85 @@ constructor(
         // 정리된 포멧이 localAddressData에 저장
         if (this.componentForm[filteredAddressType[i]]) {
           const addressValue = addressData[this.componentForm[filteredAddressType[i]]];
-          console.log(filteredAddressType[i], addressValue);
-
           this.locationFields[filteredAddressType[i]] = addressValue;
         }
       }
 
+      // 정돈된 주소값 , 위도, 경도
       this.formattedLocation = response.results[0].formatted_address;
       this.latitude = response.results[0].geometry.location.lat;
       this.longitude = response.results[0].geometry.location.lng;
+
+      // 유효정보 입력후 location page 상태변경
+      this.nextButtonState.location_status = true;
+
+      this.switchNextButtonValid();
     });
   }
 
+  checkNextButtonState () {
 
-  // 현재 페이지를 변경
+    // 편의물품 체크
+    if (this.roomLocalData.amenities.length) {
+      this.nextButtonState.amenities_status = true;
+    } else {
+      this.nextButtonState.amenities_status = false;
+    }
+
+    // 편의시설 체크
+    if (this.roomLocalData.facilities.length) {
+      this.nextButtonState.spaces_status = true;
+    } else {
+      this.nextButtonState.spaces_status = false;
+    }
+
+    // 숙소이름 유효성검사
+    if (this.roomName.length < 1 || this.roomName.length > 11) {
+      this.nextButtonState.accommodationName_status = false;
+    } else {
+      this.nextButtonState.accommodationName_status = true;
+      this.switchNextButtonValid();
+    }
+
+    // 숙소설명 유효성검사
+    if (this.roomDescription.length < 1 || this.roomDescription.length > 201) {
+      this.nextButtonState.description_status = false;
+    } else {
+      this.nextButtonState.description_status = true;
+      this.switchNextButtonValid();
+    }
+
+
+     // 최소 최대 기간 유효성검사
+    if (this.currentState === 'minMaxReservationDate') {
+      if (this.minNightCount <= 0 || this.maxNightCount < this.minNightCount
+        || this.maxNightCount > 10 || this.maxNightCount === this.minNightCount) {
+        this.nextButtonState.minMaxReservationDate_status = false;
+        this.switchNextButtonInvalid();
+      } else {
+        this.nextButtonState.minMaxReservationDate_status = true;
+        this.switchNextButtonValid();
+      }
+    }
+
+
+    // 하루숙박 비용 유효성검사
+
+    if (this.currentState === 'price') {
+      if (this.price < 10670 ||
+        this.price > 10669995) {
+        this.nextButtonState.price_status = false;
+        this.switchNextButtonInvalid();
+      } else {
+        this.nextButtonState.price_status = true;
+        this.switchNextButtonValid();
+      }
+    }
+  }
+
+  // 현재 페이지를 변경하며 상태에따라 로컬데이터에 정보입력
   changePageState () {
+
     switch (this.currentState) {
       case 'room': this.currentState = this.pageStates[this.stateCount];
         // formdata 형성
@@ -529,13 +600,16 @@ constructor(
         break;
 
       case 'bedroom': this.currentState = this.pageStates[this.stateCount];
-        this.roomLocalData.bed = this.bedroomCount; break;
+        this.roomLocalData.bed = this.bedroomCount;
+        break;
 
       case 'bathroom': this.currentState = this.pageStates[this.stateCount];
-        this.roomLocalData.bathroom = this.bathroomCount; break;
+        this.roomLocalData.bathroom = this.bathroomCount;
+        if (!this.nextButtonState.location_status) {
+            this.switchNextButtonInvalid();
+        } break;
 
       case 'location': this.currentState = this.pageStates[this.stateCount];
-
         this.roomLocalData.country = this.locationFields.country;
         this.roomLocalData.city = this.locationFields.administrative_area_level_1;
         this.roomLocalData.district = this.locationFields.sublocality_level_1;
@@ -543,43 +617,70 @@ constructor(
         this.roomLocalData.address1 += this.locationFields.sublocality_level_3;
         this.roomLocalData.address1 += this.locationFields.premise;
         this.roomLocalData.latitude = this.latitude;
-        this.roomLocalData.longitude = this.longitude; break;
+        this.roomLocalData.longitude = this.longitude;
+        if (!this.nextButtonState.amenities_status) {
+          this.switchNextButtonInvalid();
+        } break;
 
       case 'amenities': this.currentState = this.pageStates[this.stateCount];
-        this.roomLocalData.amenities =
-          this.amenities.filter(amenity => amenity.available)
-          .map(userAmenity => +userAmenity.id);
+        this.checkNextButtonState();
+        if (!this.nextButtonState.spaces_status) {
+          this.switchNextButtonInvalid();
+        } break;
 
       case 'spaces': this.currentState = this.pageStates[this.stateCount];
-        this.roomLocalData.facilities =
-          this.spaces.filter(space => space.available)
-          .map(userSpace => +userSpace.id); break;
+        this.checkNextButtonState();
+        if (!this.nextButtonState.picture_status) {
+          this.switchNextButtonInvalid();
+        } break;
 
       case 'picture': this.currentState = this.pageStates[this.stateCount];
-      break;
+        if (!this.nextButtonState.description_status) {
+          this.switchNextButtonInvalid();
+        } break;
 
       case 'description': this.currentState = this.pageStates[this.stateCount];
-        this.roomLocalData.description = this.roomDescription; break;
+      this.roomLocalData.description = this.roomDescription;
+        this.checkNextButtonState();
+        if (!this.nextButtonState.accommodationName_status) {
+          this.switchNextButtonInvalid();
+        } break;
 
       case 'accommodationName': this.currentState = this.pageStates[this.stateCount];
-        this.roomLocalData.name = this.roomName; break;
+        this.roomLocalData.name = this.roomName;
+        this.checkNextButtonState(); break;
 
       case 'maximumCheckInRange': this.currentState = this.pageStates[this.stateCount];
-        this.roomLocalData.maximum_check_in_range = this.maxCheckinRange; break;
+        if (!this.nextButtonState.minMaxReservationDate_status) {
+          this.switchNextButtonInvalid();
+        } break;
 
       case 'minMaxReservationDate': this.currentState = this.pageStates[this.stateCount];
         this.roomLocalData.minimum_check_in_duration = this.minNightCount;
         this.roomLocalData.maximum_check_in_duration = this.maxNightCount;
-        // this.roomLocalData.disable_days = this.disableDays; break;
+        this.checkNextButtonState();
+        if (!this.nextButtonState.price_status) {
+          this.switchNextButtonInvalid();
+        } break;
 
       case 'price': this.currentState = this.pageStates[this.stateCount];
-        this.roomLocalData.price_per_night = this.price; break;
+        this.roomLocalData.price_per_night = this.price;
+        this.checkNextButtonState();
+        break;
 
       default: this.currentState = this.pageStates[this.stateCount]; break;
     }
   }
 
+  switchNextButtonInvalid() {
+    const nextButton = document.getElementById('next-button');
+    nextButton.classList.add('invalid');
+  }
 
+  switchNextButtonValid() {
+    const nextButton = document.getElementById('next-button');
+    nextButton.classList.remove('invalid');
+  }
 
   // 뒤로 버튼
   backPageState () {
@@ -587,20 +688,27 @@ constructor(
       this.stateCount--;
       const progressBar = document.getElementById('progressbar');
       if (this.progressbarPercentage > 0) {
-        this.progressbarPercentage -= 10;
+        this.progressbarPercentage -= 8;
+        if (this.progressbarPercentage < 0) {
+          this.progressbarPercentage = 0;
+        }
         progressBar.style.width = this.progressbarPercentage + '%';
       }
       this.changePageState();
+      this.switchNextButtonValid();
     }
   }
 
   // 다음 버튼
   nextPageState () {
-    if (this.stateCount < 11) {
+    if (this.stateCount < 12) {
       this.stateCount++;
       const progressBar = document.getElementById('progressbar');
       if (this.progressbarPercentage < 100) {
-        this.progressbarPercentage += 10;
+        this.progressbarPercentage += 8;
+        if(this.progressbarPercentage > 100) {
+          this.progressbarPercentage = 100;
+        }
         progressBar.style.width = this.progressbarPercentage + '%';
       }
       this.changePageState();
@@ -634,24 +742,28 @@ constructor(
   // 최소 숙박일수 증가
   increaseMinNight() {
     this.minNightCount++;
+    this.checkNextButtonState();
   }
 
   // 최소 숙박일수 감소
   decreaseMinNight() {
     if (this.minNightCount > 0) {
       this.minNightCount--;
+      this.checkNextButtonState();
     }
   }
 
   // 최대 숙박일수 증가
   increaseMaxNight() {
     this.maxNightCount++;
+    this.checkNextButtonState();
   }
 
   // 최대 숙박일수 감소
   decreaseMaxNight() {
     if (this.maxNightCount > 0) {
       this.maxNightCount--;
+      this.checkNextButtonState();
     }
   }
 
