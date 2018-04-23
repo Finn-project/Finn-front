@@ -65,24 +65,45 @@ export class AuthService {
   }
 
 // 유저 정보 수정
-  patchUser(formData): Observable<any> {
+  // 유저 프로필 이미지 수정
+  patchUserImage(formData : FormData): Observable<User> {
     const endpoint = `${this.url}user/${this.getUser().pk}/`;
     const headerConfig = {
       Authorization: `token ${this.getToken()}`
     };
     formData.append('email', this.getUser().username);
     return this.http
-      .patch(endpoint, formData, { headers: headerConfig })
+      .patch<User>(endpoint, formData, { headers: headerConfig })
+      .do(res => {
+        console.log('patchUserImage', res);
+        this.setUser(res)});
+  }
+  // 유저 프로필 정보 수정
+  patchUser(data): Observable<User> {
+    const endpoint = `${this.url}user/${this.getUser().pk}/`;
+    const headerConfig = {
+      Authorization: `token ${this.getToken()}`
+    };
+    data = Object.assign({}, data, { email: this.getUser().username });
+    console.log('patch User data', data)
+    return this.http
+      .patch<User>(endpoint, data, { headers: headerConfig })
       .do(res => {this.setUser(res); });
   }
-
+  // 유저 프로필 이미지 삭제
   deleteProfileImage() {
     const endpoint = `${this.url}user/${this.getUser().pk}/noimage`;
     const headerConfig = {
       Authorization: `token ${this.getToken()}`
     };
     return this.http
-      .delete(endpoint, {headers: headerConfig});
+      .delete(endpoint, {headers: headerConfig})
+      .do(() => {
+        let user = this.getUser();
+        user = Object.assign({}, user, {images: null});
+        console.log('delete User Image Success', user);
+        this.setUser(user);
+      });
   }
 // 인증 관련 함수들
   isAuthenticated(): boolean {
