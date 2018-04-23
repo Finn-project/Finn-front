@@ -39,7 +39,7 @@ export class ReservationComponent implements OnInit {
   // }
 
   house_value = this.auth.gethouse_value();
-  price = this.house_value.price_per_night;
+  price = this.house_value.price_per_night.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   @Input() modal;
   @Output() reservationModal = new EventEmitter();
 
@@ -52,6 +52,7 @@ export class ReservationComponent implements OnInit {
     console.log('maxmun', this.house_value.maximum_check_in_range);
     console.log('disable', this.house_value.disable_days);
     console.log('reserve', this.house_value.reserve_days);
+    console.log('price', this.house_value.price_per_night);
   }
 
 
@@ -61,9 +62,12 @@ export class ReservationComponent implements OnInit {
     const reserve = this.house_value.reserve_days;
 
     if (reserve == null) {
-      return false;
+      return data;
+    } else if ( data == null ){
+      data = this.house_value.reserve_days;
+    } else {
+      data = data.concat(...reserve);
     }
-    data = data.concat(...reserve);
     for (let i = 0; i < data.length; i++) {
       const startTime = moment();
       const endTime = moment(data[i]).format('YYYY MM DD');

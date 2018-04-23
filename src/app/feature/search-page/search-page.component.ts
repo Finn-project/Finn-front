@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AgmCoreModule } from '@agm/core';
+import { MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-search-page',
@@ -7,6 +8,8 @@ import { AgmCoreModule } from '@agm/core';
   styleUrls: ['./search-page.component.css']
 })
 export class SearchPageComponent implements OnInit {
+
+
 
   latitude = 12.123123;
   longitude = 12.23213;
@@ -75,9 +78,17 @@ export class SearchPageComponent implements OnInit {
       location: '서울'
     }
   ];
+
   constructor() { }
 
   ngOnInit() {
-  }
 
+  // centerChanged(e) {
+  //   setInterval(function () {
+  //     console.log(e);
+  //   }, 8000);
+  // }
+
+  }
 }
+

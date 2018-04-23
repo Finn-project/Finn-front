@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class PaymentComponent implements OnInit {
   url = `${environment.apiUrl}`;
   value = this.getUser();
+  price = this.value.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  result = (this.value.price * this.value.date).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   constructor(private auth: AuthService, private http: HttpClient, public router: Router) { }
   // get test() {
   //   return this.auth.test;
@@ -32,7 +34,6 @@ export class PaymentComponent implements OnInit {
     const In = this.value.check_in_date;
     const Out = this.value.check_out_date;
     const data = {
-
       check_in_date: In,
       check_out_date: Out,
       house: this.value.house,

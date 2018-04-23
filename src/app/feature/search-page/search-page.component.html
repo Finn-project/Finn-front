@@ -42,7 +42,7 @@
     </div>
 
     <div class="map-wrapper">
-      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"  >
         <agm-marker [latitude]="latitude" [longitude]="longitude">
           <agm-info-window></agm-info-window>
         </agm-marker>
@@ -54,3 +54,4 @@
     </div>
   </div>
 </div>
+<!-- (boundsChange)="centerChanged($event)" -->

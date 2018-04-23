@@ -17,7 +17,7 @@
             <div class="reservation-text">
               <div class="reservation-wrapper">
                 <div class="room-info">
-                  <p class= "Room-name">{{ value.name}}t</p>
+                  <p class= "Room-name">{{ value.name}}</p>
                   <span>{{value.description}}</span>
                 </div>
                 <div class="img-wrapper">
@@ -36,12 +36,12 @@
                    </div>
                   </div>
                   <div style= "border-bottom: 1px solid #DBDBDB;"class= "option price-text">
-                    <span>₩{{value.price}} x {{value.date}}박</span>
-                    <span>₩{{value.price * value.date}}</span>
+                    <span>₩{{price}} x {{value.date}}박</span>
+                    <span>₩{{result}}</span>
                   </div>
                    <div class= "option price-text">
                   <span>총 합계 (KRW)</span>
-                  <span class= "final-price">₩{{value.price * value.date}}</span>
+                  <span class= "final-price">₩{{result}}</span>
                   </div>
               </div>
             </div>

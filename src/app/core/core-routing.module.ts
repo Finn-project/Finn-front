@@ -7,6 +7,7 @@ import { ProfileComponent } from '../feature/profile/profile.component';
 import { ProfileEditComponent } from '../feature/profile/profile-edit/profile-edit.component';
 import { ProductDetailsComponent } from '../feature/product-details/product-details.component';
 import { PaymentComponent } from '../feature/payment/payment.component';
+import { SearchPageComponent } from './../feature/search-page/search-page.component';
 import { AuthGuard } from './login/auth';
 
 const routes: Routes = [
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'payment',
     component: PaymentComponent,
+  },
+  {
+    path: 'search_page',
+    component: SearchPageComponent
   }
 
 ];
