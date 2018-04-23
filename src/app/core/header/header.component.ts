@@ -77,7 +77,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           });
         });
       });
-    })
+    });
   }
 
   onLogoClick() {
@@ -89,7 +89,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   toggleLoginModal() {
-    if (this.showDropdown) {this.toggleDropdown();}
+    if (this.showDropdown) {this.toggleDropdown(); }
     this.modal = !this.modal;
     if (this.login_signUp = false) {
       this.login_sign = false;
@@ -104,7 +104,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   toggleSinnUpModal() {
-    if (this.showDropdown) {this.toggleDropdown();}
+    if (this.showDropdown) {this.toggleDropdown(); }
     this.modal = !this.modal;
     if (this.login_sign = false) {
       this.login_signUp = false;
@@ -124,7 +124,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   move() {
-    if (this.login_signUp = false){
+    if (this.login_signUp = false) {
       this.login_sign = true;
     } else {
       this.login_signUp = true;
@@ -168,7 +168,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     const images = this.user ? this.user.images : null;
     return images && images.img_profile_28 ? images.img_profile_28 : defaultImgDir;
   }
-  
   logout() {
     this.auth.signout();
     this.router.navigate(['']);
