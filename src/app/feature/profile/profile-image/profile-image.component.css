@@ -62,3 +62,6 @@
 .user-profile-container:hover > .icon-trash{
     display: block;
 }
+.hide {
+    display: none;
+}

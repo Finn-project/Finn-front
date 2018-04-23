@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.profilePath = this.user ? this.user.images.img_profile_28 : '';
+    this.profilePath = this.user ? this.user.images.img_profile_150 : '';
   }
 
   ngAfterViewInit() {
@@ -167,7 +167,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   getProfileImage() {
     const defaultImgDir = 'assets/img/defaultProfileImg.png';
     const images = this.user ? this.user.images : null;
-    return images && images.img_profile_28 ? images.img_profile_28 : defaultImgDir;
+    return images && images.img_profile_150 ? images.img_profile_150 : defaultImgDir;
   }
 
   logout() {

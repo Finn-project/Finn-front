@@ -22,7 +22,11 @@ export class ProfileEditComponent implements OnInit {
       essentialControls: this.fb.group({
         firstname: ['', [
           Validators.required
-        ]]
+        ]],
+        phone_num: ['', [
+          Validators.required,
+          Validators.pattern(/^\d{3}-\d{3,4}-\d{4}$/),
+        ]],
       })
     });
   }

@@ -44,8 +44,19 @@ export class ProfileImageComponent implements OnInit {
   }
 
   getProfileImage() {
+    // console.log('hasProfileImage', this.hasProfileImage());
+    if (this.hasProfileImage()) {
+      console.log('hasit', this.hasProfileImage());
+    } else {
+      console.log('not has it', this.hasProfileImage());
+    }
     const defaultImgDir = 'assets/img/defaultProfileImg.png';
     const images = this.user ? this.user.images : null;
-    return images ? images.img_profile_225 : defaultImgDir;
+    return images && images.img_profile_300 ? images.img_profile_300 : defaultImgDir;
+  }
+
+  hasProfileImage() {
+    const images = this.user ? this.user.images : null;
+    return images && images.img_profile_300
   }
 }

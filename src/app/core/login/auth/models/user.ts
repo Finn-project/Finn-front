@@ -6,7 +6,7 @@ export interface User {
   last_name: string;
   images: {
     img_profile: string;
-    img_profile_28: string;
-    img_profile_225: string
+    img_profile_150: string;
+    img_profile_300: string
   }
 }
