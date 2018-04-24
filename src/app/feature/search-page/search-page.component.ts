@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AgmCoreModule } from '@agm/core';
 import { MapsAPILoader } from '@agm/core';
+import { SearchHouseService } from '../../core/service/search-house.service';
 
 @Component({
   selector: 'app-search-page',
@@ -76,7 +77,10 @@ export class SearchPageComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private searchHouse: SearchHouseService) { 
+    console.log(this.searchHouse.getlatitude);
+    console.log(this.searchHouse.getlongitude);
+  }
 
   ngOnInit() {
 

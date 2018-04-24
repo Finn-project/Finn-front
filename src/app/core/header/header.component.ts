@@ -7,6 +7,9 @@ import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
 import { FullModalService } from '../service/full-modal.service';
 import { User } from '../login/auth/models/user';
+import { HttpClient } from 'selenium-webdriver/http';
+import { HttpParams } from '@angular/common/http';
+import { SearchHouseService } from '../service/search-house.service';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +28,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isInputFocused: boolean = false;
   isModalInputFocused: boolean = false;
   profilePath: string = '';
-
+  
   @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
 
   constructor(
@@ -35,7 +38,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private fullModal: FullModalService,
-    public guard: AuthGuard
+    public guard: AuthGuard,
+    private searchHouse: SearchHouseService
   ) {}
 
   @HostListener('window:resize', ['$event'])
@@ -67,9 +71,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             const place: google.maps.places.PlaceResult = autocomplete.getPlace();
             console.log('place', place);
             // verify result
+            
+            
             if (place.geometry === undefined || place.geometry === null) {
               return;
             }
+            this.searchHouse.setlatitude = place.geometry.location.lat();
+            this.searchHouse.setlongitude = place.geometry.location.lng();
+            console.log('searchHouse lat',this.searchHouse.getlatitude);
+            console.log('searchHouse lng',this.searchHouse.getlongitude);
+            this.router.navigate(['search_page'])
             // set latitude, longitude and zoom
             // this.latitude = place.geometry.location.lat();
             // this.longitude = place.geometry.location.lng();

@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FullModalService } from './service/full-modal.service';
+import { SearchHouseService } from './service/search-house.service';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { FullModalService } from './service/full-modal.service';
   ],
   declarations: [HeaderComponent, LoginComponent],
   exports: [HeaderComponent, LoginComponent, RouterModule],
-  providers: [FullModalService]
+  providers: [FullModalService, SearchHouseService]
 })
 export class CoreModule { }
