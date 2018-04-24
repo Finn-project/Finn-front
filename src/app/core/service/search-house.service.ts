@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SearchHouseService {
-  latitude: number;
-  longitude: number;
+  latitude: number = 12.0;
+  longitude: number = 38.00;
 
   constructor() { }
 

@@ -2,30 +2,33 @@
   <div class="test">
     <div style="width:100%; height: 100%;">
       <div class="row room-list">
-        <div *ngFor="let result of data; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
-          <div class="embed-responsive embed-responsive-3by2">
-            <img src="{{result.image}}" class="embed-responsive-item" alt="room image">
+          <div *ngFor="let result of results; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item" [class.hide]="notFound == 0">
+            <div class="embed-responsive embed-responsive-3by2">
+              <a [routerLink]="['/detail', pk]">
+                <img src="{{result.img_cover_thumbnail}}" class="embed-responsive-item" alt="room image" (click)="getPk($event)" [id]="result.pk">
+              </a>
+            </div>
+            <div class="room-list-item-type">
+              {{result.house_type}}
+            </div>
+            <div class="room-list-item-title">
+              {{result.name}}
+            </div>
+            <div class="room-list-item-price">
+              ₩{{result.price_per_night}}
+            </div>
           </div>
-          <div class="room-list-item-type">
-            {{result.roomType}}
-          </div>
-          <div class="room-list-item-title">
-            {{result.title}}
-          </div>
-          <div class="room-list-item-price">
-            ₩{{result.price}}
-          </div>
-        </div>
+        <app-not-found *ngIf= "notFound == 0"></app-not-found>
       </div>
       <div>
-        <div class="search-footer">
+        <div class="search-footer" *ngIf= "notFound !== 0">
           <div class="search-next-button">
-            <div class="arrow-right">
+            <div class="arrow-right" (click)= "previous_page()">
               <svg viewBox="0 0 18 18" role="img" aria-label="이전" focusable="false" style="height: 1em; width: 1em; display: block; fill: currentcolor;">
                 <path d="m13.7 16.29a1 1 0 1 1 -1.42 1.41l-8-8a1 1 0 0 1 0-1.41l8-8a1 1 0 1 1 1.42 1.41l-7.29 7.29z" fill-rule="evenodd"></path>
               </svg>
             </div>
-            <div class="arrow-right">
+            <div class="arrow-right next" (click)= "next_page()">
               <svg viewBox="0 0 18 18" role="img" aria-label="다음" focusable="false" style="height: 1em; width: 1em; display: block; fill: currentcolor;">
                 <path d="m4.29 1.71a1 1 0 1 1 1.42-1.41l8 8a1 1 0 0 1 0 1.41l-8 8a1 1 0 1 1 -1.42-1.41l7.29-7.29z" fill-rule="evenodd"></path>
               </svg>
@@ -37,22 +40,18 @@
         </div>
       </div>
       <div class="search-position">
-        <span>나라 > </span><span>지역</span>
+        <span>{{results.country}} > </span><span>{{results.city}}</span>
       </div>
     </div>
 
-    <div class="map-wrapper">
-      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"  >
-        <agm-marker [latitude]="latitude" [longitude]="longitude">
-          <agm-info-window></agm-info-window>
-        </agm-marker>
-        <agm-marker [latitude]="12.13123" [longitude]="12.2323">
-          <agm-info-window  class ="marker" isOpen="true">{{10000}}</agm-info-window>
-        </agm-marker>
+    <div class="map-wrapper" (mouseup)="mouseup()">
+      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (boundsChange)= "boundsChange($event)">
+          <agm-marker [latitude]="+result.latitude" [longitude]="+result.longitude" *ngFor= "let result of results">
+            <agm-info-window>{{result.price_per_night}}</agm-info-window>
+          </agm-marker>
       </agm-map>
-
     </div>
   </div>
 </div>
 
-<!-- (boundsChange)="centerChanged($event)" -->
+
