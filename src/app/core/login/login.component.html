@@ -4,15 +4,15 @@
     <button class="modal-off" (click) = "offButton.emit(modal)">
       <img class="off-button "src="../../../assets/img/login-image/off-button.svg" alt="off button">
     </button>
-    <div class = "re">
-      <div class="social-login" (click)= "socialSignin('facebook')">
+    <div class="re">
+      <div class="social-login" (click)="socialSignin('facebook')">
         <form>
           <button class="facebook-btn">페이스북 계정으로 로그인</button>
         </form>
       </div>
       <hr>
       <div class="login-form">
-        <form [formGroup]="userForm" (ngSubmit)= "login()" novalidate>
+        <form [formGroup]="userForm" (ngSubmit)="login()" novalidate>
           <div class="email-wrapper">
             <input type="email" class="form-control email" placeholder="이메일 주소" formControlName="email_test">
             <div class="svg-login">
@@ -25,7 +25,6 @@
             <p *ngIf="email_test.errors?.pattern && email_test.touched" class="text-danger">
               email를 이메일 형식에 맞게 입력하세요</p>
           </div>
-
           <div class="email-wrapper">
             <input type="password" class="form-control password" placeholder="비밀번호" formControlName="password_test">
             <div class="svg-login">
@@ -47,7 +46,6 @@
         <p class="signUp-text">에어비앤비 계정이 없으세요?
           <a class="signUp" (click)="moveSignUp.emit()">회원가입</a>
         </p>
-
       </div>
     </div>
   </div>
@@ -145,8 +143,8 @@
           </div>
         </div>
         <div class="alert-box">
-            <p *ngIf="phone_num.errors?.pattern" class="text-danger">전화번호 형식에 맞지 않습니다.</p>
-            <p *ngIf="signForm.invalid" class="text-danger">입력 형식에 맞지 않는 것이 있습니다.</p>
+          <p *ngIf="phone_num.errors?.pattern" class="text-danger">전화번호 형식에 맞지 않습니다.</p>
+          <p *ngIf="signForm.invalid" class="text-danger">입력 형식에 맞지 않는 것이 있습니다.</p>
         </div>
         <div class ="r">
           <div>
@@ -157,7 +155,6 @@
             <a class="signUp" (click)= " moveSignIn.emit()">로그인</a>
           </p>
         </div>
-
       </form>
     </div>
   </div>

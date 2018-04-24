@@ -31,6 +31,10 @@
     font-weight: 400;
     display: block;
     line-height: normal;
+    outline: none;
+}
+.user-form-input.error {
+    border-color: red;
 }
 .user-form-row {
     margin-bottom: 24px;

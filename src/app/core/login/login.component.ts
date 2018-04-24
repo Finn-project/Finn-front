@@ -92,7 +92,6 @@ export class LoginComponent implements OnInit {
   }
   get phone_num() {
     return this.signForm.get('phone_num');
-
   }
   // login form
   get email_test() {
@@ -118,9 +117,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
       () => {
         this.signForm.reset();
-        console.log('login success');
         this.modal = !this.modal;
-        console.log('login after', this.modal);
        },
       () => this.router.navigate(['']),
       );

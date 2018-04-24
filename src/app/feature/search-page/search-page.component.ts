@@ -8,9 +8,6 @@ import { MapsAPILoader } from '@agm/core';
   styleUrls: ['./search-page.component.css']
 })
 export class SearchPageComponent implements OnInit {
-
-
-
   latitude = 12.123123;
   longitude = 12.23213;
   zoom = 12;
