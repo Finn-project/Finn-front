@@ -5,7 +5,6 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { SpinnerService } from '../../shared/spinner/spinner.service';
-
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -23,6 +22,7 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
   img_profile: any;
+  img_cover = '../../../assets/img/default-image.png';
   value: any;
   user: any;
   zoom = 15;
@@ -32,6 +32,7 @@ export class ProductDetailsComponent implements OnInit {
   longitude: number;
   ngOnInit() {
     this.user = this.auth.getUser();
+    console.log('house', this.auth.gethouse_value())
     this.spinner.show();
 // pk 값 url 에서 받아오기
     this.route.params
@@ -48,10 +49,12 @@ export class ProductDetailsComponent implements OnInit {
           this.longitude = +res.longitude;
           this.spinner.hide();
         } else {
-          this.img_profile = (res.host.images.img_profile_28);
+          this.img_profile = (res.host.images.img_profile_150);
         }
         this.value = res;
+        console.log('tetetetetete', res.house_images)
         this.spinner.hide();
+        console.log('nu;;', res.img_cover)
       });
     }
     reservationModal() {

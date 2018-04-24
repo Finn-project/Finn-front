@@ -20,6 +20,7 @@ import { SearchPageComponent } from './feature/search-page/search-page.component
 import { ProductDetailModule } from './feature/product-details/product-detail.module';
 import { PaymentComponent } from './feature/payment/payment.component';
 import { ProfileImageComponent } from './feature/profile/profile-image/profile-image.component';
+import { NotFoundComponent } from './feature/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { ProfileImageComponent } from './feature/profile/profile-image/profile-i
     ProfileEditComponent,
     SearchPageComponent,
     PaymentComponent,
-    ProfileImageComponent
+    ProfileImageComponent,
+    NotFoundComponent,
+
   ],
   imports: [
     BrowserModule,
