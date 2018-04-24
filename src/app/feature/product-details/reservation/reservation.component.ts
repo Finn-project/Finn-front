@@ -45,13 +45,7 @@ export class ReservationComponent implements OnInit {
   private router: Router) { this.date();}
 
 
-  ngOnInit() {
-    console.log('value', this.house_value);
-    console.log('maxmun', this.house_value.maximum_check_in_range);
-    console.log('disable', this.house_value.disable_days);
-    console.log('reserve', this.house_value.reserve_days);
-    console.log('price', this.house_value.price_per_night);
-  }
+  ngOnInit() {}
 
 
   date() {
@@ -106,7 +100,6 @@ export class ReservationComponent implements OnInit {
   giveDate() {
     const check_in_date = moment(this.selectedDateRange.start).format('YYYY-MM-DD');
     const check_out_date = moment(this.selectedDateRange.end).format('YYYY-MM-DD');
-    console.log(check_in_date, check_out_date);
 
     const duration = moment.duration(moment(this.selectedDateRange.end).diff(this.selectedDateRange.start));
     const days = duration.asDays();

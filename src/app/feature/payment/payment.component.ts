@@ -27,10 +27,6 @@ export class PaymentComponent implements OnInit {
     return Data;
   }
   testest() {
-
-    console.log(typeof (this.value.check_in_date));
-    console.log(typeof Number(this.value.check_out_date));
-
     const In = this.value.check_in_date;
     const Out = this.value.check_out_date;
     const data = {
@@ -44,9 +40,6 @@ export class PaymentComponent implements OnInit {
     const headers = new HttpHeaders()
       .set('Authorization', `token ${this.auth.getToken()}`);
 
-    console.log(this.auth.getToken());
-    console.log(data);
-    console.log(headers);
     this.http.post(`${this.url}reservation/`, data, { headers } )
       .subscribe(() => {
         this.router.navigate(['']),

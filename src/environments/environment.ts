@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://himanmen.com/',
+  apiUrl: 'https://dlighter.com/',
   // apiUrl: "http://eb-finn-project.ap-northeast-2.elasticbeanstalk.com/",
   // test url
   tokenName: 'access_token',

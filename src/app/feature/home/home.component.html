@@ -12,8 +12,8 @@
     <div  *ngFor="let result of results; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
       <div class="embed-responsive embed-responsive-3by2">
         <a [routerLink]= "['/detail', pk]" >
-          <img *ngIf = "result.img_cover_thumbnail == null" src="{{img}}" class="embed-responsive-item" alt="room image" (click)="getPk($event)" [id] ="result.pk">
-        <img  *ngIf = "!result.img_cover_thumbnail == null" src="{{result.img_cover_thumbnail}}" class="embed-responsive-item" alt="room image" (click)="getPk($event)" [id]="result.pk"></a>
+          <!-- <img *ngIf = "!result.img_cover_thumbnail == null" src="{{img}}" class="embed-responsive-item" alt="room image" (click)="getPk($event)" [id] ="result.pk"> -->
+        <img  src="{{result.img_cover_thumbnail}}" class="embed-responsive-item" alt="room image" (click)="getPk($event)" [id]="result.pk"></a>
       </div>
       <div class="room-list-item-type" >
           {{result.house_type}}
