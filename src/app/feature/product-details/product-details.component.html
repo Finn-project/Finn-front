@@ -1,10 +1,6 @@
 <div class="main" *ngIf="value" >
   <div class="img-wrapper">
-     <!-- 이미지 url  -->
-     <!-- style=" background : url('https://a0.muscache.com/im/pictures/44911e59-6245-4e05-89bf-2bb76c2c4b60.jpg?aki_policy=xx_large')
-    no-repeat; height: 100%; background-size: cover; background-position: 50%;" -->
-    <div class="cover-img" [ngStyle]="{'background-image': 'url(' + value.img_cover + ')'}">
-    </div>
+    <div  class="cover-img" [ngStyle]="{'background-image': 'url(' + value.house_images[0]+ ')'}"></div>
   </div>
   <div class=" container section">
     <div class="row">
@@ -104,8 +100,8 @@
             <span>{{value.city}}</span>
             <span>{{value.country}}</span>
           </div>
-          <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-            <agm-marker [latitude]="latitude" [longitude]="longitude">
+          <agm-map [latitude]="+value.latitude" [longitude]="+value.longitude" [zoom]="zoom">
+            <agm-marker [latitude]="+value.latitude" [longitude]="+value.longitude">
               <agm-info-window></agm-info-window>
             </agm-marker>
           </agm-map>
@@ -113,10 +109,8 @@
             <i class="fas fa-map-marker-alt"></i>
             <i style="color:red">정확한 위치는 예약 완료 후에 표시됩니다 </i>
           </div>
-
         </div>
       </div>
-
       <div class="reservation-desktop">
          <app-reservation></app-reservation>
       </div>
@@ -139,4 +133,6 @@
           </button>
         </div>
   </div>
+  <app-footer></app-footer>
 </div>
+

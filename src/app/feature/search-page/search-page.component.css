@@ -103,9 +103,12 @@
 }
 .arrow-right svg{
   position: absolute;
-  top: 6px;
-  left: 7px;
+  top: 7px;
+  left: 6px;
   text-align: center;
+}
+.next svg {
+  left: 8px;
 }
 @media(min-width: 1240px) {
     .finn-col-gl-3 {
@@ -139,11 +142,12 @@ agm-map {
  width: 100%;
  height: 100%;
 }
-::ng-deep footer {
-  display: none;
-}
+
 .marker {
   font-weight: 800;
   color: red;
   background-color: red;
+}
+.hide {
+  display: none;
 }

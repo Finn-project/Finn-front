@@ -13,13 +13,12 @@ export class HomeComponent implements OnInit {
   url = `${environment.apiUrl}`;
   results: any;
   pk: number;
-
   hi: any;
   next: any;
   previous: any;
+  img = './../../../assets/img/default-image.png';
 
-
-  constructor(private http: HttpClient, public spinner: SpinnerService) {}
+  constructor(private http: HttpClient, public spinner: SpinnerService) { }
 
   ngOnInit() {
     this.spinner.show();
@@ -33,21 +32,9 @@ export class HomeComponent implements OnInit {
           this.next = res.next;
           this.previous = res.previous;
           this.results = res.results;
-          console.log(this.results);
+          console.log(res);
           this.spinner.hide();
-          if (this.results.img_cover == null) {
-            this.results.img_cover = './../../../assets/img/default-image.png';
-          }
         });
-    this.http.get<any>(`${this.url}house/`, { params })
-      .subscribe(res => {
-        console.log('response', res);
-        this.next = res.next;
-        this.previous = res.previous;
-        this.results = res.results;
-        this.spinner.hide();
-        console.log(this.results[1].img_cover);
-      });
   }
 
   getPk(event) {

@@ -2,6 +2,7 @@ footer{
   width: 100%;
   border-top: 1px solid #eee;
   margin-top: 50px;
+  animation: name 1s ease-in-out;
 }
 .footer-main{
   display: flex;
@@ -11,6 +12,7 @@ footer{
   display: flex;
   border-bottom: 1px solid #eee;
   flex-wrap: nowrap;
+
 
 }
 .footer-box{
@@ -33,5 +35,14 @@ ul li{
 @media (max-width: 600px){
   footer{
     display: none;
+  }
+}
+
+@keyframes name{
+  from {
+    transform: translateY(100%)
+  }
+  to{
+    transform:translateY(0%);
   }
 }

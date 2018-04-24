@@ -5,7 +5,6 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { SpinnerService } from '../../shared/spinner/spinner.service';
-
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -23,15 +22,13 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
   img_profile: any;
-  value: any;
-  user: any;
+  value: object;
+  user: object;
   zoom = 15;
   pk: number;
-// 위도 경도 값
-  latitude: number;
-  longitude: number;
   ngOnInit() {
     this.user = this.auth.getUser();
+    console.log('house', this.auth.gethouse_value())
     this.spinner.show();
 // pk 값 url 에서 받아오기
     this.route.params
@@ -43,12 +40,10 @@ export class ProductDetailsComponent implements OnInit {
     this.auth.img_check(this.pk)
       .subscribe(res => {
         if (res.host.images == null) {
-          this.img_profile = '../../../assets/img/defaultProfileImg.png';
-          this.latitude = +res.latitude;
-          this.longitude = +res.longitude;
           this.spinner.hide();
+          this.img_profile = './../../../assets/img/defaultProfileImg.png';
         } else {
-          this.img_profile = (res.host.images.img_profile_28);
+          this.img_profile = (res.host.images.img_profile);
         }
         this.value = res;
         this.spinner.hide();
