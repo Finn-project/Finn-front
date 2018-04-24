@@ -1,3 +1,8 @@
+
+.container {
+  max-width: 800px;
+}
+
 .row {
   margin: 0;
 }
@@ -161,16 +166,24 @@ label.amenities-label {
 /* 사진업로드 */
 
 .picture-title h3 {
-
   font-weight: 800;
 }
 .upload-picture-container {
   height: 200px;
   cursor: pointer;
-  border: dashed 3px gray;
+  border: dashed 2px gray;
+  border-radius: 3px;
   background-color : #efefef;
   background-repeat : repeat-x;
   padding: 0;
+}
+
+.trash-icon {
+  width: 50px;
+  height: 30px;
+  position: absolute;
+  left: 26px;
+  top: 15px;
 }
 
 /* 업로드버튼 중간고정 */
@@ -179,7 +192,7 @@ label.amenities-label {
 }
 
 .image-list-container {
-  height: 325px;
+  height: 300px;
   overflow-y: scroll;
 }
 
@@ -293,6 +306,28 @@ input::-webkit-inner-spin-button {
   color: black;
 }
 
+/* calendar */
+
+.calendar-container {
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.disable-date-title {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.disable-date-title > h3{
+  margin: 0;
+  font-weight: 800;
+  line-height: 57px;
+}
+.view-year-month {
+  margin-left: 20px;
+  font-weight: 600;
+}
 /* 가격 */
 
 .price-title h3 {
@@ -360,17 +395,7 @@ input::-webkit-inner-spin-button {
   color: green;
 }
 
-/* aside 도움말 */
 
-.content-right {
-  background-color: #fafafa;
-}
-.aside-panel-body {
-  height: 300px;
-  margin-left: 30px;
-  border: solid 1px #dce0e0;
-  border-radius: 10;
-}
 
 /* layout */
 .col-md-6 {
@@ -430,7 +455,7 @@ ul {
 
 .invalid {
   opacity: 0.5;
-  /* pointer-events: none; */
+  pointer-events: none;
 }
 
 /* 증감버튼 설명 Label */
@@ -566,8 +591,8 @@ ul {
 }
 
 .fa-trash-alt {
-  color:#e6e6de;
-  font-size: 30px;
+  color:#008489;
+  font-size: 23px;
   cursor: pointer;
 }
 
@@ -593,6 +618,93 @@ ul {
 
 .button-label div {
   padding:0 15px;
+}
+
+.circle-button {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 0;
+  -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  -moz-box-shadow: 0 0 0 1px rgba(0,0,0,0.08),0 2px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  background-color: white;
+  margin-top: 7px;
+}
+
+.circle-medium-button {
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 0;
+  -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  -moz-box-shadow: 0 0 0 1px rgba(0,0,0,0.08),0 2px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  background-color: white;
+  margin-top: 7px;
+}
+
+.button-group {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.month-button {
+  cursor: pointer;
+  padding: 9px 35px;
+  float: left;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  background-color: white;
+  border: 0;
+  border-color: #c4c4c4;
+  background: white;
+  color: #484848;
+}
+
+.month-button-left {
+  margin-left: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.month-button-right {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+
+
+/* aside 도움말 */
+.content-right {
+  background-color: #fafafa;
+}
+.aside-panel-body {
+  background-color: white;
+  height: 350px;
+  border: solid 1px #dce0e0;
+  padding: 26px;
+}
+
+.bulb-icon {
+  padding: 10px 0;
+}
+
+.tip {
+  font-size: 16px;
+  line-height: 150%;
+  color: #767676;
+  background-color: white;
+}
+
+.clicked {
+  color: #dee0de;
 }
 
 agm-map {

@@ -6,15 +6,14 @@
   <!--progressbar container-->
   <div class="row progress-bar-container">
     <div class="progress col-md-12">
-      <div class="progress-bar progress-bar-striped progress-bar-animated"
-      role="progressbar" aria-valuenow="progressbarPercentage" aria-valuemin="0"
-      aria-valuemax="100" style="width: 0%" id="progressbar">{{progressbarPercentage}}%</div>
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="progressbarPercentage"
+        aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progressbar">{{progressbarPercentage}}%</div>
     </div>
   </div>
   <div class="row">
-      <!--article container-->
-
-    <article class="content-left col-md-7">
+    <!--article container-->
+    <article class="content-left col-md-7" [class.col-md-12]="currentState === 'disableDate' ||
+    currentState === 'picture'">
       <!--숙소정보 container-->
       <div *ngIf="currentState === 'room'" class="room-container">
         <div class="greeting">
@@ -38,12 +37,11 @@
               </select>
             </div>
 
+            <!--방 개수 설정-->
             <div class="roomtype-description">
               <span class="sub-description">방은 몇개 인가요?</span>
             </div>
-
-            <!--방 개수 설정-->
-            <div class="room-count-selectbox" >
+            <div class="room-count-selectbox">
               <a (click)="roomSelectBox(roomCountBox)">
                 <i class="fas fa-chevron-down"></i>
               </a>
@@ -53,11 +51,8 @@
                 </option>
               </select>
             </div>
-
           </div>
         </div>
-        <!--Room관련 selectBox들 설정-->
-
 
       </div>
 
@@ -93,13 +88,15 @@
                 </span>
               </div>
               <div class="bedroom-button button-label">
-                  <a (click)="decreaseBedroomCount()">
-                    <i class="fas fa-minus-circle"></i>
-                  </a>
-                    <div><span>{{bedroomCount}}</span></div>
-                  <a (click)="increaseBedroomCount()">
-                    <i class="fas fa-plus-circle"></i>
-                  </a>
+                <a (click)="decreaseBedroomCount()">
+                  <i class="fas fa-minus-circle"></i>
+                </a>
+                <div>
+                  <span>{{bedroomCount}}</span>
+                </div>
+                <a (click)="increaseBedroomCount()">
+                  <i class="fas fa-plus-circle"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -155,9 +152,9 @@
         </div>
         <div class="location-field sub-description">
           <span>검색된 숙소 주소를 확인해주세요.</span>
-            <div>
-              <em class="user-location" #showAddress>{{formattedLocation}}</em>
-            </div>
+          <div>
+            <em class="user-location" #showAddress>{{formattedLocation}}</em>
+          </div>
         </div>
 
         <div class="map-screen">
@@ -177,13 +174,12 @@
           <h3>어떤 편의시설을 제공하시나요?</h3>
         </div>
         <div class="amenity-list">
-            <div class="chiller_cb" *ngFor="let amenity of amenities">
-              <input type="checkbox" value="{{amenity.id}}" id="{{amenity.id}}"
-              (change)="changeAmenity(amenityList)" [class.checked]="amenity.available"
+          <div class="chiller_cb" *ngFor="let amenity of amenities">
+            <input type="checkbox" value="{{amenity.id}}" id="{{amenity.id}}" (change)="changeAmenity(amenityList)" [class.checked]="amenity.available"
               #amenityList>
-              <label for="{{amenity.id}}">{{amenity.content}}</label>
-              <span></span>
-            </div>
+            <label for="{{amenity.id}}">{{amenity.content}}</label>
+            <span></span>
+          </div>
         </div>
       </div>
 
@@ -196,9 +192,8 @@
 
         <div class="space-list">
           <div class="chiller_cb" *ngFor="let space of spaces">
-            <input type="checkbox" value="{{space.id}}" id="{{space.id}}"
-            (change)="changeSpace(spaceList)" [class.checked]="space.available"
-            #spaceList>
+            <input type="checkbox" value="{{space.id}}" id="{{space.id}}" (change)="changeSpace(spaceList)" [class.checked]="space.available"
+              #spaceList>
             <label for="{{space.id}}">{{space.content}}</label>
             <span></span>
           </div>
@@ -212,22 +207,27 @@
 
           <h3>나만의 숙소 사진을 등록해주세요!</h3>
         </div>
-          <div class="row image-list-container">
-            <div class="image-list col-6" *ngFor="let image of imageList">
-              <input id="{{image.id}}" accept="image/*" class="upload-photo" type="file"
-              (change)="onFileChange($event.target.files, image.id)">
-              <a class="remove-btn" (click)="removePhoto(image.id)">
-                <i class="fas fa-trash-alt"></i>
-              </a>
-              <label for="{{image.id}}" class="upload-picture-container col-12">
-                <div class="upload-btn-container">
-                  <a class="upload-btn btn btn-primary">사진 업로드</a>
+        <div class="row image-list-container">
+          <div class="image-list col-6" *ngFor="let image of imageList">
+            <input id="{{image.id}}" accept="image/*" class="upload-photo" type="file" (change)="onFileChange($event.target.files, image.id)">
 
-                  <img class="image-box" *ngIf="image.available" src="{{image.caption}}">
-                </div>
-              </label>
-            </div> <!--image-list-->
-          </div> <!--row-->
+
+            <label for="{{image.id}}" class="upload-picture-container col-12">
+              <div class="upload-btn-container">
+                <a class="upload-btn btn btn-primary">사진 업로드</a>
+
+                <img class="image-box" *ngIf="image.available" src="{{image.caption}}">
+              </div>
+            </label>
+            <div class="trash-icon">
+              <button class="circle-medium-button" type="button" (click)="removePhoto(image.id)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+          <!--image-list-->
+        </div>
+        <!--row-->
 
       </div>
 
@@ -239,9 +239,7 @@
           <h3>숙소에 대해서 설명해주세요.</h3>
         </div>
         <div class="description-text">
-          <input autofocus class="description-textbox" type="text" placeholder="역에서 5분거리입니다"
-          (keyup)="checkNextButtonState()"
-          [(ngModel)]="roomDescription">
+          <input autofocus class="description-textbox" type="text" placeholder="역에서 5분거리입니다" (keyup)="checkNextButtonState()" [(ngModel)]="roomDescription">
         </div>
       </div>
 
@@ -250,10 +248,8 @@
         <div class="accommodation-title page-title">
           <h3>숙소이름을 입력 해주세요.</h3>
         </div>
-          <input autofocus type="text" placeholder="10자이내로 입력 해주세요."
-           class="accomodation-name" maxlength="10"
-           (keyup)="checkNextButtonState()"
-           [(ngModel)]="roomName">
+        <input autofocus type="text" placeholder="10자이내로 입력 해주세요." class="accomodation-name" maxlength="10" (keyup)="checkNextButtonState()"
+          [(ngModel)]="roomName">
         <!-- <input autofocus class="accomodation-name" maxlength="10" type="text" placeholder="10글자 이내로 작성해주세요"
         [(ngModel)]="roomName"> -->
       </div>
@@ -275,7 +271,6 @@
         </div>
       </div>
 
-
       <!--최소 최대 예약가능한 날짜 container-->
       <div *ngIf="currentState === 'minMaxReservationDate'" class="minMaxReservationDate-container">
 
@@ -287,9 +282,8 @@
         <div class="reservationSetting-container">
 
           <div class="min-night number-box">
-            <input class="night-input-box" id="min-night-input-box" type="number" [value]="minNightCount"
-            (focusout)="changeMinNightCount($event.target.value)" maxlength="4"
-            onKeyPress="if(this.value.length==4) return false;">
+            <input class="night-input-box" id="min-night-input-box" type="number" [value]="minNightCount" (focusout)="changeMinNightCount($event.target.value)"
+              maxlength="4" onKeyPress="if(this.value.length==4) return false;">
             <label for="min-night-input-box">
               <span class="minNight-count">박(최소)</span>
             </label>
@@ -297,9 +291,8 @@
             <button (click)="increaseMinNight()" class="count-button btn btn-outline-success">+</button>
           </div>
           <div class="max-night number-box">
-            <input class="night-input-box" id="max-night-input-box" type="number" value="{{maxNightCount}}"
-            (focusout)="changeMaxNightCount($event.target.value)" maxlength="4"
-            onKeyPress="if(this.value.length==4) return false;">
+            <input class="night-input-box" id="max-night-input-box" type="number" value="{{maxNightCount}}" (focusout)="changeMaxNightCount($event.target.value)"
+              maxlength="4" onKeyPress="if(this.value.length==4) return false;">
             <label for="max-night-input-box" (click)="onMaxNightInputbox()">
               <span class="maxNight-count">박(최대)</span>
             </label>
@@ -320,22 +313,54 @@
               최소 숙박일수는 0일 수 없습니다.
             </span>
           </div>
-        </div> <!--setting-->
-      </div> <!--container-->
+        </div>
+        <!--setting-->
+      </div>
+      <!--container-->
+
+      <!--예약 불가날짜 선택 container-->
+      <div *ngIf="currentState === 'disableDate'" class="disable-date-container">
+
+        <div class="row">
+          <div class="disable-date-title page-title col-md-7">
+            <h3>달력을 업데이트하세요. </h3>
+          </div>
+          <div class="calendar-help offset-md-3 col-md-1">
+            <button class="circle-button" type="button">
+              <i class="far fa-lightbulb"></i>
+            </button>
+          </div>
+        </div>
+        <hr>
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <div class="button-group">
+              <button class="month-button month-button-left" mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="month-button month-button-right" mwlCalendarNextView [(viewDate)]="viewDate" [view]="view">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+            <span class="view-year-month">{{yearMonth}}</span>
+          </div>
+          <div [ngSwitch]="view">
+            <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" (dayClicked)="clickedDate = $event.day.date"
+              (click)="getClickedDate($event.target)" (beforeViewRender)="beforeMonthViewRender($event)">
+            </mwl-calendar-month-view>
+          </div>
+        </div>
+      </div>
 
       <!--숙박가격 container-->
       <div *ngIf="currentState === 'price'" class="price-container">
-        <!--편의시설(종류 선택)-->
         <div class="price-title">
           <h3>모든 날짜에 동일하게 적용할 기본 요금을 설정하세요.</h3>
         </div>
         <div class="number-box">
           <span>₩</span>
-          <input autofocus class="price-box" type="number" placeholder="45000"
-          (keyup)="checkNextButtonState()"
-          [value]="price"
-          (focusout)="changePrice($event.target.value)"
-          onKeyPress="if(this.value.length==8) return false;">
+          <input autofocus class="price-box" type="number" placeholder="45000" (keyup)="checkNextButtonState()" [value]="price" (focusout)="changePrice($event.target.value)"
+            onKeyPress="if(this.value.length==8) return false;">
         </div>
 
         <div class="min-max-tooltip">
@@ -347,32 +372,87 @@
         </div>
       </div>
 
+      <!--등록완료 container-->
+      <div *ngIf="currentState === 'register'" class="price-container">
+
+        <div class="price-title">
+          <h3>숙소 등록 준비가 완료되었습니다!</h3>
+        </div>
+        <div class="complete-description">
+          <p>2018년 4월 25일부터 첫 게스트를 맞이할 수 있습니다. 숙소 등록을 완료한 후 달력 또는 숙소 이용규칙을 쉽게 업데이트할 수 있습니다.
+          </p>
+        </div>
+        <div class="complete-button">
+          <button type="button" class="btn btn-primary btn-lg btn3d" (click)="sendingLocalData()">숙소 등록</button>
+        </div>
+      </div>
+
       <!--버튼 panel-->
-      <div class="row justify-content-between hosting-button-panel">
-        <button type="button" class="btn btn-primary btn-lg btn3d"
-        (click)="sendingLocalData()">임시버튼</button>
+      <div class="row justify-content-between hosting-button-panel" *ngIf="currentState !== 'register'">
         <div class="hosting-button-back">
           <button type="button" class="btn btn-primary btn-lg btn3d" (click)="backPageState()">
-          <span class="glyphicon glyphicon-cloud"></span> 뒤로</button>
+            <span class="glyphicon glyphicon-cloud"></span> 뒤로</button>
         </div>
         <div class="hosting-button-next">
-          <button id="next-button" type="button" class="btn btn-primary btn-lg btn3d"
-          (click)="nextPageState()">
-          <span class="glyphicon glyphicon-cloud"></span> 다음</button>
+          <button id="next-button" type="button" class="btn btn-primary btn-lg btn3d" (click)="nextPageState()">
+            <span class="glyphicon glyphicon-cloud"></span> 다음</button>
         </div>
       </div>
     </article>
 
 
+
     <!--aside container-->
-    <aside class="content-right col-md-5">
-      <div class="help-panel">
-        <div class="bulb-icon">
-          <i class="far fa-lightbulb"></i>
-        </div>
-        <div class="aside-panel-body d-flex justify-content-center">
-          <!-- <pre>{{nextButtonState | json}}</pre> -->
-          <p>회원님 숙소의 침대 수와 종류에 따라 몇 명의 인원이 불편함 없이 머물 수 있는지가 결정됩니다.</p>
+    <aside class="content-right col-md-5" *ngIf="asideState()">
+      <!-- <div class="complete-image">
+        <img src="" alt="">
+      </div> -->
+      <div class="help-panel" *ngIf="currentState !== 'room'">
+        <div class="aside-panel-body">
+          <div class="bulb-icon tip">
+            <i class="far fa-lightbulb"></i>
+          </div>
+          <div class="asied-content tip">
+            <p *ngIf="currentState === 'bedroom'">회원님 숙소의 침대 수와 종류에 따라 몇 명의 인원이 불편함 없이 머물 수 있는지가 결정됩니다. 침대 유형을 명시하면 게스트가 어떤 종류의 침대가 있는지 알 수 있습니다.
+            </p>
+
+            <p *ngIf="currentState === 'bathroom'">
+              숙소에 있는 욕실 개수를 표시 해주세요.
+            </p>
+
+            <p *ngIf="currentState === 'location'">
+              정확한 주소는 예약이 확정된 게스트에게만 공개됩니다.
+            </p>
+
+            <p *ngIf="currentState === 'amenities'">
+              필수품목을 제공하면 게스트가 내 집처럼 편안하게 머물 수 있습니다. 일부 호스트는 조식 또는 커피와 차만 제공하기도 합니다. 필수 사항은 아니지만, 이런 서비스를 제공하면 게스트가 보다 환영받는다고 느낄 수 있습니다.
+            </p>
+
+            <p *ngIf="currentState === 'spaces'">
+              호스팅하는 공간은 집 안에 있어야 합니다. 집의 일부가 아닌 빨래방이나 주변 시설은 포함하지 마세요. 이웃이 동의하면 수영장이나 자쿠지 등의 단지 공유 시설을 포함할 수 있습니다.
+            </p>
+
+            <p *ngIf="currentState === 'description'">
+              요약 설명은 숙소에 대한 간단한 개요로 게스트가 세부사항을 확인하기 전에 읽어볼 수 있습니다. 또한, 개인적 배경과 관계없이 모든 게스트를 환영한다는 메시지를 숙소 설명에 포함할 수 있습니다.
+            </p>
+
+            <p *ngIf="currentState === 'accommodationName'">
+              사용자들이 볼 수 있는 나만의 숙소이름을 정해주세요.
+            </p>
+
+            <p *ngIf="currentState === 'maximumCheckInRange'">
+              호스팅할 수 있는 날짜만 예약 가능하도록 설정하면 예약을 취소하거나 예약 요청을 거절할 필요가 없습니다.
+            </p>
+            <p *ngIf="currentState === 'minMaxReservationDate'">
+              숙박 기간이 짧으면 예약을 더 많이 받을 수 있지만, 그만큼 예약을 자주 받아야 합니다.
+            </p>
+
+            <p *ngIf="currentState === 'price'">
+              호스트님의 지역에서 경쟁력 있는 요금을 책정하세요. 1박당 요금을 설졍해주세요.
+            </p>
+          </div>
+
+
         </div>
       </div>
     </aside>
