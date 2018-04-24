@@ -78,8 +78,8 @@ export class SearchPageComponent implements OnInit {
   ];
 
   constructor(private searchHouse: SearchHouseService) { 
-    console.log(this.searchHouse.getlatitude);
-    console.log(this.searchHouse.getlongitude);
+    console.log('getlatitude',this.searchHouse.getlatitude);
+    console.log('getlongitude',this.searchHouse.getlongitude);
   }
 
   ngOnInit() {
