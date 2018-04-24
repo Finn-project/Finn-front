@@ -148,3 +148,6 @@ agm-map {
   color: red;
   background-color: red;
 }
+.hide {
+  display: none;
+}

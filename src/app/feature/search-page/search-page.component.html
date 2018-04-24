@@ -1,29 +1,27 @@
-<!-- <div class="container-fluid main-room-list-container">
+<div class="container-fluid main-room-list-container">
   <div class="test">
     <div style="width:100%; height: 100%;">
       <div class="row room-list">
-        <div *ngFor="let result of results; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item">
-          <div class="embed-responsive embed-responsive-3by2">
-            <a [routerLink]="['/detail', pk]">
-            <img src="{{result.results.img_cover_thumbnail}}"
-             class="embed-responsive-item"
-             alt="room image"
-             (click)="getPk($event)"
-             [id]="result.results.pk"></a>
+          <div *ngFor="let result of results; let i =index" class="col-sm-6 col-lg-4 finn-col-gl-3 main-room-list-item" [class.hide]="notFound == 0">
+            <div class="embed-responsive embed-responsive-3by2">
+              <a [routerLink]="['/detail', pk]">
+                <img src="{{result.img_cover_thumbnail}}" class="embed-responsive-item" alt="room image" (click)="getPk($event)" [id]="result.pk">
+              </a>
+            </div>
+            <div class="room-list-item-type">
+              {{result.house_type}}
+            </div>
+            <div class="room-list-item-title">
+              {{result.name}}
+            </div>
+            <div class="room-list-item-price">
+              ₩{{result.price_per_night}}
+            </div>
           </div>
-          <div class="room-list-item-type">
-             {{result.results.house_type}}
-          </div>
-          <div class="room-list-item-title">
-             {{result.results.name}}
-          </div>
-          <div class="room-list-item-price">
-             ₩{{result.results.price_per_night}}
-          </div>
-        </div>
+        <app-not-found *ngIf= "notFound == 0"></app-not-found>
       </div>
       <div>
-        <div class="search-footer">
+        <div class="search-footer" *ngIf= "notFound !== 0">
           <div class="search-next-button">
             <div class="arrow-right" (click)= "previous_page()">
               <svg viewBox="0 0 18 18" role="img" aria-label="이전" focusable="false" style="height: 1em; width: 1em; display: block; fill: currentcolor;">
@@ -42,9 +40,9 @@
         </div>
       </div>
       <div class="search-position">
-        <span>{{results.results.country}} > </span><span>{{results.results.city}}</span>
+        <span>{{results.country}} > </span><span>{{results.city}}</span>
       </div>
-    </div> -->
+    </div>
 
     <div class="map-wrapper" (mouseup)="mouseup()">
       <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (boundsChange)= "boundsChange($event)">
@@ -54,7 +52,8 @@
       </agm-map>
 
     </div>
-  <!-- </div>
-</div> -->
+  </div>
+</div>
 
-<!-- (boundsChange)="centerChanged($event)" -->
+
+

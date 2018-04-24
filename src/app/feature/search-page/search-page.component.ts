@@ -4,7 +4,7 @@ import { MapsAPILoader } from '@agm/core';
 import { SearchHouseService } from '../../core/service/search-house.service';
 import { environment } from '../../../environments/environment';
 import { HttpParams, HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-page',
@@ -15,7 +15,10 @@ export class SearchPageComponent implements OnInit {
   zoom = 15;
 
 
-  constructor(private http: HttpClient, private route: ActivatedRoute,private searchHouse: SearchHouseService) {
+  constructor(private http: HttpClient,
+     private route: ActivatedRoute,
+     private searchHouse: SearchHouseService,
+    public router: Router) {
     console.log(this.searchHouse.getlatitude);
     console.log(this.searchHouse.getlongitude);
   }
@@ -25,8 +28,8 @@ export class SearchPageComponent implements OnInit {
   previous: any;
   results: any;
 
-  latitude: number = +this.searchHouse.getlatitude;
-  longitude: number = +this.searchHouse.getlongitude;
+  latitude: number;
+  longitude: number;
 
   pk: number;
 
@@ -34,14 +37,18 @@ export class SearchPageComponent implements OnInit {
   neLng: number;;
   swLat: number;
   swLng: number;
-
+  notFound: number;
 
   ngOnInit() {
     // this.results.next = this.next;
     // this.results.previous = this.previous;
 
-    this.route.params
-      .subscribe(res => console.log('params', res));
+    this.route.queryParams
+      .subscribe(res => {
+        console.log('params', res.latitude)
+      this.latitude = +res.latitude
+    this.longitude= +res.longitude});
+
 
     this.neLat = this.neLat;
     this.neLng = this.neLng;
@@ -65,6 +72,7 @@ export class SearchPageComponent implements OnInit {
         this.next = res.next;
         this.previous = res.previous;
         this.results = res;
+        this.notFound = res.count;
         console.log('rerererdfdfdf', res);
       });
   }
@@ -78,7 +86,9 @@ export class SearchPageComponent implements OnInit {
     console.log('test next', this.next);
     this.http.get<any>(`${this.next}`)
       .subscribe(res => {
-        this.results = res;
+        this.results = res.results;
+        this.next = res.next;
+        this.previous = res.previous;
       });
   }
 
@@ -86,7 +96,9 @@ export class SearchPageComponent implements OnInit {
     console.log('test previous', this.previous);
     this.http.get<any>(`${this.previous}`)
       .subscribe(res => {
-        this.results = res;
+        this.results = res.results;
+        this.next = res.next;
+        this.previous = res.previous;
       });
   }
 
@@ -131,7 +143,8 @@ export class SearchPageComponent implements OnInit {
       .subscribe(res => {
         this.next = res.next;
         this.previous = res.previous;
-        this.results = res;
+        this.results = res.results;
+        this.notFound = res.count;
         console.log('rererer', res);
       });
   }
