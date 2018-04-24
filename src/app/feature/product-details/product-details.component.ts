@@ -22,14 +22,10 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
   img_profile: any;
-  img_cover = '../../../assets/img/default-image.png';
   value: any;
   user: any;
   zoom = 15;
   pk: number;
-// 위도 경도 값
-  latitude: number;
-  longitude: number;
   ngOnInit() {
     this.user = this.auth.getUser();
     console.log('house', this.auth.gethouse_value())
@@ -44,17 +40,13 @@ export class ProductDetailsComponent implements OnInit {
     this.auth.img_check(this.pk)
       .subscribe(res => {
         if (res.host.images == null) {
-          this.img_profile = '../../../assets/img/defaultProfileImg.png';
-          this.latitude = +res.latitude;
-          this.longitude = +res.longitude;
           this.spinner.hide();
+          this.img_profile = './../../../assets/img/defaultProfileImg.png';
         } else {
-          this.img_profile = (res.host.images.img_profile_150);
+          this.img_profile = (res.host.images.img_profile);
         }
         this.value = res;
-        console.log('tetetetetete', res.house_images)
         this.spinner.hide();
-        console.log('nu;;', res.img_cover)
       });
     }
     reservationModal() {

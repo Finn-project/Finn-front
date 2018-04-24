@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
           this.next = res.next;
           this.previous = res.previous;
           this.results = res.results;
+          console.log(res);
           this.spinner.hide();
         });
   }
