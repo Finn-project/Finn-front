@@ -87,7 +87,7 @@ export class RoomComponent {
 
   // 방 개수
   roomCounts: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-  11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+  11, 12, 13, 14, 15, 16];
 
   // 유저 선택 방개수
   selectedRoomCount: number = 1;
@@ -100,7 +100,7 @@ export class RoomComponent {
 
   // 최대 숙박가능 인원
   roomCapacities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-  11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+  11, 12, 13, 14, 15, 16];
 
   // 유저 선택 숙박가능인원
   selectedRoomCapacity: number = 1;
@@ -341,6 +341,25 @@ constructor(
     return this.imageList ? Math.max.apply(null, this.getImageListId()) + 1 : 1;
   }
 
+  // 사진 삭제
+  removePhoto (id: number) {
+
+    this.imageList = this.imageList.map(image => {
+      return id === image.id ?
+        Object.assign({}, image, { image:"" ,caption: null, available: false }) : image;
+    });
+
+    if (this.imageList.length > 1) {
+      this.imageList = this.imageList.filter(image => {
+        return id !== image.id;
+      })
+    }
+  }
+
+  roomSelectBox (event) {
+    console.log('room박스눌림');
+  }
+
   // 사진 등록
   onFileChange(files: FileList, imageId:string) {
 
@@ -369,14 +388,12 @@ constructor(
       }
 
       // 하우스 이미지 formdata에 append
-      for (var i = 0; i < this.roomLocalData.house_images.length; i++) {
-        this.formData.append('house_images', this.roomLocalData.house_images[i]);
-      }
 
       // 하우스이미지 4개 제한
-      if (this.imageList.length < 4) {
+      if (this.imageList.length < 5) {
         this.imageList = [...this.imageList, { id: this.getImageListNextId(),
-        caption: '', image: null, available: false }];
+          caption: '', image: null, available: false }];
+          console.log('지우기전:', this.formData.getAll('house_images'));
       }
 
       // 사진 페이지 상태
@@ -635,6 +652,10 @@ constructor(
         } break;
 
       case 'picture': this.currentState = this.pageStates[this.stateCount];
+        for (var i = 0; i < this.roomLocalData.house_images.length; i++) {
+          this.formData.append('house_images', this.roomLocalData.house_images[i]);
+        }
+        console.log(this.formData.getAll('house_images'));
         if (!this.nextButtonState.description_status) {
           this.switchNextButtonInvalid();
         } break;
