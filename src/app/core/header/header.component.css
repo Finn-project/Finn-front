@@ -345,3 +345,9 @@ a {
 .on-dropdown-show {
   z-index: 30;
 }
+
+.testmap {
+  width: 388.58px;
+  height: 800px;
+  display: none;
+}
