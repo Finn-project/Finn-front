@@ -22,8 +22,8 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
   img_profile: any;
-  value: any;
-  user: any;
+  value: object;
+  user: object;
   zoom = 15;
   pk: number;
   ngOnInit() {
