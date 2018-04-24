@@ -67,7 +67,7 @@ export class SearchPageComponent implements OnInit {
       .set('sw_lng', `${this.swLng}`);
 
     this.http.get<any>(`${this.url}house/?fields=pk,host,img_cover_thumbnail,house_type
-    ,name,price_per_night`, { params })
+    ,name,price_per_night,latitude,longitude`, { params })
       .subscribe(res => {
         this.next = res.next;
         this.previous = res.previous;
@@ -139,7 +139,7 @@ export class SearchPageComponent implements OnInit {
       .set('sw_lng', `${this.swLng}`);
 
     this.http.get<any>(`${this.url}house/?fields=pk,host,img_cover_thumbnail,house_type
-    ,name,price_per_night`, { params})
+    ,name,price_per_night,latitude,longitude`, { params})
       .subscribe(res => {
         this.next = res.next;
         this.previous = res.previous;

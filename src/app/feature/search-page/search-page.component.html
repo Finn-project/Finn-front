@@ -46,14 +46,12 @@
 
     <div class="map-wrapper" (mouseup)="mouseup()">
       <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (boundsChange)= "boundsChange($event)">
-        <agm-marker [latitude]="latitude" [longitude]="longitude" >
-          <agm-info-window>df</agm-info-window>
-        </agm-marker>
+          <agm-marker [latitude]="+result.latitude" [longitude]="+result.longitude" *ngFor= "let result of results">
+            <agm-info-window>{{result.price_per_night}}</agm-info-window>
+          </agm-marker>
       </agm-map>
-
     </div>
   </div>
 </div>
-
 
 
