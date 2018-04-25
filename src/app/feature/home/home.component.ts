@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SpinnerService } from '../../shared/spinner/spinner.service';
 import { environment } from '../../../environments/environment';
+import { UtilService } from '../../core/service/util.service';
 
 @Component({
   selector: 'app-home',
@@ -17,8 +18,8 @@ export class HomeComponent implements OnInit {
   next: any;
   previous: any;
   img = './../../../assets/img/default-image.png';
-
-  constructor(private http: HttpClient, public spinner: SpinnerService) { }
+  star = [0,1,2,3,4];
+  constructor(private http: HttpClient, public spinner: SpinnerService, public utils: UtilService) { }
 
   ngOnInit() {
     this.spinner.show();

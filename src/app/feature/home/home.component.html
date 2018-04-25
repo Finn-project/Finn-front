@@ -14,7 +14,12 @@
           {{result.name}}
       </div>
       <div class="room-list-item-price">
-        ₩{{result.price_per_night}}
+        ₩{{utils.numberWithCommas(result.price_per_night)}}
+      </div>
+      <div>
+        <span *ngFor="let i of star">
+          <img class="icon-star" src="assets/img/icon-star.svg" alt="icon-star">
+        </span>
       </div>
     </div>
   </div>

@@ -69,8 +69,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             const place: google.maps.places.PlaceResult = autocomplete.getPlace();
             console.log('place', place);
             // verify result
-
-
             if (place.geometry === undefined || place.geometry === null) {
               return;
             }
@@ -90,7 +88,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                   "swLng": map.getBounds().getSouthWest().lng(),
                 }
               };
-              console.log('navgigg', navigationExtras);
               this.router.navigate(["search_page"], navigationExtras);
             });
 
@@ -203,5 +200,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   logout() {
     this.auth.signout();
     this.router.navigate(['']);
+    this.toggleDropdown();
   }
 }
