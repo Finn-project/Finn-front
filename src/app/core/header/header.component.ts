@@ -201,6 +201,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   logout() {
     this.auth.signout();
     this.router.navigate(['']);
-    this.toggleDropdown();
+    // this.toggleDropdown();
+    this.showDropdown = false;
   }
 }
