@@ -62,9 +62,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.searchElementList.forEach(child => {
       this.mapsAPILoader.load().then(() => {
-        const autocomplete = new google.maps.places.Autocomplete(child.nativeElement, {
-          types: ['address']
-        });
+        const autocomplete = new google.maps.places.Autocomplete(child.nativeElement);
         autocomplete.addListener('place_changed', () => {
           this.ngZone.run(() => {
             // get the place result
