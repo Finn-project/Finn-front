@@ -270,6 +270,7 @@ a {
   border: none;
   cursor: pointer;
   outline: none;
+  background-color: white;
 }
 .user-dropdown-container {
   width: 282px;
@@ -398,4 +399,8 @@ a {
 .icon-profile {
   width: 26px;
   height: 26px;
+}
+.icon-hosting {
+  width: 44px;
+  height: 44px;
 }

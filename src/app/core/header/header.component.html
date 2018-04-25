@@ -91,13 +91,13 @@
         <li class="overlay-menu-item">
             <a routerLink="/" (click)="toggleDropdown()">
               <span>홈</span>
-              <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
             </a>
         </li>
       <li *ngIf="hasRole()" class="overlay-menu-item">
         <a routerLink="/host" (click)="toggleDropdown()">
           <span>호스팅하기</span>
-          <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
+          <img class="icon-hosting" src="assets/img/hosting_icon.svg" alt="">
+
         </a>
       </li>
       <li *ngIf="hasRole()" class="overlay-menu-item">
@@ -109,26 +109,23 @@
       <li *ngIf="hasRole()" class="overlay-menu-item">
           <a (click)="logout()">
             <span>로그아웃</span>
-            <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
           </a>
       </li>
       <li *ngIf="!hasRole()" class="overlay-menu-item">
           <a (click)="toggleLoginModal()">
             <span>회원가입</span>
-            <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
           </a>
       </li>
       <li *ngIf="!hasRole()" class="overlay-menu-item">
           <a (click)="toggleSignUpModal()">
             <span>로그인</span>
-            <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
           </a>
       </li>
           <!-- <a routerLink="/host" (click)="toggleDropdown()">호스팅하기</a> -->
           <!-- <a (click)="toggleLoginModal()">회원가입</a> -->
           <!-- <a (click)="toggleSignUpModal()">로그인</a> -->
     </ul>
-    
+
   </div>
 </div>
 <div class="overlay search" [class.show]="showSearchModal">
