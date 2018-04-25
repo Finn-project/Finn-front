@@ -5,6 +5,8 @@ import { AgmCoreModule } from '@agm/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { SharedModule } from '../../shared/shared.module';
+import { CalendarModule } from 'angular-calendar';
+import { CalendarHeaderComponent } from './room-basic-info/calendar-header.component';
 
 @NgModule({
   imports: [
@@ -12,9 +14,13 @@ import { SharedModule } from '../../shared/shared.module';
     AgmCoreModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    CalendarModule.forRoot()
   ],
-  declarations: [RoomComponent],
+  declarations: [
+  RoomComponent,
+  CalendarHeaderComponent
+  ],
   exports: [RoomComponent]
 })
 export class HostRegisterModule { }

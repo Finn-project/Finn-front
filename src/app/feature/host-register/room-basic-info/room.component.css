@@ -1,3 +1,8 @@
+
+.container {
+  max-width: 800px;
+}
+
 .row {
   margin: 0;
 }
@@ -10,24 +15,96 @@
 }
 
 .progress-bar-container {
-  margin-top: 70px;
+  margin-top: 50px;
+  margin-bottom: -17px
 }
 
+.progress-bar-striped {
+  background-color: #00a699;
+}
 /* room 컨테이너 */
 .room {
   width: 390px;
 }
 
-.room-title {
-  margin: 10px 0px;
-  padding: 10px 0px;
-  border-top: solid 1px gray;
+/* .roomtype-title {
+  font-weight: 700;
+  font-size: 28px;
+  color: #484848;
+  padding-bottom: 26px;
+} */
+
+.roomtype-description {
+  padding: 15px 0;
+  font-weight: 500;
+}
+.sub-description {
+  font-size: 19px;
+  color: #767676;
+}
+
+.room-type-selectbox {
+  position: relative;
+}
+
+.room-count-selectbox {
+  position: relative;
+}
+
+/* 침실, 최대인원 */
+
+/* .bedroom-title {
+  font-weight: 700;
+  font-size: 28px;
+  color: #484848;
+  padding-bottom: 26px;
+} */
+
+.button-count-container {
+  display: flex;
+}
+
+.page-title {
+  font-weight: 700;
+  font-size: 28px;
+  color: #484848;
+  padding-bottom: 26px;
+}
+
+.bedroom-count {
+  margin : 0;
+}
+
+.bedroom-count-container {
+  margin-top: 20px;
+  display: flex;
+}
+
+.bedroom-description {
+  padding: 0;
+    margin-top: 20px;
+}
+
+.room-capacity-selectbox {
+  position: relative;
 }
 
 .select-box {
-  width: 70%;
+  width: 318px;
+  height: 46px;
   margin-bottom: 3px;
 }
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 10px;
+  text-overflow: '';
+  font-size: 20px;
+  font-weight: 500;
+  overflow-y: auto;
+}
+
 /* article 컨테이너 */
 .content-left {
   position: relative;
@@ -37,9 +114,21 @@
 /* 위치 */
 
 .location-container {
-  width: inherit;
-  height: inherit;
+  padding: 0;
   overflow: hidden;
+}
+
+.location-title h3{
+  font-weight: 800;
+  padding: 0;
+  font-size: 28px;
+  color: #484848;
+}
+
+.location-searchbar {
+  width: 70%;
+  padding: 10px 0;
+  margin-top: -20px;
 }
 
 .user-location {
@@ -52,6 +141,10 @@
 }
 
 /* 편의물품 */
+
+.amenity-title h3{
+  font-weight: 800;
+}
 .amenities-label {
   display: block;
 }
@@ -66,14 +159,31 @@ label.amenities-label {
   display: block;
 }
 
+.space-title h3 {
+  font-weight: 800;
+}
+
 /* 사진업로드 */
+
+.picture-title h3 {
+  font-weight: 800;
+}
 .upload-picture-container {
   height: 200px;
   cursor: pointer;
-  border: dashed 3px gray;
+  border: dashed 2px gray;
+  border-radius: 3px;
   background-color : #efefef;
   background-repeat : repeat-x;
   padding: 0;
+}
+
+.trash-icon {
+  width: 50px;
+  height: 30px;
+  position: absolute;
+  left: 26px;
+  top: 15px;
 }
 
 /* 업로드버튼 중간고정 */
@@ -82,7 +192,7 @@ label.amenities-label {
 }
 
 .image-list-container {
-  height: 325px;
+  height: 300px;
   overflow-y: scroll;
 }
 
@@ -97,8 +207,6 @@ label.amenities-label {
 .image-caption {
   width: 100%;
 }
-
-
 
 .upload-photo {
   /* 브라우져 제공 삭제 */
@@ -133,8 +241,40 @@ label.amenities-label {
   /* padding: 0; */
 }
 
+/* 숙소이름 */
+.accommodation-title h3 {
+  font-weight: 800;
+}
+
+.accomodation-name {
+  text-indent: 5px;
+  width: 318px;
+  height: 46px;
+}
+
+/* 숙소설명 */
+
+.description-title h3 {
+  font-weight: 800;
+}
+
+.description-textbox {
+  width: 420px;
+  height: 200px;
+
+}
+
+/* 예약 기간 설정 */
+.avaiability-title h3{
+  font-weight: 800;
+}
+
 
 /* 숙박가능기간 */
+
+.min-max-reservation-date-title h3 {
+  font-weight: 800;
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -166,7 +306,33 @@ input::-webkit-inner-spin-button {
   color: black;
 }
 
+/* calendar */
+
+.calendar-container {
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.disable-date-title {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.disable-date-title > h3{
+  margin: 0;
+  font-weight: 800;
+  line-height: 57px;
+}
+.view-year-month {
+  margin-left: 20px;
+  font-weight: 600;
+}
 /* 가격 */
+
+.price-title h3 {
+  font-weight: 800;
+}
 .number-box {
   border: solid 1px gray;
   margin: 5px 0;
@@ -211,17 +377,13 @@ input::-webkit-inner-spin-button {
 
 /* 개수 버튼 */
 
-.bedroom-count-container {
-  margin-top: 10px;
-}
-.bedroom-count {
+.bathroom-count {
   padding: 10px 0;
   margin: 0 20px;
+}
 
-}
-.bathoom-count {
-  padding: 10px 0;
-  margin: 0 20px;
+.bathroom-count-container {
+  display: flex;
 }
 
 
@@ -233,20 +395,18 @@ input::-webkit-inner-spin-button {
   color: green;
 }
 
-/* aside 도움말 */
 
-.content-right {
-  background-color: #fafafa;
-}
-.aside-panel-body {
-  height: 300px;
-  margin-left: 30px;
-  border: solid 1px #dce0e0;
-  border-radius: 10;
-}
 
 /* layout */
 .col-md-6 {
+  padding: 0;
+}
+
+.col-md-7 {
+  padding: 0;
+}
+
+.col-md-5 {
   padding: 0;
 }
 
@@ -283,19 +443,19 @@ ul {
     top:2px;
 }
 .btn3d.btn-primary {
-    box-shadow:0 0 0 1px #417fbd inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 8px 0 0 #4D5BBE, 0 8px 8px 1px rgba(0,0,0,0.5);
-    background-color:#4274D7;
+    box-shadow:0 0 0 1px #008489 inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 8px 0 0 #008489, 0 8px 8px 1px rgba(0,0,0,0.5);
+    background-color:#008489;
 }
 .btn3d.btn-primary:active, .btn3d.btn-primary.active {
-    box-shadow:0 0 0 1px #417fbd inset, 0 0 0 1px rgba(255,255,255,0.15) inset, 0 1px 3px 1px rgba(0,0,0,0.3);
-    background-color:#4274D7;
+    box-shadow:0 0 0 1px #008489 inset, 0 0 0 1px rgba(255,255,255,0.15) inset, 0 1px 3px 1px rgba(0,0,0,0.3);
+    background-color:#008489;
 }
 
 /* 버튼 클릭 불가  */
 
 .invalid {
   opacity: 0.5;
-  /* pointer-events: none; */
+  pointer-events: none;
 }
 
 /* 증감버튼 설명 Label */
@@ -304,7 +464,8 @@ ul {
 }
 
 .button-label {
-  display: inline-block;
+
+  /* display: flex; */
 }
 
 .button-label span {
@@ -417,20 +578,133 @@ ul {
   margin-bottom: 10px;
 }
 
-/* description-textbox */
-.description-textbox {
-  width: 80%;
-  height: 300px;
+.fa-plus-circle {
+  font-size: 45px;
+  color: #008489;
+  cursor: pointer;
 }
 
-/* accomodation-name */
-.accomodation-name {
-  width: 80%;
+.fa-minus-circle {
+  font-size: 45px;
+  color: #008489;
+  cursor: pointer;
+}
+
+.fa-trash-alt {
+  color:#008489;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.fa-lightbulb {
+  color: #40bcb5;
+  font-size: 30px;
+}
+
+.fa-chevron-down {
+  position: absolute;
+  left: 285px;
+  top: 15px;
 }
 
 /* 맵 */
 .map-screen {
   margin-top: 10px;
+}
+
+.button-label a, .button-label div {
+  float:left;
+}
+
+.button-label div {
+  padding:0 15px;
+}
+
+.circle-button {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 0;
+  -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  -moz-box-shadow: 0 0 0 1px rgba(0,0,0,0.08),0 2px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  background-color: white;
+  margin-top: 7px;
+}
+
+.circle-medium-button {
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 0;
+  -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  -moz-box-shadow: 0 0 0 1px rgba(0,0,0,0.08),0 2px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  background-color: white;
+  margin-top: 7px;
+}
+
+.button-group {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.month-button {
+  cursor: pointer;
+  padding: 9px 35px;
+  float: left;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.04);
+  background-color: white;
+  border: 0;
+  border-color: #c4c4c4;
+  background: white;
+  color: #484848;
+}
+
+.month-button-left {
+  margin-left: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.month-button-right {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+
+
+/* aside 도움말 */
+.content-right {
+  background-color: #fafafa;
+}
+.aside-panel-body {
+  background-color: white;
+  height: 350px;
+  border: solid 1px #dce0e0;
+  padding: 26px;
+}
+
+.bulb-icon {
+  padding: 10px 0;
+}
+
+.tip {
+  font-size: 16px;
+  line-height: 150%;
+  color: #767676;
+  background-color: white;
+}
+
+.clicked {
+  color: #dee0de;
 }
 
 agm-map {

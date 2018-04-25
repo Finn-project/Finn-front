@@ -1,16 +1,66 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild,
-  ElementRef, NgZone, ViewChildren, AfterViewInit,
-   QueryList, OnChanges } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 import { FormControl } from '@angular/forms';
 
+import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
+import {
+  subMonths,
+  addMonths,
+  addDays,
+  addWeeks,
+  subDays,
+  subWeeks,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  startOfDay,
+  endOfDay
+} from 'date-fns';
+import { AuthService } from '../../../core/login/auth';
+
+
+type CalendarPeriod = 'day' | 'week' | 'month';
 export type PageState = 'room' | 'bedroom'
 | 'bathroom' | 'location' | 'amenities' | 'spaces'
 | 'picture' | 'description' | 'accommodationName'
-| 'maximumCheckInRange' | 'minMaxReservationDate' |'price';
+| 'maximumCheckInRange' | 'minMaxReservationDate' | 'disableDate' | 'price' | 'register';
+
+function addPeriod(period: CalendarPeriod, date: Date, amount: number): Date {
+  return {
+    day: addDays,
+    week: addWeeks,
+    month: addMonths
+  }[period](date, amount);
+}
+
+function subPeriod(period: CalendarPeriod, date: Date, amount: number): Date {
+  return {
+    day: subDays,
+    week: subWeeks,
+    month: subMonths
+  }[period](date, amount);
+}
+
+function startOfPeriod(period: CalendarPeriod, date: Date): Date {
+  return {
+    day: startOfDay,
+    week: startOfWeek,
+    month: startOfMonth
+  }[period](date);
+}
+
+function endOfPeriod(period: CalendarPeriod, date: Date): Date {
+  return {
+    day: endOfDay,
+    week: endOfWeek,
+    month: endOfMonth
+  }[period](date);
+}
+
 
 interface LocationData {
   country: string;
@@ -87,7 +137,7 @@ export class RoomComponent {
 
   // 방 개수
   roomCounts: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-  11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+  11, 12, 13, 14, 15, 16];
 
   // 유저 선택 방개수
   selectedRoomCount: number = 1;
@@ -100,7 +150,7 @@ export class RoomComponent {
 
   // 최대 숙박가능 인원
   roomCapacities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-  11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+  11, 12, 13, 14, 15, 16];
 
   // 유저 선택 숙박가능인원
   selectedRoomCapacity: number = 1;
@@ -172,7 +222,8 @@ export class RoomComponent {
   // 현재 페이지의 상태
   pageStates: PageState[] = ['room', 'bedroom', 'bathroom',
     'location', 'amenities', 'spaces', 'picture', 'description',
-    'accommodationName', 'maximumCheckInRange', 'minMaxReservationDate', 'price'];
+    'accommodationName', 'maximumCheckInRange', 'minMaxReservationDate',
+    'disableDate', 'price', 'register'];
 
   // 카운팅 될 페이지의 pagenumber
   stateCount = 0;
@@ -188,6 +239,7 @@ export class RoomComponent {
     description_status: false,
     accommodationName_status: false,
     minMaxReservationDate_status: false,
+    disable_days_status: false,
     price_status: false
   }
 
@@ -214,7 +266,7 @@ export class RoomComponent {
       address1: '',
       latitude: 0,
       longitude: 0,
-      disable_days: ['2017-04-23'],
+      disable_days: [],
       img_cover: null,
       house_images: []
     }
@@ -258,18 +310,60 @@ export class RoomComponent {
     { id: this.getImageListNextId(), caption: '', image: null, available: false }
   ];
 
+  // 달력 관련 변수
+  view: CalendarPeriod = 'month';
+
+  viewDate: Date = new Date();
+
+  events: CalendarEvent[] = [];
+
+  clickedDate: Date;
+
+  minDate: Date = subMonths(new Date(), 0);
+
+  maxDate: Date = addMonths(new Date(), 1);
+
+  prevBtnDisabled: boolean = false;
+
+  nextBtnDisabled: boolean = false;
+
+  currentYear: number = 0;
+
+  currentMonth: string = '';
+
+  currentDate: number = 0;
+
+  convertedMonth: string = '';
+
+  convertedDate: string = '';
+
+  monthNames = ['01', '02', '03', '04', '05', '06', '07',
+    '08', '09', '10', '11', '12'];
+
+  clickedToday: string = '';
+
+  yearMonth: string = '';
+
+  disableDate: string[] = [];
+
+  dateCheck: boolean = false;
+
+  checkDisable: string = '';
+
+  userKey:string = '';
+
 //#region 함수모음(function)
 
-// public searchControl: FormControl;
-  // @ViewChildren('dummy, search') public addressList: QueryList<ElementRef>;
-constructor(
+
+  constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone,
     private fb: FormBuilder,
+    public auth: AuthService,
     private http: HttpClient) {
     this.form = this.fb.group({
       avatar: ['', Validators.required]
     });
+    this.dateOrViewChanged();
   }
   // 방 개수 변경시
   chageRoomCount (roomCount) {
@@ -341,6 +435,21 @@ constructor(
     return this.imageList ? Math.max.apply(null, this.getImageListId()) + 1 : 1;
   }
 
+  // 사진 삭제
+  removePhoto (id: number) {
+
+    this.imageList = this.imageList.map(image => {
+      return id === image.id ?
+        Object.assign({}, image, { image:"" ,caption: null, available: false }) : image;
+    });
+
+    if (this.imageList.length > 1) {
+      this.imageList = this.imageList.filter(image => {
+        return id !== image.id;
+      })
+    }
+  }
+
   // 사진 등록
   onFileChange(files: FileList, imageId:string) {
 
@@ -369,9 +478,6 @@ constructor(
       }
 
       // 하우스 이미지 formdata에 append
-      for (var i = 0; i < this.roomLocalData.house_images.length; i++) {
-        this.formData.append('house_images', this.roomLocalData.house_images[i]);
-      }
 
       // 하우스이미지 4개 제한
       if (this.imageList.length < 4) {
@@ -390,19 +496,24 @@ constructor(
     }
   }
 
-  // 임시버튼
+  // 완료버튼
   sendingLocalData() {
+
+    // 모든과정이 완료되면 house입력값을 append
+    for (var i = 0; i < this.roomLocalData.house_images.length; i++) {
+      this.formData.append('house_images', this.roomLocalData.house_images[i]);
+    }
     for (let key of Object.keys(this.roomLocalData)) {
       if (key === 'house_images') {
         continue;
       }
       this.formData.append(key, this.roomLocalData[key]);
     }
-    console.log(this.roomLocalData);
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Token ccf9ec87c75370b9c702ad28ab20795a0622f364');
 
-    this.http.post('https://himanmen.com/house/', this.formData, { headers })
+    const headers = new HttpHeaders()
+      .set('Authorization', `Token ${this.userKey}`);
+
+    this.http.post('https://dlighter.com/house/', this.formData, { headers })
       .subscribe(response => {
         console.log(response);
       })
@@ -528,7 +639,6 @@ constructor(
   }
 
   checkNextButtonState () {
-
     // 편의물품 체크
     if (this.roomLocalData.amenities.length) {
       this.nextButtonState.amenities_status = true;
@@ -572,6 +682,19 @@ constructor(
       }
     }
 
+    // disable days 유효성 검사
+    if (this.currentState === 'disableDate') {
+
+      if(this.disableDate.length === 0) {
+        this.nextButtonState.disable_days_status = false;
+        this.switchNextButtonInvalid();
+      } else {
+        this.nextButtonState.disable_days_status = true;
+        this.switchNextButtonValid();
+      }
+
+    }
+
 
     // 하루숙박 비용 유효성검사
 
@@ -580,11 +703,95 @@ constructor(
         this.price > 10669995) {
         this.nextButtonState.price_status = false;
         this.switchNextButtonInvalid();
+
       } else {
         this.nextButtonState.price_status = true;
         this.switchNextButtonValid();
       }
     }
+  }
+
+  getClickedDate(event) {
+
+    if (this.clickedDate.getMonth() + 1 < 10) {
+      this.convertedMonth = '0' + (this.clickedDate.getMonth() + 1);
+    } else {
+      this.convertedMonth = '' + (this.clickedDate.getMonth() + 1);
+    }
+
+    if (this.clickedDate.getDate() < 10) {
+      this.convertedDate = '0' + this.clickedDate.getDate();
+    } else {
+      this.convertedDate = '' + this.clickedDate.getDate();
+    }
+
+    this.clickedToday = this.clickedDate.getFullYear() + '-' + this.convertedMonth + '-' + this.convertedDate;
+
+    if (!event.classList.contains('cal-cell-row') ||
+      !event.classList.contains('cal-future')) {
+      this.dateCheck = this.disableDate.includes(this.clickedToday);
+      this.disableDate = this.disableDate.filter(date => {
+        return date !== this.clickedToday;
+      });
+
+      event.classList.remove('clicked');
+
+      if (!this.dateCheck) {
+        this.disableDate = [...this.disableDate, this.clickedToday];
+        event.classList.add('clicked');
+      }
+    }
+    this.checkNextButtonState();
+  }
+
+  ngDoCheck() {
+    this.currentMonth = this.monthNames[this.viewDate.getMonth()];
+    this.currentYear = this.viewDate.getFullYear();
+    this.yearMonth = this.currentYear + '년' + this.currentMonth + ' 월';
+  }
+
+  ngOnInit() {
+    this.dateOrViewChanged();
+    this.userKey = this.auth.getToken();
+
+  }
+
+  dateIsValid(date: Date): boolean {
+    return date >= this.minDate && date <= this.maxDate;
+  }
+
+  changeDate(date: Date): void {
+    this.viewDate = date;
+    this.dateOrViewChanged();
+  }
+
+  dateOrViewChanged(): void {
+    this.prevBtnDisabled = !this.dateIsValid(
+      endOfPeriod(this.view, subPeriod(this.view, this.viewDate, 1))
+    );
+    this.nextBtnDisabled = !this.dateIsValid(
+      startOfPeriod(this.view, addPeriod(this.view, this.viewDate, 1))
+    );
+    if (this.viewDate < this.minDate) {
+      this.changeDate(this.minDate);
+    } else if (this.viewDate > this.maxDate) {
+      this.changeDate(this.maxDate);
+    }
+  }
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    body.forEach(day => {
+      if (!this.dateIsValid(day.date)) {
+        day.cssClass = 'cal-disabled';
+      }
+      this.checkDisable = day.date.getFullYear() + '-' + (day.date.getMonth() + 1) + '-' + day.date.getDate();
+
+      for (let i = 0; i < this.disableDate.length; i++) {
+        if (this.disableDate[i] === this.checkDisable) {
+          day.cssClass = 'clicked';
+        }
+      }
+    });
   }
 
   // 현재 페이지를 변경하며 상태에따라 로컬데이터에 정보입력
@@ -663,15 +870,27 @@ constructor(
           this.switchNextButtonInvalid();
         } break;
 
+      case 'disableDate': this.currentState = this.pageStates[this.stateCount];
+        this.roomLocalData.disable_days = this.disableDate;
+        this.checkNextButtonState();
+        if (!this.nextButtonState.price_status) {
+          this.switchNextButtonInvalid();
+        } break;
+
       case 'price': this.currentState = this.pageStates[this.stateCount];
         this.roomLocalData.price_per_night = this.price;
         this.checkNextButtonState();
         break;
 
+      case 'register': this.currentState = this.pageStates[this.stateCount];
+      break;
+
       default: this.currentState = this.pageStates[this.stateCount]; break;
     }
   }
 
+
+  // 버튼 상태 함수
   switchNextButtonInvalid() {
     const nextButton = document.getElementById('next-button');
     nextButton.classList.add('invalid');
@@ -681,6 +900,8 @@ constructor(
     const nextButton = document.getElementById('next-button');
     nextButton.classList.remove('invalid');
   }
+
+
 
   // 뒤로 버튼
   backPageState () {
@@ -701,11 +922,12 @@ constructor(
 
   // 다음 버튼
   nextPageState () {
-    if (this.stateCount < 12) {
+    if (this.stateCount < 13) {
       this.stateCount++;
       const progressBar = document.getElementById('progressbar');
       if (this.progressbarPercentage < 100) {
         this.progressbarPercentage += 8;
+
         if(this.progressbarPercentage > 100) {
           this.progressbarPercentage = 100;
         }
@@ -764,6 +986,19 @@ constructor(
     if (this.maxNightCount > 0) {
       this.maxNightCount--;
       this.checkNextButtonState();
+    }
+  }
+
+  // aside on/off 함수
+  asideState():boolean {
+    if (this.currentState === 'picture') {
+      return false;
+    } else if (this.currentState === 'disableDate') {
+      return false;
+    } else if (this.currentState === 'register') {
+      return false;
+    } else {
+      return true;
     }
   }
 
