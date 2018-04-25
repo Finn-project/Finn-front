@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isInputFocused: boolean = false;
   isModalInputFocused: boolean = false;
   profilePath: string = '';
-  
+
   @ViewChildren('headerSearch, headerSearch2') searchElementList: QueryList<ElementRef>;
 
   constructor(
@@ -69,6 +69,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             const place: google.maps.places.PlaceResult = autocomplete.getPlace();
             console.log('place', place);
             // verify result
+
+
             if (place.geometry === undefined || place.geometry === null) {
               return;
             }
@@ -91,8 +93,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
               console.log('navgigg', navigationExtras);
               this.router.navigate(["search_page"], navigationExtras);
             });
-            
-            
+
+
             // this.searchHouse.setlatitude = place.geometry.location.lat();
             // this.searchHouse.setlongitude = place.geometry.location.lng();
             // console.log('searchHouse lat',this.searchHouse.getlatitude);

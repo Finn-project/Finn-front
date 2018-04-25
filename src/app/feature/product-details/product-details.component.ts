@@ -22,7 +22,7 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
   img_profile: any;
-  value: object;
+  value: any;
   user: object;
   zoom = 15;
   pk: number;

@@ -39,17 +39,22 @@ export class SearchPageComponent implements OnInit {
   swLng: number;
   notFound: number;
 
+test: any;
   ngOnInit() {
     // this.results.next = this.next;
     // this.results.previous = this.previous;
 
     this.route.queryParams
-      .subscribe(res => {
+        .subscribe(res => {
         console.log('params', res.latitude)
-      this.latitude = +res.latitude
-    this.longitude= +res.longitude});
-
-
+        this.latitude = +res.latitude
+        this.longitude= +res.longitude
+        this.neLat = res.neLat;
+        this.neLng = res.neLng;
+          this.swLat = res.swLat;
+          this.swLng = res.swLng;
+      console.log('dfdfd', this.test)
+        });
     this.neLat = this.neLat;
     this.neLng = this.neLng;
     this.swLat = this.swLat;
@@ -103,24 +108,22 @@ export class SearchPageComponent implements OnInit {
   }
 
   boundsChange(latLngBounds): void {
+    // console.log('fdfdf', this.test)
+    // console.log('bounds changed' + latLngBounds);
+    const neLat = latLngBounds.getNorthEast().lat();
+    const neLng = latLngBounds.getNorthEast().lng();
+    const swLat = latLngBounds.getSouthWest().lat();
+    const swLng = latLngBounds.getSouthWest().lng();
 
-      // console.log('fdfdf', this.test)
-      // console.log('bounds changed' + latLngBounds);
-      const neLat = latLngBounds.getNorthEast().lat();
-      const neLng = latLngBounds.getNorthEast().lng();
-      const swLat = latLngBounds.getSouthWest().lat();
-      const swLng = latLngBounds.getSouthWest().lng();
-
-      // console.log('북동 위도', neLat);
-      // console.log('북동 경도', neLng);
-      // console.log('남서 위도', swLat);
-      // console.log('남서 경도', swLng);
-      this.neLat = neLat;
-      this.neLng = neLng;
-      this.swLat = swLat;
-      this.swLng = swLng;
-}
-
+    // console.log('북동 위도', neLat);
+    // console.log('북동 경도', neLng);
+    // console.log('남서 위도', swLat);
+    // console.log('남서 경도', swLng);
+    this.neLat = neLat;
+    this.neLng = neLng;
+    this.swLat = swLat;
+    this.swLng = swLng;
+  }
   mouseup() {
     this.neLat = this.neLat;
     this.neLng = this.neLng;
