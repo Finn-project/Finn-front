@@ -270,6 +270,7 @@ a {
   border: none;
   cursor: pointer;
   outline: none;
+  background-color: white;
 }
 .user-dropdown-container {
   width: 282px;
