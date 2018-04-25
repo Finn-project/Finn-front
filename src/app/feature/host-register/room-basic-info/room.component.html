@@ -295,7 +295,7 @@
           <div class="max-night number-box">
             <input class="night-input-box" id="max-night-input-box" type="number" value="{{maxNightCount}}" (focusout)="changeMaxNightCount($event.target.value)"
               maxlength="4" onKeyPress="if(this.value.length==4) return false;">
-            <label for="max-night-input-box" (click)="onMaxNightInputbox()" class="minNight-label">
+            <label for="max-night-input-box" class="minNight-label">
               <span class="maxNight-count">박(최대)</span>
               <button class="one-night" type="button" (click)="decreaseMaxNight()">-</button>
               <button class="one-night" type="button" (click)="increaseMaxNight()">+</button>
