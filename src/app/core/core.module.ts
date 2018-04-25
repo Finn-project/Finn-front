@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FullModalService } from './service/full-modal.service';
 import { SearchHouseService } from './service/search-house.service';
+import { UtilService } from './service/util.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { SearchHouseService } from './service/search-house.service';
   ],
   declarations: [HeaderComponent, LoginComponent],
   exports: [HeaderComponent, LoginComponent, RouterModule],
-  providers: [FullModalService, SearchHouseService]
+  providers: [FullModalService, SearchHouseService, UtilService]
 })
 export class CoreModule { }

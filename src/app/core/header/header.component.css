@@ -38,7 +38,7 @@ a {
   padding-left: 40px;
   padding-right: 40px;
   font-size: 19px;
-  background-image: url('assets/img/magnifying_glass.svg');
+  background-image: url('../../../assets/img/magnifying_glass.svg');
   background-repeat: no-repeat;
   background-position: 8px;
   background-size: 24px 24px;
@@ -268,8 +268,31 @@ a {
 .user-menu-btn {
   height: 100%;
   border: none;
-
+  cursor: pointer;
+  outline: none;
 }
+.user-dropdown-container {
+  width: 282px;
+}
+.user-dropdown-item {
+  padding: 0 16px;
+  display: block;
+  cursor: pointer;
+}
+.user-dropdown-item > span {
+  font-size: 15px;
+  font-weight: 400px;
+  padding: 16px 0;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+  line-height: 18px;
+  display: block;
+  border-bottom: 1px solid transparent;
+  color:#767676;
+}
+.user-dropdown-item:hover > span {
+  border-color: slategray;
+}
+
 /* google autocomplete box */
 
 /* google autocomplete box */
@@ -286,12 +309,14 @@ a {
   overflow-x: hidden; /* Disable horizontal scroll */
 }
 .overlay.menu {
-  transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+  transition: none; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
 }
 .overlay.show {
   height: 100%;
 }
-
+.overlay.menu.show {
+  transition: 0.5s;
+}
 /* Position the content inside the overlay */
 .overlay-content {
   background-color: #fff;
@@ -352,4 +377,25 @@ a {
   position: absolute;
   top: -9999999999px;
   /* display: block; */
+}
+.overlay-menu {
+  padding: 24px;
+  list-style: none;
+}
+
+.overlay-menu-item > a {
+  padding: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.overlay-menu-item > a > span {
+  font-size: 19px;
+  line-height: 24px;
+  display: block;
+}
+.icon-profile {
+  width: 26px;
+  height: 26px;
 }

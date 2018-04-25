@@ -20,7 +20,6 @@
 .main-room-list-item {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding: 8px 8px 12px 8px;
     cursor: pointer;
@@ -31,10 +30,11 @@
 .room-list-item-title {
     font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
     word-wrap: break-word;
-    font-size: 19px;
+    font-size: 17px;
     line-height: 22px;
-    /* width: 100%; */
+    letter-spacing: 0.3px;
     font-weight: 700;
+    margin-bottom: 2px;
 }
 /* .room-list-image {
     height: 100%;
@@ -68,6 +68,10 @@
 }
 .embed-responsive-3by2::before {
     padding-top: 66.6667%;
+}
+.icon-star {
+    width: 0.5em;
+    height: 0.5em;
 }
 @media(min-width: 1240px) {
     .finn-col-gl-3 {
