@@ -21,6 +21,7 @@ import {
   endOfDay
 } from 'date-fns';
 import { AuthService } from '../../../core/login/auth';
+import { Router } from '@angular/router';
 
 
 type CalendarPeriod = 'day' | 'week' | 'month';
@@ -252,7 +253,7 @@ export class RoomComponent {
       room: 0,
       bed: 0,
       bathroom: 0,
-      personnel: 1,
+      personnel: 0,
       amenities: [],
       facilities: [],
       minimum_check_in_duration: 0,
@@ -359,6 +360,7 @@ export class RoomComponent {
     private mapsAPILoader: MapsAPILoader,
     private fb: FormBuilder,
     public auth: AuthService,
+    public router: Router,
     private http: HttpClient) {
     this.form = this.fb.group({
       avatar: ['', Validators.required]
@@ -383,9 +385,12 @@ export class RoomComponent {
   // 최대 체크인 가능기간 설정
   chageAvailableDate (availableDate) {
     switch (availableDate) {
-      case '1개월': this.roomLocalData.maximum_check_in_range = 30; break;
-      case '2개월' : this.roomLocalData.maximum_check_in_range = 60; break;
-      case '3개월' : this.roomLocalData.maximum_check_in_range = 90; break;
+      case '1개월': this.roomLocalData.maximum_check_in_range = 30;
+            this.maxDate = addMonths(new Date(), 1); break;
+      case '2개월' : this.roomLocalData.maximum_check_in_range = 60;
+            this.maxDate = addMonths(new Date(), 2); break;
+      case '3개월' : this.roomLocalData.maximum_check_in_range = 90;
+            this.maxDate = addMonths(new Date(), 3);break;
       default : this.roomLocalData.maximum_check_in_range = 30; break;
     }
   }
@@ -477,8 +482,6 @@ export class RoomComponent {
         this.roomLocalData.house_images = [...this.roomLocalData.house_images, files.item(0)];
       }
 
-      // 하우스 이미지 formdata에 append
-
       // 하우스이미지 4개 제한
       if (this.imageList.length < 4) {
         this.imageList = [...this.imageList, { id: this.getImageListNextId(),
@@ -494,29 +497,6 @@ export class RoomComponent {
         this.switchNextButtonValid();
       }
     }
-  }
-
-  // 완료버튼
-  sendingLocalData() {
-
-    // 모든과정이 완료되면 house입력값을 append
-    for (var i = 0; i < this.roomLocalData.house_images.length; i++) {
-      this.formData.append('house_images', this.roomLocalData.house_images[i]);
-    }
-    for (let key of Object.keys(this.roomLocalData)) {
-      if (key === 'house_images') {
-        continue;
-      }
-      this.formData.append(key, this.roomLocalData[key]);
-    }
-
-    const headers = new HttpHeaders()
-      .set('Authorization', `Token ${this.userKey}`);
-
-    this.http.post('https://dlighter.com/house/', this.formData, { headers })
-      .subscribe(response => {
-        console.log(response);
-      })
   }
 
   get avatar() {
@@ -753,7 +733,6 @@ export class RoomComponent {
   ngOnInit() {
     this.dateOrViewChanged();
     this.userKey = this.auth.getToken();
-
   }
 
   dateIsValid(date: Date): boolean {
@@ -796,11 +775,8 @@ export class RoomComponent {
 
   // 현재 페이지를 변경하며 상태에따라 로컬데이터에 정보입력
   changePageState () {
-
     switch (this.currentState) {
       case 'room': this.currentState = this.pageStates[this.stateCount];
-        // formdata 형성
-        this.formData = new FormData();
         this.roomLocalData.room = this.selectedRoomCount;
         this.roomLocalData.personnel = this.selectedRoomCapacity;
         this.roomLocalData.house_type = this.selectedRoomType;
@@ -855,7 +831,8 @@ export class RoomComponent {
 
       case 'accommodationName': this.currentState = this.pageStates[this.stateCount];
         this.roomLocalData.name = this.roomName;
-        this.checkNextButtonState(); break;
+        this.checkNextButtonState();
+        break;
 
       case 'maximumCheckInRange': this.currentState = this.pageStates[this.stateCount];
         if (!this.nextButtonState.minMaxReservationDate_status) {
@@ -883,12 +860,64 @@ export class RoomComponent {
         break;
 
       case 'register': this.currentState = this.pageStates[this.stateCount];
-      break;
+        break;
 
       default: this.currentState = this.pageStates[this.stateCount]; break;
     }
   }
 
+  // 완료버튼
+  sendingLocalData() {
+
+    // formdata 형성
+    this.formData = new FormData();
+
+    // 사진 append
+    for (var i = 0; i < this.roomLocalData.house_images.length; i++) {
+      this.formData.append('house_images', this.roomLocalData.house_images[i]);
+    }
+
+    // 편의물품 append
+    for (var j = 0; j < this.roomLocalData.amenities.length; j++) {
+      this.formData.append('amenities', this.roomLocalData.amenities[j].toString());
+    }
+
+    // 편의시설 append
+    for (var k = 0; k < this.roomLocalData.facilities.length; k++) {
+      this.formData.append('facilities', this.roomLocalData.facilities[k].toString());
+    }
+
+    // 예약불가날짜 append
+    for (var l = 0; l < this.roomLocalData.disable_days.length; l++) {
+      this.formData.append('disable_days', this.roomLocalData.disable_days[l]);
+    }
+
+    for (let key of Object.keys(this.roomLocalData)) {
+
+      if (key === 'house_images' || key === 'amenities' || key === 'facilities' || key === 'disable_days') {
+        continue
+      }
+      this.formData.append(key, this.roomLocalData[key]);
+      // console.log(key, ':', typeof this.roomLocalData[key], this.roomLocalData[key]);
+    }
+
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Token ${this.userKey}`);
+
+    this.http.post('https://dlighter.com/house/', this.formData, { headers })
+      .subscribe(response => {
+        console.log(response);
+        this.router.navigate(['']);
+      })
+
+
+  }
+
+  modifyLocalData () {
+    this.currentState = 'room';
+    this.stateCount = 0;
+  }
 
   // 버튼 상태 함수
   switchNextButtonInvalid() {
@@ -900,8 +929,6 @@ export class RoomComponent {
     const nextButton = document.getElementById('next-button');
     nextButton.classList.remove('invalid');
   }
-
-
 
   // 뒤로 버튼
   backPageState () {
