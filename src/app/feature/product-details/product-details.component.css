@@ -1,3 +1,20 @@
+h1 {
+  font-size : 1.5rem;
+  font-weight: 700;
+}
+
+ul{
+  list-style: none;
+  padding:0;
+  margin:0;
+}
+span{
+  color: #484848;
+  font-weight: 600;
+}
+li {
+  font-size : 1.1rem;
+}
 .main {
   width: 100%;
   height: 100%;
@@ -62,20 +79,6 @@
 .bed-wrapper p {
   margin-top: 20px;
 }
-h1 {
-  font-size : 1.7rem;
-  font-weight: 700;
-}
-
-ul{
-  list-style: none;
-  padding:0;
-  margin:0;
-}
-span{
-  color: #484848;
-  font-weight: 700;
-}
 .reservation-desktop{
   width: 500px;
   height: 350px;
@@ -105,13 +108,15 @@ span{
 }
 .reservation-mobile{
   width: 100%;
-  height: 60px;
+  height: 80px;
   background-color: #fff;
   border : 1px solid #DBDBDB !important;
   padding: 0 40px;
   position: fixed;
   bottom: 0px;
   display: flex;
+  color: #484848;
+  line-height: 37px;
 }
 
 .reservation-text-wrapper {
@@ -120,11 +125,16 @@ span{
   padding: 20px 0;
 }
 .reservation-text-wrapper p{
-  font-size: 13px;
+  font-size: 12px;
+  margin: 0 10px 0 0;
 
 }
 .reservation-text-wrapper div {
   font-size: 17px;
+}
+.day {
+  font-size: 12px;
+  font-weight: 300;
 }
 .button {
   background: #FF5A5F;
@@ -140,28 +150,23 @@ span{
 }
 
 @media (max-width: 472px){
-  .cover-img {
-   height: 400px;
+  .img-wrapper{
+  height: 100%;
+  }
+}
+@media (min-width: 700px){
+  .reservation-mobile{
+    display: none;
+  }
+  .reservation-modal{
+     display: none;
   }
   .img-wrapper{
-  height: 500px;
-}
-}
-@media (min-width: 600px){
-
-   .reservation-mobile{
-     display: none;
-   }
-   .reservation-modal{
-     display: none;
-   }
-   .img-wrapper{
-   height: 670px;
+     height: 600px;
+  }
 }
 
-}
-
-@media (max-width: 900px){
+@media (max-width: 700px){
   .reservation-desktop{
      display: none;
    }
@@ -169,14 +174,15 @@ span{
      display: flex;
    }
    .main {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
-  h1{
-    font-size: 2.0rem;
-  }
-  .map-wrapper{
+    .map-wrapper{
     display: none;
   }
+  .img-wrapper{
+     height: 300px;
+  }
+
 }
 
 /* 구글 맵 관련 css*/

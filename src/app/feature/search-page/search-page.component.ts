@@ -14,10 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SearchPageComponent implements OnInit {
   zoom = 15;
 
-
   constructor(private http: HttpClient,
-     private route: ActivatedRoute,
-     private searchHouse: SearchHouseService,
+    private route: ActivatedRoute,
+    private searchHouse: SearchHouseService,
     public router: Router) {
     console.log(this.searchHouse.getlatitude);
     console.log(this.searchHouse.getlongitude);
@@ -39,46 +38,36 @@ export class SearchPageComponent implements OnInit {
   swLng: number;
   notFound: number;
 
-test: any;
   ngOnInit() {
-    // this.results.next = this.next;
-    // this.results.previous = this.previous;
 
     this.route.queryParams
-        .subscribe(res => {
+      .subscribe(res => {
         console.log('params', res.latitude)
         this.latitude = +res.latitude
-        this.longitude= +res.longitude
+        this.longitude = +res.longitude
         this.neLat = res.neLat;
         this.neLng = res.neLng;
-          this.swLat = res.swLat;
-          this.swLng = res.swLng;
-      console.log('dfdfd', this.test)
-        });
-    this.neLat = this.neLat;
-    this.neLng = this.neLng;
-    this.swLat = this.swLat;
-    this.swLng = this.swLng;
-    console.log('북동 위도', this.neLat);
-    console.log('북동 경도', this.neLng);
-    console.log('남서 위도', this.swLat);
-    console.log('남서 경도', this.swLng);
-    const params = new HttpParams()
-      .set('page', '1')
-      .set('page_size', '12')
-      .set('ne_lat', `${this.neLat}`)
-      .set('ne_lng', `${this.neLng}`)
-      .set('sw_lat', `${this.swLat}`)
-      .set('sw_lng', `${this.swLng}`);
+        this.swLat = res.swLat;
+        this.swLng = res.swLng;
 
-    this.http.get<any>(`${this.url}house/?fields=pk,host,img_cover_thumbnail,house_type
+        const params = new HttpParams()
+          .set('page', '1')
+          .set('page_size', '12')
+          .set('ne_lat', `${this.neLat}`)
+          .set('ne_lng', `${this.neLng}`)
+          .set('sw_lat', `${this.swLat}`)
+          .set('sw_lng', `${this.swLng}`);
+
+        this.http.get<any>(`${this.url}house/?fields=pk,host,img_cover_thumbnail,house_type
     ,name,price_per_night,latitude,longitude`, { params })
-      .subscribe(res => {
-        this.next = res.next;
-        this.previous = res.previous;
-        this.results = res;
-        this.notFound = res.count;
-        console.log('rerererdfdfdf', res);
+          .subscribe(res => {
+            console.log('response receive')
+            this.next = res ? res.next : null;
+            this.previous = res ? res.previous : null;
+            this.notFound = res ? res.count : null;
+            this.results = res ? res.results : null;
+            console.log('result', this.results)
+          });
       });
   }
 
@@ -142,13 +131,14 @@ test: any;
       .set('sw_lng', `${this.swLng}`);
 
     this.http.get<any>(`${this.url}house/?fields=pk,host,img_cover_thumbnail,house_type
-    ,name,price_per_night,latitude,longitude`, { params})
+    ,name,price_per_night,latitude,longitude`, { params })
       .subscribe(res => {
-        this.next = res.next;
-        this.previous = res.previous;
-        this.results = res.results;
-        this.notFound = res.count;
-        console.log('rererer', res);
+        console.log('response receive')
+        this.next = res ? res.next : null;
+        this.previous = res ? res.previous : null;
+        this.notFound = res ? res.count : null;
+        this.results = res ? res.results : null;
+        console.log('result', this.results)
       });
   }
 }
