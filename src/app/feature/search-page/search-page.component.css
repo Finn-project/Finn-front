@@ -151,3 +151,7 @@ agm-map {
 .hide {
   display: none;
 }
+.icon-star {
+    width: 0.5em;
+    height: 0.5em;
+}

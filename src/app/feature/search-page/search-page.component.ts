@@ -5,6 +5,7 @@ import { SearchHouseService } from '../../core/service/search-house.service';
 import { environment } from '../../../environments/environment';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UtilService } from '../../core/service/util.service';
 
 @Component({
   selector: 'app-search-page',
@@ -17,7 +18,8 @@ export class SearchPageComponent implements OnInit {
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private searchHouse: SearchHouseService,
-    public router: Router) {
+    public router: Router,
+    public utils: UtilService) {
     console.log(this.searchHouse.getlatitude);
     console.log(this.searchHouse.getlongitude);
   }
@@ -26,10 +28,8 @@ export class SearchPageComponent implements OnInit {
   next: any;
   previous: any;
   results: any;
-
   latitude: number;
   longitude: number;
-
   pk: number;
 
   neLat: number;
@@ -37,7 +37,6 @@ export class SearchPageComponent implements OnInit {
   swLat: number;
   swLng: number;
   notFound: number;
-
   ngOnInit() {
 
     this.route.queryParams
@@ -66,7 +65,7 @@ export class SearchPageComponent implements OnInit {
             this.previous = res ? res.previous : null;
             this.notFound = res ? res.count : null;
             this.results = res ? res.results : null;
-            console.log('result', this.results)
+            console.log('result', this.results);
           });
       });
   }

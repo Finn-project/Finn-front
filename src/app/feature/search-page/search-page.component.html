@@ -15,7 +15,12 @@
               {{result.name}}
             </div>
             <div class="room-list-item-price">
-              ₩{{result.price_per_night}}
+              ₩{{utils.numberWithCommas(result.price_per_night)}}
+            </div>
+            <div>
+              <span *ngFor="let i of [1,2,3,4,5]">
+                <img class="icon-star" src="assets/img/icon-star.svg" alt="icon-star">
+              </span>
             </div>
           </div>
         <app-not-found *ngIf= "notFound == 0"></app-not-found>
@@ -44,7 +49,7 @@
     <div class="map-wrapper" (mouseup)="mouseup()">
       <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (boundsChange)= "boundsChange($event)">
           <agm-marker  [latitude]="+result.latitude" [longitude]="+result.longitude" *ngFor= "let result of results">
-            <agm-info-window isOpen= "true">₩{{result.price_per_night}}</agm-info-window>
+            <agm-info-window isOpen= "true">₩{{utils.numberWithCommas(result.price_per_night)}}</agm-info-window>
           </agm-marker>
       </agm-map>
     </div>
