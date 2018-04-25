@@ -173,6 +173,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   onFocusSearchInput() {
     this.isInputFocused = true;
+    this.clearSearchInput();
   }
 
   onBlurSearchInput() {
