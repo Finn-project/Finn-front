@@ -19,20 +19,13 @@
   margin-bottom: -17px
 }
 
-.progress-bar-striped {
+.progress-bar {
   background-color: #00a699;
 }
 /* room 컨테이너 */
 .room {
   width: 390px;
 }
-
-/* .roomtype-title {
-  font-weight: 700;
-  font-size: 28px;
-  color: #484848;
-  padding-bottom: 26px;
-} */
 
 .roomtype-description {
   padding: 15px 0;
@@ -52,13 +45,6 @@
 }
 
 /* 침실, 최대인원 */
-
-/* .bedroom-title {
-  font-weight: 700;
-  font-size: 28px;
-  color: #484848;
-  padding-bottom: 26px;
-} */
 
 .button-count-container {
   display: flex;
@@ -82,7 +68,7 @@
 
 .bedroom-description {
   padding: 0;
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .room-capacity-selectbox {
@@ -226,9 +212,7 @@ label.amenities-label {
 }
 
 .upload-btn {
-  /* left: 235px;
-  top: 158px; */
-  /* width: 132.93px; */
+
   display: block;
   width: 110px;
   margin: 0 auto;
@@ -272,8 +256,33 @@ label.amenities-label {
 
 /* 숙박가능기간 */
 
+.container-layout {
+  width: 95%;
+}
+
 .min-max-reservation-date-title h3 {
   font-weight: 800;
+}
+
+.one-night {
+  border-radius: 50% ;
+  text-align: center;
+  line-height: 1;
+  touch-action: manipulation;
+  border-style: solid;
+  border-color: #008489;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  border-width: 1px;
+  color: #008489;
+  margin: 0 5px;
+  outline: none;
+  cursor: pointer;
+}
+
+.minNight-label {
+  margin: 10px 0;
 }
 
 input::-webkit-outer-spin-button,
@@ -296,7 +305,6 @@ input::-webkit-inner-spin-button {
 
 .min-max-tooltip {
   margin-top: 10px;
-  border: dashed 2px gray;
   background-color: #ffd1c4;
 }
 
@@ -357,7 +365,7 @@ input::-webkit-inner-spin-button {
 /* hosting 버튼 패널 */
 .hosting-button-panel {
   position: absolute;
-  width: 100%;
+  width: 95%;
   bottom: 0;
   margin: 10px 0px;
   padding: 10px 0px;
@@ -365,11 +373,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* 뒤로, 다음 버튼 */
-.register-button {
-  font-size: 1.5em;
-  width: 100px;
-  height: 50px;
-}
 
 .block-button {
   background-color: #fff;
@@ -407,6 +410,10 @@ input::-webkit-inner-spin-button {
 }
 
 .col-md-5 {
+  padding: 0;
+}
+
+.col-md-4 {
   padding: 0;
 }
 
@@ -451,6 +458,15 @@ ul {
     background-color:#008489;
 }
 
+.register-button {
+  background-color: #ff5a5f;
+  color: #fff;
+}
+
+.changeinfo-button {
+  color: #fff;
+}
+
 /* 버튼 클릭 불가  */
 
 .invalid {
@@ -461,11 +477,6 @@ ul {
 /* 증감버튼 설명 Label */
 .bedroom-label, .bathroom-label {
   width: 40%;
-}
-
-.button-label {
-
-  /* display: flex; */
 }
 
 .button-label span {
@@ -493,6 +504,28 @@ ul {
   border-color: #008489;
   color: #008489;
   background: transparent;
+}
+
+.btn-lg {
+  background-color: #008489;
+  color: #fff;
+}
+
+.btn-lg:hover {
+  background-color: #017277;
+}
+
+.register-container {
+  margin-top: 100px;
+}
+
+.register-button:hover {
+  background-color: #ea4c51;
+}
+
+.register-image {
+  width: 100%;
+  height: 100%;
 }
 
 /* 체크박스 */
@@ -679,6 +712,9 @@ ul {
   border-top-right-radius: 5px;
 }
 
+.register-button {
+  background-color: #ff5a5f;
+}
 
 
 /* aside 도움말 */

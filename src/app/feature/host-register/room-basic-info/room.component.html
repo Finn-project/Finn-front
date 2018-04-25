@@ -6,7 +6,7 @@
   <!--progressbar container-->
   <div class="row progress-bar-container">
     <div class="progress col-md-12">
-      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="progressbarPercentage"
+      <div class="progress-bar" role="progressbar" aria-valuenow="progressbarPercentage"
         aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progressbar">{{progressbarPercentage}}%</div>
     </div>
   </div>
@@ -57,7 +57,7 @@
       </div>
 
       <!--침대정보 container-->
-      <div *ngIf="currentState === 'bedroom'" class="bedroom-container">
+      <div *ngIf="currentState === 'bedroom'" class="bedroom-container container-layout">
         <div class="bedroom">
           <h3 class="capacity-title page-title">
             숙소에 얼마나 많은 인원이 숙박할 수 있나요?
@@ -141,7 +141,7 @@
       </div>
 
       <!--위치정보 container-->
-      <div *ngIf="currentState === 'location'" class="location-container">
+      <div *ngIf="currentState === 'location'" class="location-container container-layout">
         <!--위치(설정)-->
         <div class="location-title">
           <h3>숙소의 위치를 알려주세요.</h3>
@@ -184,7 +184,7 @@
       </div>
 
       <!--편의시설 container-->
-      <div *ngIf="currentState === 'spaces'" class="spaces-container">
+      <div *ngIf="currentState === 'spaces'" class="spaces-container container-layout">
         <!--편의시설(종류 선택)-->
         <div class="space-title page-title">
           <h3>게스트에게 회원님의 공간에 대해 설명해주세요.</h3>
@@ -201,7 +201,7 @@
       </div>
 
       <!--사진정보 container-->
-      <div *ngIf="currentState === 'picture'" class="picture-container">
+      <div *ngIf="currentState === 'picture'" class="picture-container container-layout">
 
         <div class="picture-title page-title">
 
@@ -256,7 +256,7 @@
 
 
       <!--예약 한도일 container-->
-      <div *ngIf="currentState === 'maximumCheckInRange'" class="maximumCheckInRange-container">
+      <div *ngIf="currentState === 'maximumCheckInRange'" class="maximumCheckInRange-container container-layout">
 
         <div class="avaiability-title page-title">
           <h3>얼마나 먼 날짜까지 예약할 수 있나요? </h3>
@@ -272,11 +272,13 @@
       </div>
 
       <!--최소 최대 예약가능한 날짜 container-->
-      <div *ngIf="currentState === 'minMaxReservationDate'" class="minMaxReservationDate-container">
+      <div *ngIf="currentState === 'minMaxReservationDate'" class="minMaxReservationDate-container container-layout">
 
         <div class="min-max-reservation-date-title">
           <h3>게스트가 얼마동안 숙박할 수 있나요? </h3>
         </div>
+
+
 
         <!--몇박 몇일 선택-->
         <div class="reservationSetting-container">
@@ -284,20 +286,20 @@
           <div class="min-night number-box">
             <input class="night-input-box" id="min-night-input-box" type="number" [value]="minNightCount" (focusout)="changeMinNightCount($event.target.value)"
               maxlength="4" onKeyPress="if(this.value.length==4) return false;">
-            <label for="min-night-input-box">
+            <label for="min-night-input-box" class="minNight-label">
               <span class="minNight-count">박(최소)</span>
+              <button class="one-night" type="button" (click)="decreaseMinNight()">-</button>
+              <button class="one-night" type="button" (click)="increaseMinNight()">+</button>
             </label>
-            <button (click)="decreaseMinNight()" class="count-button btn btn-outline-success">-</button>
-            <button (click)="increaseMinNight()" class="count-button btn btn-outline-success">+</button>
           </div>
           <div class="max-night number-box">
             <input class="night-input-box" id="max-night-input-box" type="number" value="{{maxNightCount}}" (focusout)="changeMaxNightCount($event.target.value)"
               maxlength="4" onKeyPress="if(this.value.length==4) return false;">
-            <label for="max-night-input-box" (click)="onMaxNightInputbox()">
+            <label for="max-night-input-box" (click)="onMaxNightInputbox()" class="minNight-label">
               <span class="maxNight-count">박(최대)</span>
+              <button class="one-night" type="button" (click)="decreaseMaxNight()">-</button>
+              <button class="one-night" type="button" (click)="increaseMaxNight()">+</button>
             </label>
-            <button (click)="decreaseMaxNight()" class="count-button btn btn-outline-success">-</button>
-            <button (click)="increaseMaxNight()" class="count-button btn btn-outline-success">+</button>
           </div>
           <div class="min-max-tooltip">
             <span class="min-max-tooltip-text" *ngIf="minNightCount > maxNightCount">
@@ -319,11 +321,11 @@
       <!--container-->
 
       <!--예약 불가날짜 선택 container-->
-      <div *ngIf="currentState === 'disableDate'" class="disable-date-container">
+      <div *ngIf="currentState === 'disableDate'" class="disable-date-container container-layout">
 
         <div class="row">
           <div class="disable-date-title page-title col-md-7">
-            <h3>달력을 업데이트하세요. </h3>
+            <h3>예약 불가날짜를 선택해주세요. </h3>
           </div>
           <div class="calendar-help offset-md-3 col-md-1">
             <button class="circle-button" type="button">
@@ -353,7 +355,7 @@
       </div>
 
       <!--숙박가격 container-->
-      <div *ngIf="currentState === 'price'" class="price-container">
+      <div *ngIf="currentState === 'price'" class="price-container container-layout">
         <div class="price-title">
           <h3>모든 날짜에 동일하게 적용할 기본 요금을 설정하세요.</h3>
         </div>
@@ -373,7 +375,7 @@
       </div>
 
       <!--등록완료 container-->
-      <div *ngIf="currentState === 'register'" class="price-container">
+      <div *ngIf="currentState === 'register'" class="register-container container-layout">
 
         <div class="price-title">
           <h3>숙소 등록 준비가 완료되었습니다!</h3>
@@ -382,32 +384,37 @@
           <p>2018년 4월 25일부터 첫 게스트를 맞이할 수 있습니다. 숙소 등록을 완료한 후 달력 또는 숙소 이용규칙을 쉽게 업데이트할 수 있습니다.
           </p>
         </div>
-        <div class="complete-button">
-          <button type="button" class="btn btn-primary btn-lg btn3d" (click)="sendingLocalData()">숙소 등록</button>
+        <div class="row">
+          <div class="complete-button col-md-4">
+            <button type="button" class="btn register-button btn-lg btn3d" (click)="sendingLocalData()">숙소 등록</button>
+          </div>
+          <div class="complete-button col-md-4">
+            <button type="button" class="btn changeinfo-button btn-lg btn3d" (click)="modifyLocalData()">정보 변경</button>
+          </div>
         </div>
       </div>
 
       <!--버튼 panel-->
       <div class="row justify-content-between hosting-button-panel" *ngIf="currentState !== 'register'">
         <div class="hosting-button-back">
-          <button type="button" class="btn btn-primary btn-lg btn3d" (click)="backPageState()">
+          <button type="button" class="btn btn-lg" (click)="backPageState()">
             <span class="glyphicon glyphicon-cloud"></span> 뒤로</button>
         </div>
         <div class="hosting-button-next">
-          <button id="next-button" type="button" class="btn btn-primary btn-lg btn3d" (click)="nextPageState()">
+          <button id="next-button" type="button" class="btn btn-lg" (click)="nextPageState()">
             <span class="glyphicon glyphicon-cloud"></span> 다음</button>
         </div>
       </div>
     </article>
 
-
+    <div class="complete-image col-md-5" *ngIf="currentState === 'register'">
+      <img src="../../../../assets/img/complete.png" alt="register_screen" class="register-image">
+    </div>
 
     <!--aside container-->
     <aside class="content-right col-md-5" *ngIf="asideState()">
-      <!-- <div class="complete-image">
-        <img src="" alt="">
-      </div> -->
       <div class="help-panel" *ngIf="currentState !== 'room'">
+
         <div class="aside-panel-body">
           <div class="bulb-icon tip">
             <i class="far fa-lightbulb"></i>
