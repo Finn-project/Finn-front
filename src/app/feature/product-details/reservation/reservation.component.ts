@@ -83,7 +83,7 @@ export class ReservationComponent implements OnInit {
 
     const isOutsideRange = day =>
       isInclusivelyAfterDay(day, moment().add(this.house_value.maximum_check_in_range, 'days'))
-      || !isInclusivelyAfterDay(day, moment().subtract(0, 'months'));
+      || !isInclusivelyAfterDay(day, moment().subtract(0, 'months'))
     this.propsDRP = {
       startDatePlaceholderText: '체크인',
       endDatePlaceholderText: '체크아웃',
@@ -96,7 +96,10 @@ export class ReservationComponent implements OnInit {
       isOutsideRange: isOutsideRange,
       enableOutsideDays: false,
       isDayBlocked: isDayBlocked,
+      focusedInput: START_DATE,
+
     };
+
     this.dateRangePickerProps = Object.assign({}, this.propsDRP);
   }
   giveDate() {

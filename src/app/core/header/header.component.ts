@@ -73,7 +73,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
               return;
             }
             var map = new google.maps.Map(document.getElementById('testmap'), {
-              zoom: 11,
+              zoom: 15,
               center: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
             });
             map.addListener('bounds_changed', () => {
