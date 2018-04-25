@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
         this.spinner.hide();
         this.results = [...this.results, ...res.results];
+        console.log(this.results);
     });
   }
 
@@ -58,7 +59,9 @@ export class HomeComponent implements OnInit {
     const d = document.documentElement;
     const offset = d.scrollTop + window.innerHeight;
     const height = d.offsetHeight;
-    if (offset === height) {
+
+    if (Math.floor(offset) === Math.floor(height)) {
+      console.log(offset);
       this.test();
     }
   }
