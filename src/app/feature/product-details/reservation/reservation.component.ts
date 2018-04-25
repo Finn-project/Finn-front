@@ -45,7 +45,9 @@ export class ReservationComponent implements OnInit {
   private router: Router) { this.date();}
 
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.house_value.disable_days, this.house_value.reserve_days )
+  }
 
 
   date() {
@@ -65,7 +67,7 @@ export class ReservationComponent implements OnInit {
       const endTime = moment(data[i]).format('YYYY MM DD');
       const duration = moment.duration(moment(endTime).diff(startTime));
       const days = duration.asDays();
-      const days_value = Math.round(days) + 1;
+      const days_value = Math.round(days);
       array = array.concat(days_value);
 
     }

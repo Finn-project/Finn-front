@@ -39,15 +39,12 @@
           </div>
         </div>
       </div>
-      <div class="search-position">
-        <span>{{results.country}} > </span><span>{{results.city}}</span>
-      </div>
     </div>
 
     <div class="map-wrapper" (mouseup)="mouseup()">
       <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (boundsChange)= "boundsChange($event)">
-          <agm-marker [latitude]="+result.latitude" [longitude]="+result.longitude" *ngFor= "let result of results">
-            <agm-info-window>{{result.price_per_night}}</agm-info-window>
+          <agm-marker  [latitude]="+result.latitude" [longitude]="+result.longitude" *ngFor= "let result of results">
+            <agm-info-window isOpen= "true">₩{{result.price_per_night}}</agm-info-window>
           </agm-marker>
       </agm-map>
     </div>
