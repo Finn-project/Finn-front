@@ -694,7 +694,8 @@ body {
   font-weight: bolder; }
 
 .cal-month-view .cal-cell-row {
-  background-color: #fafafa; }
+  background-color: #fafafa;
+}
 
 .cal-month-view .cal-header .cal-cell {
   padding: 5px 0;
@@ -706,7 +707,8 @@ body {
 
 .cal-month-view .cal-cell-row .cal-cell:hover,
 .cal-month-view .cal-cell.cal-has-events.cal-open {
-  background-color: #ededed; }
+  background-color: #ededed;
+}
 
 .cal-month-view .cal-days {
   border: 1px solid #e1e1e1;

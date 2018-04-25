@@ -103,7 +103,7 @@ a {
   margin: auto 0;
 }
 .person div button {
-  border-radius: 50% ;
+    border-radius: 50% ;
     text-align: center;
     line-height: 1;
     touch-action: manipulation;
