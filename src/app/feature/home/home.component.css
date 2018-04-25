@@ -20,7 +20,6 @@
 .main-room-list-item {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding: 8px 8px 12px 8px;
     cursor: pointer;
@@ -30,11 +29,14 @@
 }
 .room-list-item-title {
     font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+    /* font-family: 'Nanum Gothic', sans-serif; */
     word-wrap: break-word;
     font-size: 19px;
     line-height: 22px;
+    letter-spacing: 0.3px;
     /* width: 100%; */
     font-weight: 700;
+    margin-bottom: 2px;
 }
 /* .room-list-image {
     height: 100%;

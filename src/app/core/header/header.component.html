@@ -54,7 +54,7 @@
     </div>
     <nav *ngIf="!navToDropdown" class="header-nav">
       <ul class="header-nav-list">
-        <li class="header-nav-list-item">
+        <li *ngIf="hasRole()" class="header-nav-list-item">
           <a routerLink="/host"><span>호스팅하기</span></a></li>
         <li *ngIf="!hasRole()" class="header-nav-list-item">
           <a (click)="toggleLoginModal()"><span>회원가입</span></a>
@@ -68,9 +68,9 @@
               class="default-profile-image"
               [src]="getProfileImage()" alt="profile image">
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" routerLink="/user">프로필 수정</a>
-              <a class="dropdown-item" (click)="logout()">로그아웃</a>
+            <div class="dropdown-menu user-dropdown-container" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item user-dropdown-item" routerLink="/user"><span>프로필 수정</span></a>
+              <a class="dropdown-item user-dropdown-item" (click)="logout()"><span>로그아웃</span></a>
             </div>
           </div>
         </li>
@@ -87,10 +87,48 @@
   (move) = "move($event)"></app-login>
 <div id="myNav" class="overlay menu" [class.show]="showDropdown">
   <div class="overlay-content menu">
-    <a routerLink="/" (click)="toggleDropdown()">홈</a>
-    <a routerLink="/host" (click)="toggleDropdown()">호스팅하기</a>
-    <a (click)="toggleLoginModal()">회원가입</a>
-    <a (click)="toggleSignUpModal()">로그인</a>
+    <ul class="overlay-menu">
+        <li class="overlay-menu-item">
+            <a routerLink="/" (click)="toggleDropdown()">
+              <span>홈</span>
+              <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
+            </a>
+        </li>
+      <li *ngIf="hasRole()" class="overlay-menu-item">
+        <a routerLink="/host" (click)="toggleDropdown()">
+          <span>호스팅하기</span>
+          <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
+        </a>
+      </li>
+      <li *ngIf="hasRole()" class="overlay-menu-item">
+          <a routerLink="/user" (click)="toggleDropdown()">
+            <span>프로필</span>
+            <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
+          </a>
+      </li>
+      <li *ngIf="hasRole()" class="overlay-menu-item">
+          <a (click)="logout()">
+            <span>로그아웃</span>
+            <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
+          </a>
+      </li>
+      <li *ngIf="!hasRole()" class="overlay-menu-item">
+          <a (click)="toggleLoginModal()">
+            <span>회원가입</span>
+            <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
+          </a>
+      </li>
+      <li *ngIf="!hasRole()" class="overlay-menu-item">
+          <a (click)="toggleSignUpModal()">
+            <span>로그인</span>
+            <img class="icon-profile" src="assets/img/profile_icon.svg" alt="">
+          </a>
+      </li>
+          <!-- <a routerLink="/host" (click)="toggleDropdown()">호스팅하기</a> -->
+          <!-- <a (click)="toggleLoginModal()">회원가입</a> -->
+          <!-- <a (click)="toggleSignUpModal()">로그인</a> -->
+    </ul>
+    
   </div>
 </div>
 <div class="overlay search" [class.show]="showSearchModal">
