@@ -69,19 +69,30 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             const place: google.maps.places.PlaceResult = autocomplete.getPlace();
             console.log('place', place);
             // verify result
-            
-            
             if (place.geometry === undefined || place.geometry === null) {
               return;
             }
-            let navigationExtras: NavigationExtras = {
-              queryParams: {
-                "latitude": place.geometry.location.lat(),
-                "longitude": place.geometry.location.lng()
-              }
-            };
-            this.router.navigate(["search_page"], navigationExtras);
-
+            var map = new google.maps.Map(document.getElementById('testmap'), {
+              zoom: 11,
+              center: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
+            });
+            map.addListener('bounds_changed', () => {
+              console.log(map.getBounds());
+              let navigationExtras: NavigationExtras = {
+                queryParams: {
+                  "latitude": place.geometry.location.lat(),
+                  "longitude": place.geometry.location.lng(),
+                  "neLat": map.getBounds().getNorthEast().lat(),
+                  "neLng": map.getBounds().getNorthEast().lng(),
+                  "swLat": map.getBounds().getSouthWest().lat(),
+                  "swLng": map.getBounds().getSouthWest().lng(),
+                }
+              };
+              console.log('navgigg', navigationExtras);
+              this.router.navigate(["search_page"], navigationExtras);
+            });
+            
+            
             // this.searchHouse.setlatitude = place.geometry.location.lat();
             // this.searchHouse.setlongitude = place.geometry.location.lng();
             // console.log('searchHouse lat',this.searchHouse.getlatitude);
